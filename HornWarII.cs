@@ -58,7 +58,7 @@ namespace Horn_War_II
         {
             Graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
             Graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
-            Graphics.ApplyChanges();
+            //Graphics.ApplyChanges();
         }
 
         /// <summary>

@@ -198,7 +198,7 @@ namespace Horn_War_II.Maps
             button = new UI.UiButton(MenuScene, PhysicEngine, "Quit");
             button.Background = UI.UiButton.Backgrounds.Wood4;
             button.Position = button.Position + new Vector2(0, ybtnoff);
-            button.OnMouseClick += delegate { this.GameScene.Game.Exit(); };
+            //button.OnMouseClick += delegate { this.GameScene.Game.Exit(); };
             ybtnoff += 70;
 
             //button.Position = button.Position + new Vector2(0, 274 + yoff);
