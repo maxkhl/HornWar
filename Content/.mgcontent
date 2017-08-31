@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>D:/hw2/Content/Shader/Test.fx</File>
+    <File>D:/hw2/Content/DebugFont.spritefont</File>
+    <File>D:/hw2/Content/IngameText.spritefont</File>
+    <File>D:/hw2/Content/Shader/Default.fx</File>
+    <File>D:/hw2/Content/Images/Atlas Test Texture.png</File>
+    <File>D:/hw2/Content/Images/Maps/Cave/CaveBottom.png</File>
+    <File>D:/hw2/Content/Images/Maps/Cave/CaveTop.png</File>
+    <File>C:/Users/maxkhl/Desktop/Horn War/Content/Images/Axe.png</File>
+    <File>C:/Users/maxkhl/Desktop/Horn War/Content/Images/Goblin.png</File>
+    <File>C:/Users/maxkhl/Desktop/Horn War/Content/Images/RockBackground.png</File>
+    <File>D:/hw2/Content/Images/Horn.png</File>
+    <File>D:/hw2/Content/Images/Cyborg.png</File>
+    <File>D:/hw2/Content/Images/Asteroid1.png</File>
+    <File>D:/hw2/Content/Images/Asteroid2.png</File>
+    <File>D:/hw2/Content/Images/Asteroid3.png</File>
+    <File>D:/hw2/Content/Images/Asteroid4.png</File>
+    <File>D:/hw2/Content/Images/Asteroid.png</File>
+    <File>D:/hw2/Content/Images/Bleck.png</File>
+    <File>D:/hw2/Content/Images/Background.png</File>
+    <File>C:/Users/maxkhl/Desktop/Horn War/Content/Images/Atlas Test Texture.png</File>
+    <File>C:/Users/Tim/Documents/Visual Studio 2015/Projects/SVN/Horn_War_II/Content/Images/Atlas Test Texture.png</File>
+  </SourceFiles>
+</SourceFileCollection>

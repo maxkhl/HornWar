@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Horn_War_II.GameObjects.GameObject" Collapsed="true">
+    <Position X="2.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAEAAACAAAYAQAAAAAAAAAAgAAAAAAAAIAQACAAA=</HashCode>
+      <FileName>GameObjects\GameObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.DrawableObject" Collapsed="true">
+    <Position X="2.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAABAgBAAAAAAAAAAAAAACAoAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\DrawableObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.DebugDrawer" Collapsed="true">
+    <Position X="2.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAgAAAAAAAAAAAAAAAAAAAAAgACAAAAA=</HashCode>
+      <FileName>GameObjects\DebugDrawer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.BodyObject" Collapsed="true">
+    <Position X="1" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAADAAAoAhAAABgAAAEAQAAAAAIAAAAACECEA=</HashCode>
+      <FileName>GameObjects\BodyObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.SpriteObject" Collapsed="true">
+    <Position X="1" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAyAAgoAgAAQAAAAAQEAIAAAEAAIAgAgAAAA=</HashCode>
+      <FileName>GameObjects\SpriteObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.StaticObject" Collapsed="true">
+    <Position X="1" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\StaticObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.Label" Collapsed="true">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAgAAAQAAAAgACAAAAAAAAAiIAAAQA=</HashCode>
+      <FileName>GameObjects\Label.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.PhysicEngine" Collapsed="true">
+    <Position X="4" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAABAIAAAAAAAAAAAAAAAAAAAAIAAAAAAAAQA=</HashCode>
+      <FileName>GameObjects\PhysicEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.Weapon" Collapsed="true">
+    <Position X="2.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Weapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.Decoration.Asteroid" Collapsed="true">
+    <Position X="4.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Decoration\Asteroid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.Decoration.Mushroom" Collapsed="true">
+    <Position X="6.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABAAAAAAgAAAAAAAAAAAAAgAAAQAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Decoration\Mushroom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.Weapons.Axe" Collapsed="true">
+    <Position X="2.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Weapons\Axe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.Weapons.Horn" Collapsed="true">
+    <Position X="4.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Weapons\Horn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.Player" Collapsed="true">
+    <Position X="8" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAACAAoAA=</HashCode>
+      <FileName>GameObjects\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Horn_War_II.GameObjects.Background" Collapsed="true">
+    <Position X="6.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAIAACAAwAA=</HashCode>
+      <FileName>GameObjects\Background.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
