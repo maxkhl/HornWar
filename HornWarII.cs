@@ -41,7 +41,7 @@ namespace Horn_War_II
 
             this.Window.AllowAltF4 = true; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             this.Window.AllowUserResizing = true;
-            this.Window.ClientSizeChanged += Window_ClientSizeChanged;
+            //this.Window.ClientSizeChanged += Window_ClientSizeChanged;
 
             this.IsMouseVisible = true;
 
@@ -58,7 +58,7 @@ namespace Horn_War_II
         {
             Graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
             Graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
-            //Graphics.ApplyChanges();
+            Graphics.ApplyChanges();
         }
 
         /// <summary>

@@ -210,14 +210,16 @@ namespace Horn_War_II.Maps
             var npcGoblin1 = new GameObjects.NPC(GameScene, PhysicEngine, Character.SkinType.Goblin);
             npcGoblin1.Position = new Microsoft.Xna.Framework.Vector2(-500, 0);
             npcGoblin1.DrawOrder = -5;
-            npcGoblin1.RoamArea = Camera.Visible; // Makes sure the goblin roams around the visible area
+            npcGoblin1.RoamArea = new Rectangle(0, 0, 400, 400); // Makes sure the goblin roams around the visible area
+            npcGoblin1.ForceRoamArea = true;
             var npcGoblin1Horn = new GameObjects.Weapons.Horn(GameScene, PhysicEngine);
             npcGoblin1Horn.Attach(npcGoblin1);
 
             npcGoblin1 = new GameObjects.NPC(GameScene, PhysicEngine, Character.SkinType.Goblin);
             npcGoblin1.Position = new Microsoft.Xna.Framework.Vector2(500, 0);
             npcGoblin1.DrawOrder = -5;
-            npcGoblin1.RoamArea = Camera.Visible; // Makes sure the goblin roams around the visible area
+            npcGoblin1.RoamArea = new Rectangle(0, 0, 400, 400); // Makes sure the goblin roams around the visible area
+            npcGoblin1.ForceRoamArea = true;
             npcGoblin1Horn = new GameObjects.Weapons.Horn(GameScene, PhysicEngine);
             npcGoblin1Horn.Attach(npcGoblin1);
 

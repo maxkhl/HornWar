@@ -50,6 +50,11 @@ namespace Horn_War_II.GameObjects
         public Rectangle RoamArea { get; set; }
 
         /// <summary>
+        /// Will enforce roamarea behaviour on any situation - even if in combat, targets will not be chased if outside of the area
+        /// </summary>
+        public bool ForceRoamArea { get; set; }
+
+        /// <summary>
         /// Defines NPC movement behaviour
         /// </summary>
         public enum MovementState
@@ -128,8 +133,16 @@ namespace Horn_War_II.GameObjects
                     var distance = (enemy.Position - this.Position).Length();
                     var facing = Math.Abs(Angle(enemy.Body.LinearVelocity, enemy.Position - this.Position));
                     var Speed = enemy.Body.LinearVelocity.Length();
+                    
+
 
                     ThreatLevel[count] = (180 - facing) + (Speed * 100) + (distance * -1);
+
+                    // No threat if roamarea forced and target outside of it
+                    // This will ensure the npc stays inside its box if required
+                    if (ForceRoamArea && RoamArea != null &&
+                        !RoamArea.Contains(enemy.Position))
+                        ThreatLevel[count] = -999;
                 }
                 count++;
             }
@@ -137,14 +150,15 @@ namespace Horn_War_II.GameObjects
             float BiggestThreatLevel = -1;
             for(int i = 0; i < ThreatLevel.Length; i++)
             {
-                if(ThreatLevel[i] > BiggestThreatLevel)
+                if(ThreatLevel[i] > BiggestThreatLevel &&
+                    ThreatLevel[i] >= 0)
                 {
                     BiggestThreatLevel = ThreatLevel[i];
                     BiggestThreat = Enemies[i];
                 }
             }
 
-            if(BiggestThreat != null)
+            if (BiggestThreat != null)
             {
                 this.Speed = WalkSpeed.Full;
                 float Distance = (BiggestThreat.Position - this.Position).Length();
@@ -171,7 +185,6 @@ namespace Horn_War_II.GameObjects
                     else
                         this.GoTo = BiggestThreat.Position;
                 }
-
             }
             else if (this.State == MovementState.Roam && (this.Position - this.GoTo).Length() < 50)
             {
@@ -191,8 +204,8 @@ namespace Horn_War_II.GameObjects
 
                     var hits = PhysicEngine.World.RayCast(FarseerPhysics.ConvertUnits.ToSimUnits(this.Position), FarseerPhysics.ConvertUnits.ToSimUnits(this.GoTo));
                     bool Obstacle = false;
-                    foreach(var fixture in hits)
-                        if(fixture.Body.UserData != this && fixture.Body.UserData != this.Weapon)
+                    foreach (var fixture in hits)
+                        if (fixture.Body.UserData != this && fixture.Body.UserData != this.Weapon)
                             Obstacle = true;
 
                     clearPath = !Obstacle;
@@ -203,8 +216,10 @@ namespace Horn_War_II.GameObjects
                 }
                 this.Color = Color.White;
             }
+            else
+                this.State = MovementState.Roam; //Roam, if nothing todo
 
-            switch(this.State)
+            switch (this.State)
             {
                 case MovementState.Move:
                     this.Color = new Color(255, 180, 180);

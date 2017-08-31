@@ -130,9 +130,32 @@ namespace Horn_War_II.GameObjects
             }
         }
 
+        /// <summary>
+        /// Amount of Health this Object has
+        /// </summary>
+        public float Health
+        {
+            get
+            {
+                return this._Health;
+            }
+            set
+            {
+                bool die = false;
+                if (this._Health > 0 && value <= 0)
+                    die = true;
+
+                this._Health = value;
+
+                if (die)
+                    this.Die();
+            }
+        }
+
+        private float _Health = 100;
 
         /// <summary>
-        /// Amount of Damage this Object already took
+        /// Amount of Damage this Object took
         /// </summary>
         public float Damage { get; set; }
 
@@ -278,7 +301,19 @@ namespace Horn_War_II.GameObjects
         public virtual void Hit(BodyObject Contact, bool DamagingImpact, float Damage)
         {
             if (DamagingImpact)
+            {
                 this.Damage += Damage;
+                this.Health -= Damage;
+            }
+        }
+
+
+        /// <summary>
+        /// Occurs when health drops under or at 0 - kills object
+        /// </summary>
+        private void Die()
+        {
+            this.Dispose();
         }
 
         /// <summary>
