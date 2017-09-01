@@ -305,7 +305,16 @@ namespace Horn_War_II.GameObjects
                 this.Damage += Damage;
                 this.Health -= Damage;
             }
+
+            // Invoke Hit event
+            OnHit?.Invoke(Contact, DamagingImpact, Damage);
         }
+
+        /// <summary>
+        /// Fired, when this body got hit
+        /// </summary>
+        public event OnHitHandler OnHit;
+        public delegate void OnHitHandler(BodyObject Contact, bool DamagingImpact, float Damage);
 
 
         /// <summary>

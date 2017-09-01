@@ -70,8 +70,8 @@ namespace Horn_War_II
         protected override void Initialize()
         {
             // Load first scene
-            //SceneManager.ActiveScene = new Scenes.GameScene();
-            SceneManager.ActiveScene = new Scenes.MenuScene();
+            SceneManager.ActiveScene = new Scenes.GameScene(Scenes.GameScene.GameSceneMap.Cave);
+            //SceneManager.ActiveScene = new Scenes.MenuScene();
 
             // Load initial keyboard layout (TODO - agent you probably need to implement that into the options menu)
             InputManager.LoadDefault();

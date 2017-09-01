@@ -18,6 +18,27 @@ namespace Horn_War_II.GameObjects
         /// Defines a position, the character should try to look at
         /// </summary>
         public Vector2 LookAt { get; set; }
+        
+        /// <summary>
+        /// String indicating the team of this Character. AI's of teammates with similar strings will not attack each other. Also important for friendly fire
+        /// </summary>
+        public string Team
+        {
+            get
+            {
+                return _Team;
+            }
+            set
+            {
+                _Team = value;
+            }
+        }
+        private string _Team = "";
+
+        /// <summary>
+        /// Will be filled, if this character is controlled by an AI - otherwise null
+        /// </summary>
+        public AI.AI AI { get; set; }
 
         /// <summary>
         /// Activates the characters boost wich will drain stamina until it disables itself or gets disabled (TODO:Stamina)
@@ -35,10 +56,21 @@ namespace Horn_War_II.GameObjects
             }
             set
             {
+                if (_Weapon != null)
+                    _Weapon.onHitCharacter -= OnWeaponHit;
+
                 _Weapon = value;
+                
+                if(value != null)
+                    _Weapon.onHitCharacter += OnWeaponHit;
             }
         }
         private Weapon _Weapon;
+
+        /// <summary>
+        /// Fired whenever another character was hit by this characters weapon
+        /// </summary>
+        public event Weapon.onHitCharacterHandler OnWeaponHit;
 
         /// <summary>
         /// Gets or sets the speed of this character.
@@ -135,7 +167,7 @@ namespace Horn_War_II.GameObjects
         Random random = new Random();
         public override void Update(GameTime gameTime)
         {
-            Rotate((float)Math.Atan2(LookAt.Y - this.Position.Y, LookAt.X - this.Position.X));
+            Rotate((float)Math.Atan2(LookAt.Y - this.Position.Y, LookAt.X - this.Position.X), 5f, 5);
 
             if (random.NextDouble() < 0.005)
                 this.Blink();

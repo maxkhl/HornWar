@@ -49,6 +49,11 @@
     <Compile Include="DebugTool.Designer.cs">
       <DependentUpon>DebugTool.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameObjects\AI\AI.cs" />
+    <Compile Include="GameObjects\AI\AI_Effects.cs" />
+    <Compile Include="GameObjects\AI\AI_Tools.cs" />
+    <Compile Include="GameObjects\AI\AI_Thinking.cs" />
+    <Compile Include="GameObjects\AI\AI_Movement.cs" />
     <Compile Include="GameObjects\Background.cs" />
     <Compile Include="GameObjects\BodyObject.cs" />
     <Compile Include="GameObjects\Character.cs" />

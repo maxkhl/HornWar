@@ -207,19 +207,25 @@ namespace Horn_War_II.Maps
             //label.Position = button.Position + new Vector2(0, 274 + yoff);
 
             // Spawn NPCs
-            var npcGoblin1 = new GameObjects.NPC(GameScene, PhysicEngine, Character.SkinType.Goblin);
+            var npcGoblin1 = new GameObjects.NPC(new GameObjects.AI.AI.AIOptions()
+            {
+                RoamArea = new Rectangle(0, 0, 400, 400), // Makes sure the goblin roams around the visible area
+                ForceRoamArea = true
+            }, 
+            GameScene, PhysicEngine, Character.SkinType.Goblin);
             npcGoblin1.Position = new Microsoft.Xna.Framework.Vector2(-500, 0);
             npcGoblin1.DrawOrder = -5;
-            npcGoblin1.RoamArea = new Rectangle(0, 0, 400, 400); // Makes sure the goblin roams around the visible area
-            npcGoblin1.ForceRoamArea = true;
             var npcGoblin1Horn = new GameObjects.Weapons.Horn(GameScene, PhysicEngine);
             npcGoblin1Horn.Attach(npcGoblin1);
 
-            npcGoblin1 = new GameObjects.NPC(GameScene, PhysicEngine, Character.SkinType.Goblin);
+            npcGoblin1 = new GameObjects.NPC(new GameObjects.AI.AI.AIOptions()
+            {
+                RoamArea = new Rectangle(0, 0, 400, 400), // Makes sure the goblin roams around the visible area
+                ForceRoamArea = true
+            }, 
+            GameScene, PhysicEngine, Character.SkinType.Goblin);
             npcGoblin1.Position = new Microsoft.Xna.Framework.Vector2(500, 0);
             npcGoblin1.DrawOrder = -5;
-            npcGoblin1.RoamArea = new Rectangle(0, 0, 400, 400); // Makes sure the goblin roams around the visible area
-            npcGoblin1.ForceRoamArea = true;
             npcGoblin1Horn = new GameObjects.Weapons.Horn(GameScene, PhysicEngine);
             npcGoblin1Horn.Attach(npcGoblin1);
 
