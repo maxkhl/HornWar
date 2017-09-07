@@ -61,6 +61,7 @@ namespace Horn_War_II.GameObjects
         /// Use this to specify an area the camera is allowed to show
         /// </summary>
         public Rectangle AllowedArea { get; set; }
+        public bool TouchingAllowedArea { get; private set; }
 
         public Tools.Animation ZoomAnimation { get; private set; }
 
@@ -72,6 +73,19 @@ namespace Horn_War_II.GameObjects
                     return Game.GraphicsDevice.Viewport;
                 else
                     return base.Viewport;
+            }
+        }
+
+        public override float Zoom
+        {
+            get => base.Zoom;
+            set
+            {
+                if(!TouchingAllowedArea)
+                    base.Zoom = value;
+                else
+                    if(base.Zoom < value)
+                        base.Zoom = value;
             }
         }
 
@@ -141,17 +155,31 @@ namespace Horn_War_II.GameObjects
                 this.position += (Target - position) / 50;
 
                 var VisibleArea = Visible;
-                if(AllowedArea != Rectangle.Empty && !AllowedArea.Contains(VisibleArea))
+                TouchingAllowedArea = false;
+                if (AllowedArea != Rectangle.Empty && !AllowedArea.Contains(VisibleArea))
                 {
                     if (VisibleArea.X < AllowedArea.X)
+                    {
                         this.position.X += AllowedArea.X - VisibleArea.X;
+                        TouchingAllowedArea = true;
+                    }
                     if (VisibleArea.Y < AllowedArea.Y)
+                    {
                         this.position.Y += AllowedArea.Y - VisibleArea.Y;
+                        TouchingAllowedArea = true;
+                    }
 
                     if (VisibleArea.X + VisibleArea.Width > AllowedArea.X + AllowedArea.Width)
+                    {
                         this.position.X -= (VisibleArea.X + VisibleArea.Width) - (AllowedArea.X + AllowedArea.Width);
+                        TouchingAllowedArea = true;
+                    }
                     if (VisibleArea.Y + VisibleArea.Height > AllowedArea.Y + AllowedArea.Height)
+                    {
                         this.position.Y -= (VisibleArea.Y + VisibleArea.Height) - (AllowedArea.Y + AllowedArea.Height);
+                        TouchingAllowedArea = true;
+                    }
+                        
                 }
             }
         }

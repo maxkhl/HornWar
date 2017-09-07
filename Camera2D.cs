@@ -21,7 +21,7 @@ namespace Horn_War_II
         public float zoom;
         public Vector2 origin;
 
-        public float Zoom
+        public virtual float Zoom
         {
             get
             {
@@ -29,9 +29,10 @@ namespace Horn_War_II
             }
             set
             {
-                if (value < 0)
+
+                if (value < 0.1f)
                 {
-                    zoom = 0;
+                    zoom = 0.1f;
                 }
                 else
                 {
