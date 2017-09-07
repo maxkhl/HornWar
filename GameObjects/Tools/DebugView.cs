@@ -128,6 +128,7 @@ namespace Horn_War_II.GameObjects.Tools
         /// </summary>
         private void DrawDebugData()
         {
+
             if ((Flags & DebugViewFlags.Shape) == DebugViewFlags.Shape)
             {
                 foreach (Body b in World.BodyList)

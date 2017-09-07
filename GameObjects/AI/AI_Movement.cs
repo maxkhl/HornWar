@@ -10,54 +10,32 @@ namespace Horn_War_II.GameObjects.AI
     partial class AI
     {
         /// <summary>
-        /// Target position the AI is moving towards
+        /// Currently calculated goto-step (including curves and shit)
         /// </summary>
-        public Vector2 GoTo
+        public Vector2 GoToCalculatedPoint { get; private set; }
+
+        /// <summary>
+        /// Moves character towards this point
+        /// </summary>
+        public Vector2 GoTo { get; private set; }
+
+        /// <summary>
+        /// Lookat while moving towards goto
+        /// </summary>
+        private Vector2 GoToLookAt
         {
             get
             {
-                return _GoTo;
+                return _GoToLookAt;
             }
             set
             {
-                _GoTo = value;
+                _GoToLookAt = value;
                 Character.LookAt = value;
-                GoToInitDistance = (Character.Position - _GoTo).Length();
             }
         }
-        private Vector2 _GoTo;
-
-        /// <summary>
-        /// Maximum allowed distance, the goto-command is allowed to leave the direct path sideways
-        /// </summary>
-        private float GoToCurveSize { get; set; }
-
-        /// <summary>
-        /// Initial distance when the goto-command was ordered
-        /// </summary>
-        private float GoToInitDistance { get; set; }
-
-        /// <summary>
-        /// Distance, a GoTo command needs to be successful
-        /// </summary>
-        private float GoToFinishDistance { get; set; }
-
-        /// <summary>
-        /// Easing function for the GoTo-command. Determins a path to travel
-        /// </summary>
-        private Tools.Easing.EaseFunction GoToFunction { get; set; }
-
-        /// <summary>
-        /// GoToArrived-Handler
-        /// </summary>
-        /// <param name="GoToPoint">Target point, the character arrived at</param>
-        public delegate void GoToArrivedHandler(Vector2 GoToPoint);
-
-        /// <summary>
-        /// Called when the GoTo-Point was reached by the ai's character
-        /// </summary>
-        public event GoToArrivedHandler GoToArrived;
-
+        private Vector2 _GoToLookAt;
+        
         /// <summary>
         /// Tells the character to hurry and move faster
         /// </summary>
@@ -73,28 +51,50 @@ namespace Horn_War_II.GameObjects.AI
 
             if (this.State != AIState.Wait)
             {
-                var TargetPosition = this.GoTo - this.Character.Position + (FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * -1);
-                var TargetDistance = (this.Character.Position - TargetPosition).Length();
 
-                var s = Tools.Easing.Ease(GoToFunction, TargetDistance - GoToFinishDistance, -GoToCurveSize, GoToCurveSize, this.GoToInitDistance);
-               // TargetPosition += ( * Vector2.(Vector2.UnitY * s, Matrix.Create));
+                this.Boost = true;
 
+                var TargetPosition = this.Character.Position;
+
+                // Normal -straight- movement
+                if (this.GoTo != Vector2.Zero)
+                {
+                    TargetPosition = this.GoTo;
+                }
+                else
+                {
+                    // Attack curve
+                    if (this.Path != null)
+                        TargetPosition = Path.CalculateStep(this.Character.Position, AttackTarget.Position);
+                }
+
+                GoToCalculatedPoint = TargetPosition;
                 this.Character.Move(TargetPosition);
-            }
-
-            if ((this.Character.Position - this.GoTo).Length() < (GoToFinishDistance <= 0 ? 50 : GoToFinishDistance))
-            {
-                GoToFinishDistance = 50;
-                GoToArrived?.Invoke(this.GoTo);
             }
         }
 
-        private void Move(Vector2 Position, float Distance, Tools.Easing.EaseFunction Function)
+        public Tools.Path Path;
+        public BodyObject AttackTarget;
+        private void Attack(BodyObject Target, float Distance, Tools.Easing.EaseFunction Function)
         {
-            GoTo = Position;
-            GoToFinishDistance = Distance;
-            GoToFunction = Function;
-            GoToCurveSize = 80;
+            this.AttackTarget = Target;
+            this.GoTo = Vector2.Zero;
+
+            Path = new Tools.Path(
+                this.Character.Position,
+                Function,
+                Tools.Path.CurveSides.Left,
+                900,
+                0,
+                70);
+        }
+
+        private void Move(Vector2 Target)
+        {
+            this.AttackTarget = null;
+            this.Path = null;
+
+            this.GoTo = Target;
         }
     }
 }

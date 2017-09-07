@@ -322,7 +322,7 @@ namespace Horn_War_II.GameObjects
         /// </summary>
         private void Die()
         {
-            this.Dispose();
+            //this.Dispose();
         }
 
         /// <summary>
@@ -333,6 +333,7 @@ namespace Horn_War_II.GameObjects
         /// <param name="Damping">Damping coefficient. Lower than 1.0 will overshoot.</param>
         protected void Rotate(float targetAngle, float Spring = 2.0f, float Damping = 1.0f)
         {
+            if (Body == null) return;
             var c = (float)(-Math.Sqrt(4 * Body.Inertia * Spring) * Damping);
             var v = Body.AngularVelocity;
             var x = AngleDelta(Body.Rotation, targetAngle);

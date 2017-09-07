@@ -26,7 +26,6 @@ namespace Horn_War_II.GameObjects.AI
             this.RandomGenerator = new Random();
             this.Character.OnWeaponHit += Character_OnWeaponHit;
             this.Character.OnHit += Character_OnHit;
-            this.GoToArrived += AI_GoToArrived;
         }
 
 
@@ -56,7 +55,18 @@ namespace Horn_War_II.GameObjects.AI
 
                 //if (this.Options.Difficulty == AIOptions.DifficultyType.Wtf)
                 this.State = AIState.Charge;
-                Move(hvt.Position + FarseerPhysics.ConvertUnits.ToDisplayUnits(hvt.Body.LinearVelocity), 20, Tools.Easing.EaseFunction.Linear);
+
+                var forward = (hvt.Position - this.Character.Position);
+                forward.Normalize();
+                forward = new Vector2(forward.Y, -forward.X);
+
+                //hvt +
+                //   FarseerPhysics.ConvertUnits.ToDisplayUnits(hvt.Body.LinearVelocity - Vector2.Reflect(hvt.Body.LinearVelocity, forward))
+
+                Attack(
+                    hvt,
+                    20, 
+                    Tools.Easing.EaseFunction.BackEaseIn);
                 //else
                 //    this.GoTo = hvt.Position;
 
@@ -78,9 +88,9 @@ namespace Horn_War_II.GameObjects.AI
             while (!clearPath)
             {
                 if (Options.RoamArea != null)
-                    this.GoTo = new Vector2(RandomGenerator.Next(Options.RoamArea.X, Options.RoamArea.Width), RandomGenerator.Next(Options.RoamArea.Y, Options.RoamArea.Height));
+                    Move(new Vector2(RandomGenerator.Next(Options.RoamArea.X, Options.RoamArea.Width), RandomGenerator.Next(Options.RoamArea.Y, Options.RoamArea.Height)));
                 else
-                    this.GoTo = new Vector2(this.Character.Position.X + RandomGenerator.Next(-300, 300), this.Character.Position.Y + RandomGenerator.Next(-300, 300));
+                    Move(new Vector2(this.Character.Position.X + RandomGenerator.Next(-300, 300), this.Character.Position.Y + RandomGenerator.Next(-300, 300)));
 
                 var hits = Character.PhysicEngine.World.RayCast(FarseerPhysics.ConvertUnits.ToSimUnits(this.Character.Position), FarseerPhysics.ConvertUnits.ToSimUnits(this.GoTo));
                 bool Obstacle = false;
@@ -119,7 +129,9 @@ namespace Horn_War_II.GameObjects.AI
         /// </summary>
         private List<Character> GetEnemies()
         {
-            if (this.Options.DefaultHostile)
+            if (this.Options.Passive)
+                return new List<Character>();
+            else if (this.Options.DefaultHostile)
                 return GetVisibleCharacters();
             else
             {
@@ -144,6 +156,7 @@ namespace Horn_War_II.GameObjects.AI
         {
             if (DamagingImpact)
             {
+                Options.Passive = false;
                 // NPC got attacked by weapon
                 if (typeof(Weapon).IsAssignableFrom(Contact.GetType()) && ((Weapon)Contact).Holder != null)
                 {

@@ -24,6 +24,11 @@ namespace Horn_War_II.GameObjects.AI
             public bool DefaultHostile { get; set; }
 
             /// <summary>
+            /// Gets or sets a value indicating whether [this npc is passive towards everybody until provoked].
+            /// </summary>
+            public bool Passive { get; set; }
+
+            /// <summary>
             /// Gets or sets the view distance.
             /// </summary>
             public float ViewDistance { get; set; }

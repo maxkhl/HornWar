@@ -69,6 +69,7 @@
     <Compile Include="GameObjects\ParticleEmitter.cs" />
     <Compile Include="GameObjects\PhysicEngine.cs" />
     <Compile Include="GameObjects\Player.cs" />
+    <Compile Include="GameObjects\Spectator.cs" />
     <Compile Include="GameObjects\SpriteObject.cs" />
     <Compile Include="GameObjects\StaticObject.cs" />
     <Compile Include="GameObjects\TestBody.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="GameObjects\Tools\DebugView.cs" />
     <Compile Include="GameObjects\Tools\Easing.cs" />
     <Compile Include="GameObjects\GameCam.cs" />
+    <Compile Include="GameObjects\Tools\Path.cs" />
     <Compile Include="GameObjects\Weapon.cs" />
     <Compile Include="GameObjects\Weapons\Flail.cs" />
     <Compile Include="GameObjects\Weapons\Staff.cs" />

@@ -13,6 +13,8 @@ namespace Horn_War_II.GameObjects
         GameCam _camera;
         SpriteFont _debugFont;
 
+        hTexture Pixel;
+
         public DebugDrawer(Scenes.GameScene GameScene, FarseerPhysics.Dynamics.World World, GameCam Camera)
             : base(GameScene)
         {
@@ -22,6 +24,9 @@ namespace Horn_War_II.GameObjects
             _physicsDebug.LoadContent(Game.GraphicsDevice, Game.Content);
             _physicsDebug.AppendFlags(FarseerPhysics.DebugViewFlags.Shape);
             _physicsDebug.AppendFlags(FarseerPhysics.DebugViewFlags.PolygonPoints);
+
+            Pixel = new hTexture(new Texture2D(Game.GraphicsDevice, 1, 1));
+            Pixel.Base.SetData<Color>(new Color[1] { Color.White });
 
             this.DrawOrder = 99999;
 
@@ -49,6 +54,47 @@ namespace Horn_War_II.GameObjects
                         Game.SpriteBatch.DrawString(_debugFont, ((BodyObject)drawComp).Body.LinearVelocity.ToString(), drawComp.Position + drawComp.Size + new Vector2(0, 12), Color.Lime);
                         Game.SpriteBatch.DrawString(_debugFont, MathHelper.ToDegrees(((BodyObject)drawComp).Body.Rotation).ToString(), drawComp.Position + drawComp.Size + new Vector2(0, 24), Color.Yellow);
                     }
+                    
+                }
+
+                if (typeof(AI.AI).IsAssignableFrom(comp.GetType()))
+                {
+                    var ai = (AI.AI)comp;
+
+                    if(ai.Path != null && ai.AttackTarget != null)
+                    {
+                        var distance = (ai.Character.Position - ai.AttackTarget.Position).Length();
+
+                        var forward = ai.Character.Position - ai.AttackTarget.Position;
+                        forward.Normalize();
+                        var oldPos = ai.Character.Position;
+                        var timeout = 5000;
+                        while ((oldPos - ai.AttackTarget.Position).Length() > 10 && timeout > 0)
+                        {
+                            timeout--;                                
+
+                            var target = oldPos;
+
+                            target += ai.Path.CalculateStep(oldPos, ai.AttackTarget.Position) * 5;
+
+                            var forw = oldPos - target;
+                            forw.Normalize();
+
+                            Pixel.Draw(gameTime,
+                                new Rectangle(
+                                    (int)oldPos.X,
+                                    (int)oldPos.Y,
+                                    (int)(target - oldPos).Length(),
+                                    2),
+                                Color.Yellow,
+                                (float)Math.Atan2(forw.Y, forw.X),
+                                Vector2.Zero,
+                                SpriteEffects.None,
+                                0);
+                            oldPos = target;
+                        }
+                    }
+
                     
                 }
             }
