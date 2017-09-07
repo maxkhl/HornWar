@@ -40,6 +40,8 @@ namespace Horn_War_II.GameObjects
 
         private Scenes.GameScene GameScene;
 
+        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -50,8 +52,8 @@ namespace Horn_War_II.GameObjects
             this.GameScene = GameScene;
             ConvertUnits.SetDisplayUnitToSimUnitRatio(64f);
             this.World = new FarseerPhysics.Dynamics.World(Gravity);
-            var debugView = new Tools.DebugView(this.World);
-            //debugView.
+            //var debugView = new Tools.DebugView(this.World);
+            //debugView.Enabled = false;
 
         }
 
@@ -131,7 +133,14 @@ namespace Horn_War_II.GameObjects
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            if (Game.InputManager.IsActionPressed(InputManager.Action.TogglePhysics))
+            {
+                this.World.Enabled = !this.World.Enabled;
+            }
+
+            
             this.World.Step(0.033333f);
+
             base.Update(gameTime);
         }
     }

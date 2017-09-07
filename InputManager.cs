@@ -23,7 +23,8 @@ namespace Horn_War_II
             Right,
             Boost,
             Stab,
-            Debug
+            Debug,
+            TogglePhysics
         }
 
         /// <summary>
@@ -35,6 +36,11 @@ namespace Horn_War_II
         /// Gets the current mouse position.
         /// </summary>
         public Vector2 MousePosition { get; private set; }
+
+        /// <summary>
+        /// Gets the current mouse position delta (between this and last frame).
+        /// </summary>
+        public Vector2 MousePositionDelta { get; private set; }
 
         /// <summary>
         /// Indicates if the game is on top and active
@@ -77,7 +83,9 @@ namespace Horn_War_II
         /// </value>
         public bool MouseClicked { get; private set; }
 
-        
+        public bool MousePressed { get; private set; }
+
+
 
         private KeyboardState _newKS = Keyboard.GetState();
         private KeyboardState _oldKS = Keyboard.GetState();
@@ -101,6 +109,7 @@ namespace Horn_War_II
             KeyboardDefinition.Add(Action.Right, AllKeys.D);
             KeyboardDefinition.Add(Action.Stab, AllKeys.LMB);
             KeyboardDefinition.Add(Action.Boost, AllKeys.RMB);
+            KeyboardDefinition.Add(Action.TogglePhysics, AllKeys.Space);
 
             KeyboardDefinition.Add(Action.Debug, AllKeys.Y);
         }
@@ -155,6 +164,9 @@ namespace Horn_War_II
                 return (int)AllKeys.None;
 
         }
+
+        public delegate void OnMWScrollHandler(bool Up);
+        public event OnMWScrollHandler OnMWScroll;
         
         /// <summary>
         /// Used to update states
@@ -168,12 +180,21 @@ namespace Horn_War_II
             _oldMS = _newMS;
             _newMS = Mouse.GetState();
 
+
+            if (_newMS.ScrollWheelValue < _oldMS.ScrollWheelValue)
+                OnMWScroll?.Invoke(true);
+            else if (_newMS.ScrollWheelValue > _oldMS.ScrollWheelValue)
+                OnMWScroll?.Invoke(false);
+
             if (_newMS.LeftButton == ButtonState.Pressed && _oldMS.LeftButton == ButtonState.Released)
                 MouseClicked = true;
             else
                 MouseClicked = false;
 
+            MousePressed = _newMS.LeftButton == ButtonState.Pressed;
+
             MousePosition = _newMS.Position.ToVector2();
+            MousePositionDelta = _newMS.Position.ToVector2() - _oldMS.Position.ToVector2();
         }
 
         public enum AllKeys

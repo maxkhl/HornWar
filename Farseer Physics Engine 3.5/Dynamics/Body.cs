@@ -205,6 +205,9 @@ namespace FarseerPhysics.Dynamics
                 if (_bodyType == BodyType.Static)
                     return;
 
+                if (!this._world.Enabled)
+                    return;
+
                 if (Vector2.Dot(value, value) > 0.0f)
                     Awake = true;
 
