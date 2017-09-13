@@ -145,6 +145,9 @@ namespace Horn_War_II.GameObjects
         /// </summary>
         public void Move(Vector2 Direction)
         {
+            if (Direction == Vector2.Zero)
+                return;
+
             Direction.Normalize();
 
             float WalkStateFactor = 1;

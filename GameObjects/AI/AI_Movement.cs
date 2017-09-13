@@ -65,7 +65,7 @@ namespace Horn_War_II.GameObjects.AI
                 {
                     // Attack curve
                     if (this.Path != null)
-                        TargetPosition = Path.CalculateStep(this.Character.Position, AttackTarget.Position);
+                        TargetPosition = (Path.CalculateStep(this.Character.Position, AttackTarget.Position) * 25) - FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass);
                 }
 
                 GoToCalculatedPoint = TargetPosition;
@@ -75,18 +75,23 @@ namespace Horn_War_II.GameObjects.AI
 
         public Tools.Path Path;
         public BodyObject AttackTarget;
-        private void Attack(BodyObject Target, float Distance, Tools.Easing.EaseFunction Function)
+        private void Attack(BodyObject Target, float CurveWidth, float CurveStart, float CurveEnd, Tools.Easing.EaseFunction FunctionIn, Tools.Easing.EaseFunction FunctionOut)
         {
-            this.AttackTarget = Target;
-            this.GoTo = Vector2.Zero;
+            if (Path == null)
+            {
+                this.AttackTarget = Target;
+                this.GoTo = Vector2.Zero;
 
-            Path = new Tools.Path(
-                this.Character.Position,
-                Function,
-                Tools.Path.CurveSides.Left,
-                900,
-                0,
-                70);
+                Path = new Tools.Path(
+                    this.Character.Position,
+                    Target.Position,
+                    FunctionIn,
+                    FunctionOut,
+                    Tools.Path.CurveSides.Left,
+                    CurveStart,
+                    CurveEnd,
+                    CurveWidth);
+            }
         }
 
         private void Move(Vector2 Target)

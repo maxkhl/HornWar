@@ -47,12 +47,15 @@ namespace Horn_War_II.GameObjects
                 if (typeof(SpriteObject).IsAssignableFrom(comp.GetType()))
                 {
                     var drawComp = (SpriteObject)comp;
-                    Game.SpriteBatch.DrawString(_debugFont, drawComp.Position.ToString(), drawComp.Position + drawComp.Size, Color.Red);
-
-                    if (typeof(BodyObject).IsAssignableFrom(comp.GetType()))
+                    if (!(typeof(BodyObject).IsAssignableFrom(comp.GetType()) && ((BodyObject)drawComp).Body.JointList != null && ((BodyObject)drawComp).Body.JointList.Joint.BodyA != ((BodyObject)drawComp).Body))
                     {
-                        Game.SpriteBatch.DrawString(_debugFont, ((BodyObject)drawComp).Body.LinearVelocity.ToString(), drawComp.Position + drawComp.Size + new Vector2(0, 12), Color.Lime);
-                        Game.SpriteBatch.DrawString(_debugFont, MathHelper.ToDegrees(((BodyObject)drawComp).Body.Rotation).ToString(), drawComp.Position + drawComp.Size + new Vector2(0, 24), Color.Yellow);
+                        Game.SpriteBatch.DrawString(_debugFont, drawComp.Position.ToString(), drawComp.Position + drawComp.Size, Color.Red);
+
+                        if (typeof(BodyObject).IsAssignableFrom(comp.GetType()))
+                        {
+                            Game.SpriteBatch.DrawString(_debugFont, ((BodyObject)drawComp).Body.LinearVelocity.ToString(), drawComp.Position + drawComp.Size + new Vector2(0, 12), Color.Lime);
+                            Game.SpriteBatch.DrawString(_debugFont, MathHelper.ToDegrees(((BodyObject)drawComp).Body.Rotation).ToString(), drawComp.Position + drawComp.Size + new Vector2(0, 24), Color.Yellow);
+                        }
                     }
                     
                 }
@@ -69,13 +72,13 @@ namespace Horn_War_II.GameObjects
                         forward.Normalize();
                         var oldPos = ai.Character.Position;
                         var timeout = 5000;
-                        while ((oldPos - ai.AttackTarget.Position).Length() > 10 && timeout > 0)
+                        for(int i = 0; i < ai.Path.Waypoints.Length; i++)
                         {
                             timeout--;                                
 
                             var target = oldPos;
 
-                            target += ai.Path.CalculateStep(oldPos, ai.AttackTarget.Position) * 5;
+                            target += ai.Path.CalculateStepSim(oldPos, ai.AttackTarget.Position, i);
 
                             var forw = oldPos - target;
                             forw.Normalize();

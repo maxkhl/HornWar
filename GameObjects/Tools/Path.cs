@@ -12,38 +12,6 @@ namespace Horn_War_II.GameObjects.Tools
     /// </summary>
     class Path
     {
-
-        /// <summary>
-        /// Maximum allowed distance, the goto-command is allowed to leave the direct path sideways
-        /// </summary>
-        private float CurveWidth { get; set; }
-
-        /// <summary>
-        /// Distance where the goto-curve function starts
-        /// </summary>
-        private float CurveStart { get; set; }
-
-        /// <summary>
-        /// Distance where the goto-curve function ends
-        /// </summary>
-        private float CurveEnd { get; set; }
-
-        /// <summary>
-        /// Gets the span (length) of the curve
-        /// </summary>
-        private float CurveSpan
-        {
-            get
-            {
-                return CurveStart - CurveEnd;
-            }
-        }
-
-        /// <summary>
-        /// Left-sided goto-curve?
-        /// </summary>
-        private CurveSides CurveSide { get; set; }
-
         /// <summary>
         /// Side, a curve should go
         /// </summary>
@@ -76,21 +44,30 @@ namespace Horn_War_II.GameObjects.Tools
 
         public Vector2 Source { get; private set; }
 
+        public Vector2 Target { get; private set; }
+
+        /// <summary>
+        /// Contains all the waypoints of this path
+        /// </summary>
+        public Vector2[] Waypoints { get; private set; }
+
+        private int CurrentWaypoint = 0;
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="Source">Source of the path</param>
         /// <param name="Target">Target of the path</param>
-        /// <param name="Function">Easing function of the path</param>
+        /// <param name="FunctionIn">Easing function for engaging the curve</param>
+        /// <param name="FunctionOut">Easing function for ending the curve</param>
         /// <param name="CurveSide">Curve side of the easing function</param>
-        public Path(Vector2 Source, Vector2 Target, Tools.Easing.EaseFunction Function, CurveSides CurveSide)
+        public Path(Vector2 Source, Vector2 Target, Tools.Easing.EaseFunction FunctionIn, Tools.Easing.EaseFunction FunctionOut, CurveSides CurveSide)
         {
             this.Source = Source;
-            this.Function = Function;
-            this.CurveEnd = 0;
-            this.CurveStart = (Source - Target).Length();
-            this.CurveWidth = this.CurveStart * 0.5f; //Half the distance is curve width as default
-            this.CurveSide = CurveSide;
+            this.Target = Target;
+
+            var CurveStart = (Source - Target).Length();
+            GeneratePath(Source, Target, FunctionIn, FunctionOut, CurveSide, CurveStart, 0, CurveStart * 0.5f, 1);
         }
 
         /// <summary>
@@ -98,21 +75,88 @@ namespace Horn_War_II.GameObjects.Tools
         /// </summary>
         /// <param name="Source">Source of the path</param>
         /// <param name="Target">Target of the path</param>
-        /// <param name="Function">Easing function of the path</param>
+        /// <param name="FunctionIn">Easing function for engaging the curve</param>
+        /// <param name="FunctionOut">Easing function for ending the curve</param>
         /// <param name="CurveSide">Curve side of the easing function</param>
         /// <param name="CurveStart">Distance to target, the curve should start at</param>
         /// <param name="CurveEnd">Distance to target, the curve should end a</param>
         /// <param name="CurveWidth">Width of the curve</param>
-        public Path(Vector2 Source, Tools.Easing.EaseFunction Function, CurveSides CurveSide, float CurveStart, float CurveEnd, float CurveWidth)
+        public Path(Vector2 Source, Vector2 Target, Tools.Easing.EaseFunction FunctionIn, Tools.Easing.EaseFunction FunctionOut, CurveSides CurveSide, float CurveStart, float CurveEnd, float CurveWidth)
         {
             this.Source = Source;
-            this.Function = Function;
-            this.CurveEnd = CurveEnd;
-            this.CurveStart = CurveStart;
-            this.CurveWidth = CurveWidth;
-            this.CurveSide = CurveSide;
+            this.Target = Target;
+
+            GeneratePath(Source, Target, FunctionIn, FunctionOut, CurveSide, CurveStart, CurveEnd, CurveWidth, 1);
         }
 
+
+        private void GeneratePath(Vector2 Source, Vector2 Target, Tools.Easing.EaseFunction FunctionIn, Tools.Easing.EaseFunction FunctionOut, CurveSides CurveSide, float CurveStart, float CurveEnd, float CurveWidth, float Resolution)
+        {
+            var TargetDistance = (Source - Target).Length();
+
+            var CurveSpan = CurveStart - CurveEnd;
+
+            var ForwardVector = (Target - Source);
+            ForwardVector.Normalize();
+
+            var PathSize = (int)(TargetDistance / Resolution);
+
+            this.Waypoints = new Vector2[PathSize];
+
+            var Waypoint = Source;
+
+            for (int i = 0; i < PathSize; i++)
+            {
+                var CurrentDistance = i * Resolution;
+
+                var addWaypoint = ForwardVector * Resolution;
+
+                Waypoint += addWaypoint;
+
+                // Only curve the path when distance between start and end
+                if (CurrentDistance < CurveStart && CurrentDistance > CurveEnd)
+                {
+                    var firstHalf = CurrentDistance - CurveEnd < CurveSpan / 2;
+                    float s = 0;
+
+                    if (firstHalf)
+                        s = Tools.Easing.Ease(
+                            FunctionIn,
+                            CurrentDistance - CurveEnd,
+                            0,
+                            CurveWidth,
+                            CurveSpan / 2);
+                    else
+                    {
+                        if(CurrentDistance == 800)
+                        { }
+                        s = Tools.Easing.Ease(
+                            FunctionOut,
+                            (CurrentDistance - CurveEnd) - CurveSpan / 2,
+                            0,
+                            CurveWidth,
+                            CurveSpan / 2);
+                        s = (s - CurveWidth) * -1;
+                    }
+
+
+                    var SideVector = new Vector2(0, s);
+                    SideVector = RotateVector2(SideVector, Math.Atan2(ForwardVector.Y, ForwardVector.X));
+
+                    // Get the vector pointing left or right from the forward one
+                    var ForwardRightVector = new Vector2(ForwardVector.Y, -ForwardVector.X);
+                    var ForwardLeftVector = -ForwardRightVector;
+
+                    // Add the specified vector to the target position
+                    addWaypoint = SideVector;
+                    //addWaypoint.Normalize();
+                    //addWaypoint *= Resolution;
+                }
+
+
+                this.Waypoints[i] = Waypoint + addWaypoint;
+            }
+        }
 
 
 
@@ -124,62 +168,58 @@ namespace Horn_War_II.GameObjects.Tools
         /// <returns>Next step in path</returns>
         public Vector2 CalculateStep(Vector2 Position, Vector2 Target)
         {
+            if(Waypoints == null)
+                return Vector2.Zero;
 
-            var TargetDistance = (Target - Position).Length();
+            var TargetOffset = Target - this.Target;
 
-            var ForwardVector = (Target - Source);
-            ForwardVector.Normalize();
-
-
-            var TargetPosition = ForwardVector;
-
-            // Only curve the path when distance between start and end
-            if (TargetDistance < CurveStart && TargetDistance > CurveEnd)
+            var WaypointDistance = 0f;
+            var Waypoint = Vector2.Zero;
+            while (WaypointDistance < 1 && Waypoints != null)
             {
-                // Get the path offset, using the given easing function
+                Waypoint = Waypoints[CurrentWaypoint] + TargetOffset;
 
-                var firstHalf = TargetDistance - CurveEnd > CurveSpan / 2;
-                float s = 0;
+                WaypointDistance = (Waypoint - Position).Length();
 
-                if (firstHalf)
-                    s = Tools.Easing.Ease(
-                        Easing.EaseFunction.BounceEaseIn,
-                        CurveSpan - (TargetDistance - CurveEnd),
-                        0,
-                        CurveWidth,
-                        CurveSpan / 2);
-                else
+
+                if (WaypointDistance < 50)
                 {
-                    s = Tools.Easing.Ease(
-                        Easing.EaseFunction.BounceEaseIn,
-                        CurveSpan - (TargetDistance - CurveEnd) + CurveSpan / 2,
-                        0,
-                        CurveWidth,
-                        CurveSpan);
-                    s = (s - CurveWidth) * -1;
+                    CurrentWaypoint++;
+
+                    // Fire event when target reached
+                    if (CurrentWaypoint >= Waypoints.Length)
+                    {
+                        Waypoints = null;
+                        CurrentWaypoint = 0;
+                        GoToArrived?.Invoke(Target);
+                    }
                 }
-
-                //if (!firstHalf)
-                //    s -= CurveWidth;
-
-                var SideVector = new Vector2(0, s);
-                SideVector = RotateVector2(SideVector, Math.Atan2(ForwardVector.Y, ForwardVector.X));
-
-                // Get the vector pointing left or right from the forward one
-                var ForwardRightVector = new Vector2(ForwardVector.Y, -ForwardVector.X);
-                var ForwardLeftVector = -ForwardRightVector;
-
-                // Add the specified vector to the target position
-                TargetPosition += SideVector;
-
             }
 
+            return (Waypoint - Position);
+        }
 
-            // Fire event when target reached
-            if (TargetDistance < (FinishDistance <= 0 ? 50 : FinishDistance))
-                GoToArrived?.Invoke(Target);
+        /// <summary>
+        /// Calculates the next step for this path (simulation)
+        /// </summary>
+        /// <param name="Position">Current position</param>
+        /// <param name="Target">Target position</param>
+        /// <returns>Next step in path</returns>
+        public Vector2 CalculateStepSim(Vector2 Position, Vector2 Target, int Waypoint)
+        {
+            // Save
+            var OldWaypoint = CurrentWaypoint;
+            var OldWaypointList = Waypoints;
 
-            return TargetPosition;
+
+            CurrentWaypoint = Waypoint;
+            var Result = CalculateStep(Position, Target);
+
+            // Restore
+            CurrentWaypoint = OldWaypoint;
+            Waypoints = OldWaypointList;
+
+            return Result;
         }
 
         private Vector2 RotateVector2(Vector2 vec, double radians)

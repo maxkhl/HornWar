@@ -65,7 +65,10 @@ namespace Horn_War_II.GameObjects.AI
 
                 Attack(
                     hvt,
-                    20, 
+                    200,
+                    900,
+                    30, 
+                    Tools.Easing.EaseFunction.CircEaseOut,
                     Tools.Easing.EaseFunction.BackEaseIn);
                 //else
                 //    this.GoTo = hvt.Position;
