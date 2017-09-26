@@ -59,7 +59,8 @@ namespace Horn_War_II.GameObjects
         /// <param name="Time">Time in ms until the label disappears.</param>
         /// <param name="Color">Fontcolor.</param>
         /// <param name="Animation">Animation for this label.</param>
-        public Label(Scenes.GameScene GameScene, string Text, Vector2 Position, float Time, Color Color, Animation Animation = Animation.RaiseFade)
+        /// <param name="SpriteFont">Path to a spritefont, leave empty for default.</param>
+        public Label(Scenes.GameScene GameScene, string Text, Vector2 Position, float Time, Color Color, Animation Animation = Animation.RaiseFade, string SpriteFont = "")
             : base(GameScene)
         {
             this.Text = Text;
@@ -67,7 +68,10 @@ namespace Horn_War_II.GameObjects
             this.Time = Time;
             this._animation = Animation;
             this.Color = Color;
-            this._font = Game.Content.Load<SpriteFont>("IngameText");
+            if(SpriteFont == "")
+                this._font = Game.Content.Load<SpriteFont>("Fonts/IngameText");
+            else
+                this._font = Game.Content.Load<SpriteFont>(SpriteFont);
         }
 
         public override void Update(GameTime gameTime)
