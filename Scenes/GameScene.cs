@@ -79,24 +79,24 @@ namespace Horn_War_II.Scenes
                 case GameSceneMap.Cave:
                     Map = new Maps.Cave(this);
 
-                    var spectator = new GameObjects.Spectator(this);
-                    Map.Camera.FollowGO = spectator;
+                    //var spectator = new GameObjects.Spectator(this);
+                    //Map.Camera.FollowGO = spectator;
 
                     // Spawn player
-                    //var player = new GameObjects.Player(this, Map.Camera, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
-                    //player.Position = new Microsoft.Xna.Framework.Vector2(-500, 50);
+                    var player = new GameObjects.Player(this, Map.Camera, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
+                    player.Position = new Microsoft.Xna.Framework.Vector2(-400, -150);
 
                     // Arm player
-                    //var weapon = new GameObjects.Weapons.Sword(this, Map.PhysicEngine);
-                    //weapon.Attach(player);
+                    var weapon = new GameObjects.Weapons.Sword(this, Map.PhysicEngine);
+                    weapon.Attach(player);
 
                     // Tell camera to follow player
-                    //Map.Camera.FollowGO = player;
+                    Map.Camera.FollowGO = player;
 
                     // Spawn NPCs
                     var npcGoblin1 = new GameObjects.NPC(new GameObjects.AI.AI.AIOptions(), this, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
                     npcGoblin1.Position = new Microsoft.Xna.Framework.Vector2(500, 50);
-                    var npcGoblin1Horn = new GameObjects.Weapons.Sword(this, Map.PhysicEngine);
+                    var npcGoblin1Horn = new GameObjects.Weapons.Horn(this, Map.PhysicEngine);
                     npcGoblin1Horn.Attach(npcGoblin1);
 
                     // Spawn NPCs
@@ -107,7 +107,7 @@ namespace Horn_War_II.Scenes
                     }, 
                     this, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
                     npcGoblin2.Position = new Microsoft.Xna.Framework.Vector2(-500, 50);
-                    var npcGoblin2Horn = new GameObjects.Weapons.Sword(this, Map.PhysicEngine);
+                    var npcGoblin2Horn = new GameObjects.Weapons.Horn(this, Map.PhysicEngine);
                     npcGoblin2Horn.Attach(npcGoblin2);
 
                     //// Spawn NPCs
@@ -122,7 +122,7 @@ namespace Horn_War_II.Scenes
                     //var npcGoblin4Horn = new GameObjects.Weapons.Horn(this, Map.PhysicEngine);
                     //npcGoblin4Horn.Attach(npcGoblin4);
 
-                    var scoreBoard = new UI.ScoreBoard(this, Map.PhysicEngine, npcGoblin1, npcGoblin2);
+                    //var scoreBoard = new UI.ScoreBoard(this, Map.PhysicEngine, npcGoblin1, npcGoblin2);
                     break;
                 case GameSceneMap.Space:
                     Map = new Maps.Space(this);
@@ -144,7 +144,7 @@ namespace Horn_War_II.Scenes
                     npcCyborg1.Position = new Microsoft.Xna.Framework.Vector2(500, 50);
                     var npcGoblin1Horna = new GameObjects.Weapons.Horn(this, Map.PhysicEngine);
                     npcGoblin1Horna.Attach(npcCyborg1);
-                    var scoreBoarda = new UI.ScoreBoard(this, Map.PhysicEngine, playera, npcCyborg1);
+                    //var scoreBoarda = new UI.ScoreBoard(this, Map.PhysicEngine, playera, npcCyborg1);
                     break;
             }
 
