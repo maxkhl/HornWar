@@ -108,6 +108,11 @@ namespace Horn_War_II.GameObjects
         public GameObjects.SpriteObject FollowGO { get; set; }
 
         /// <summary>
+        /// Zooms out when followed GO is moving fast
+        /// </summary>
+        public bool ZoomWithSpeed { get; set; }
+
+        /// <summary>
         /// Gets or sets the ease function.
         /// </summary>
         public Tools.Easing.EaseFunction EaseFunction { get; set; }
@@ -148,7 +153,8 @@ namespace Horn_War_II.GameObjects
                     Speed = MathHelper.Clamp(Speed, 0.2f, 1);
                     //Speed /= 50;
                     var TargetZoom = Speed > 0 ? Speed : 1;
-                    Zoom += (TargetZoom - Zoom) / 50;
+                    if(ZoomWithSpeed)
+                        Zoom += (TargetZoom - Zoom) / 50;
                 }
                 //this.position.X = Tools.Easing.Ease(EaseFunction, 0, Target.X, this.position.X, 200);
                 //this.position.Y = Tools.Easing.Ease(EaseFunction, 0, Target.Y, this.position.Y, 200);        

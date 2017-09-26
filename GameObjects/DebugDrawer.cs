@@ -34,6 +34,7 @@ namespace Horn_War_II.GameObjects
 #if DEBUG
             this.Visible = true;
 #endif
+            this.Visible = false;
         }
 
         /// <summary>
@@ -64,7 +65,25 @@ namespace Horn_War_II.GameObjects
                 {
                     var ai = (AI.AI)comp;
 
-                    if(ai.Path != null && ai.AttackTarget != null)
+                    if (ai.GoTo != null)
+                    {
+                        var forw = ai.GoTo;
+                        forw.Normalize();
+
+                        Pixel.Draw(gameTime,
+                            new Rectangle(
+                                (int)ai.Character.Position.X,
+                                (int)ai.Character.Position.Y,
+                                (int)(ai.GoTo - ai.Character.Position).Length(),
+                                2),
+                            Color.Yellow,
+                            (float)Math.Atan2(forw.Y, forw.X),
+                            Vector2.Zero,
+                            SpriteEffects.None,
+                            0);
+                    }
+
+                    if (ai.Path != null && ai.AttackTarget != null)
                     {
                         var distance = (ai.Character.Position - ai.AttackTarget.Position).Length();
 
