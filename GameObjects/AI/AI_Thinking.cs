@@ -50,26 +50,36 @@ namespace Horn_War_II.GameObjects.AI
                     return (int)((180 - facing) + (Speed * 100) + (distance * -1));
                 });
 
-                // High-value-target is first one in list (most likely to be attacking us)
+                // High-value-target is first one in list (most likely to be a threat to us)
                 var hvt = enemies[0];
+                var hvt_distance = (hvt.Position - this.Character.Position).Length();
+
+                if(this.State != AIState.Fallback && this.State != AIState.Charge)
+                    this.State = AIState.Charge;
 
                 //if (this.Options.Difficulty == AIOptions.DifficultyType.Wtf)
-                this.State = AIState.Charge;
+                if (this.State == AIState.Fallback && hvt_distance > 800)
+                    this.State = AIState.Charge; //Attack again if we have enough distance
+                else if (this.State == AIState.Charge && hvt_distance < 140)
+                    this.State = AIState.Fallback; //Fallback when we're to close to get some momentum
 
-                var forward = (hvt.Position - this.Character.Position);
+                /*var forward = (hvt.Position - this.Character.Position);
                 forward.Normalize();
-                forward = new Vector2(forward.Y, -forward.X);
+                forward = new Vector2(forward.Y, -forward.X);*/
 
                 //hvt +
                 //   FarseerPhysics.ConvertUnits.ToDisplayUnits(hvt.Body.LinearVelocity - Vector2.Reflect(hvt.Body.LinearVelocity, forward))
+                if (this.State == AIState.Charge)
+                    Attack(
+                        hvt,
+                        200,
+                        900,
+                        30,
+                        Tools.Easing.EaseFunction.CircEaseOut,
+                        Tools.Easing.EaseFunction.BackEaseIn);
+                else if (this.State == AIState.Fallback)
+                    Fallback(hvt);
 
-                Attack(
-                    hvt,
-                    200,
-                    900,
-                    30, 
-                    Tools.Easing.EaseFunction.CircEaseOut,
-                    Tools.Easing.EaseFunction.BackEaseIn);
                 //else
                 //    this.GoTo = hvt.Position;
 
@@ -128,7 +138,7 @@ namespace Horn_War_II.GameObjects.AI
 
         /// <summary>
         /// Returns Enemies in our visible range
-        /// Can be a resource killer
+        /// Can be a resource killer so dont use too often
         /// </summary>
         private List<Character> GetEnemies()
         {
@@ -142,8 +152,9 @@ namespace Horn_War_II.GameObjects.AI
 
                 return (from character in visibleChars
                         where
-                            character.Team != this.Character.Team ||
-                            character.Team == ""
+                            (character.Team != this.Character.Team || // Same team or
+                            character.Team == "") && // - no team
+                            !character.Dead //Ignore dead characters
                         select
                             character).ToList();
             }

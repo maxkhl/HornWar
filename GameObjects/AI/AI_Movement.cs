@@ -60,9 +60,17 @@ namespace Horn_War_II.GameObjects.AI
                 if (this.GoTo != Vector2.Zero)
                 {
                     TargetPosition = this.GoTo;
+                    this.Character.LookAt = this.Character.Position - TargetPosition;
                 }
                 else
                 {
+                    if (this.AttackTarget != null)
+                    {
+                        TargetPosition = this.AttackTarget.Position - this.Character.Position + FarseerPhysics.ConvertUnits.ToDisplayUnits(this.AttackTarget.Body.LinearVelocity) - FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass);
+
+                        this.Character.LookAt = this.AttackTarget.Position;
+                    }
+
                     // Attack curve
                     if (this.Path != null)
                         TargetPosition = (Path.CalculateStep(this.Character.Position, AttackTarget.Position) * 25) - FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass);
@@ -77,7 +85,12 @@ namespace Horn_War_II.GameObjects.AI
         public BodyObject AttackTarget;
         private void Attack(BodyObject Target, float CurveWidth, float CurveStart, float CurveEnd, Tools.Easing.EaseFunction FunctionIn, Tools.Easing.EaseFunction FunctionOut)
         {
-            if (Path == null)
+            this.AttackTarget = Target;
+            this.GoTo = Vector2.Zero;
+
+
+            // Path shit deacitvated for now - it's harder than I thought
+            /*if (Path == null)
             {
                 this.AttackTarget = Target;
                 this.GoTo = Vector2.Zero;
@@ -91,7 +104,17 @@ namespace Horn_War_II.GameObjects.AI
                     CurveStart,
                     CurveEnd,
                     CurveWidth);
-            }
+            }*/
+        }
+
+        private void Fallback(BodyObject Target)
+        {
+            this.AttackTarget = null;
+
+            var reverseVector = Vector2.Negate(Target.Position - this.Character.Position);
+            reverseVector.Normalize();
+            this.GoTo = reverseVector;
+            this.GoToLookAt = Target.Position - this.Character.Position;
         }
 
         private void Move(Vector2 Target)
