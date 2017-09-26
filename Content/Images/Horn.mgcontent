@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>D:/hw2/Content/Images/Horn.png</SourceFile>
+  <SourceFile>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Horn.png</SourceFile>
   <SourceTime>2016-03-11T14:13:53.1112062+01:00</SourceTime>
-  <DestFile>D:/hw2/Content/Images/Horn.xnb</DestFile>
-  <DestTime>2016-03-11T14:14:23.2381932+01:00</DestTime>
+  <DestFile>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Horn.xnb</DestFile>
+  <DestTime>2017-09-26T18:52:19.8211084+02:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2015-04-29T19:14:44+02:00</ImporterTime>
+  <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
-  <ProcessorTime>2015-04-29T19:14:44+02:00</ProcessorTime>
+  <ProcessorTime>2017-03-01T16:05:36+01:00</ProcessorTime>
   <Parameters>
     <Key>ColorKeyColor</Key>
     <Value>255,0,255,255</Value>
@@ -26,6 +26,10 @@
   </Parameters>
   <Parameters>
     <Key>ResizeToPowerOfTwo</Key>
+    <Value>False</Value>
+  </Parameters>
+  <Parameters>
+    <Key>MakeSquare</Key>
     <Value>False</Value>
   </Parameters>
   <Parameters>

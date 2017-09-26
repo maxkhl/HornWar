@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>D:/hw2/Content/DebugFont.spritefont</SourceFile>
+  <SourceFile>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/DebugFont.spritefont</SourceFile>
   <SourceTime>2016-03-07T15:14:12.5010672+01:00</SourceTime>
-  <DestFile>D:/hw2/Content/DebugFont.xnb</DestFile>
-  <DestTime>2016-03-21T18:03:44.1547367+01:00</DestTime>
+  <DestFile>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/DebugFont.xnb</DestFile>
+  <DestTime>2017-09-26T18:52:19.6503472+02:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
-  <ImporterTime>2016-03-16T03:18:04+01:00</ImporterTime>
+  <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
-  <ProcessorTime>2016-03-16T03:18:04+01:00</ProcessorTime>
+  <ProcessorTime>2017-03-01T16:05:36+01:00</ProcessorTime>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
   <Parameters>
     <Key>TextureFormat</Key>
     <Value>Compressed</Value>

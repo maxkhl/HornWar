@@ -4,26 +4,44 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>D:/hw2/Content/Shader/Test.fx</File>
-    <File>D:/hw2/Content/DebugFont.spritefont</File>
-    <File>D:/hw2/Content/IngameText.spritefont</File>
-    <File>D:/hw2/Content/Shader/Default.fx</File>
-    <File>D:/hw2/Content/Images/Atlas Test Texture.png</File>
-    <File>D:/hw2/Content/Images/Maps/Cave/CaveBottom.png</File>
-    <File>D:/hw2/Content/Images/Maps/Cave/CaveTop.png</File>
-    <File>C:/Users/maxkhl/Desktop/Horn War/Content/Images/Axe.png</File>
-    <File>C:/Users/maxkhl/Desktop/Horn War/Content/Images/Goblin.png</File>
-    <File>C:/Users/maxkhl/Desktop/Horn War/Content/Images/RockBackground.png</File>
-    <File>D:/hw2/Content/Images/Horn.png</File>
-    <File>D:/hw2/Content/Images/Cyborg.png</File>
-    <File>D:/hw2/Content/Images/Asteroid1.png</File>
-    <File>D:/hw2/Content/Images/Asteroid2.png</File>
-    <File>D:/hw2/Content/Images/Asteroid3.png</File>
-    <File>D:/hw2/Content/Images/Asteroid4.png</File>
-    <File>D:/hw2/Content/Images/Asteroid.png</File>
-    <File>D:/hw2/Content/Images/Bleck.png</File>
-    <File>D:/hw2/Content/Images/Background.png</File>
-    <File>C:/Users/maxkhl/Desktop/Horn War/Content/Images/Atlas Test Texture.png</File>
-    <File>C:/Users/Tim/Documents/Visual Studio 2015/Projects/SVN/Horn_War_II/Content/Images/Atlas Test Texture.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Atlas Test Texture.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/DebugFont.spritefont</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Bleck.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Cyborg.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Horn.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Goblin.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Axe.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Cave/Cave.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Cave/Mushroom1.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Cave/Mushroom2.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Cave/RockBackground.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Space/Asteroid1.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Space/Asteroid2.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Space/Asteroid3.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Space/Asteroid4.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Space/SpaceBackground.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Eh.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Effects/Explosion1.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Cave/CaveBottom.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Cave/CaveTop.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Menu/Heading.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Menu/MainMenuButtons.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Menu/Btn_Multiplayer.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Menu/Btn_NewGame.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Menu/Btn_Options.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Menu/Btn_Quit.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/MenuFont.spritefont</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Menu/MainMenuFrame1.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/MenuCaption.spritefont</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Menu/PreviewCave.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Sword.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Flail.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/FlailHead.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Fonts/IngameCaption.spritefont</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Fonts/IngameText.spritefont</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Staff.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Menu/PreviewSpace.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Fonts/IngameSmall.spritefont</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Fonts/DamageText.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>
