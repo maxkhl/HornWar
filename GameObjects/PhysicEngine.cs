@@ -39,8 +39,23 @@ namespace Horn_War_II.GameObjects
         public FarseerPhysics.Dynamics.World World { get; private set; }
 
         private Scenes.GameScene GameScene;
-
         
+        /// <summary>
+        /// Damage has to be higher than this to cause actual damage
+        /// </summary>
+        public float DamageBorder { get; set; }
+
+        /// <summary>
+        /// Global damagemultiplicator for factoring damage dealt to every object
+        /// </summary>
+        public float DamageMultiplicator { get; set; }
+
+        /// <summary>
+        /// Global damagemultiplicator for factoring damage dealt to every object by weapons
+        /// </summary>
+        public float DamageWeaponMultiplicator { get; set; }
+
+
 
         /// <summary>
         /// Constructor
@@ -54,6 +69,10 @@ namespace Horn_War_II.GameObjects
             this.World = new FarseerPhysics.Dynamics.World(Gravity);
             //var debugView = new Tools.DebugView(this.World);
             //debugView.Enabled = false;
+
+            DamageBorder = 2;
+            DamageMultiplicator = 1;
+            DamageWeaponMultiplicator = 2;
 
         }
 
@@ -109,22 +128,25 @@ namespace Horn_War_II.GameObjects
             if(Attacker == null || Damaged == null)
                 return;
 
+            // Apply global multiplicator
+            Damage *= DamageMultiplicator;
+
             Color Color = Color.Aquamarine;
             if(typeof(Weapon).IsAssignableFrom(Attacker.GetType()))
             {
-                Damage *= 2;
+                Damage *= DamageWeaponMultiplicator;
                 Color = Color.Red;
             }
-            else if (Damage > 2)
-                new Label(GameScene, Math.Round(Damage / 20 * 1000).ToString(), Attacker.Position, 2000, Color);
+            else if (Damage > DamageBorder)
+                new Label(GameScene, Math.Round(Damage).ToString(), Attacker.Position, 2000, Color, Label.Animation.RaiseFade, "Fonts/DamageText");
 
-            if(Damaged != null && Damage > 2)
-                new Label(GameScene, Math.Round(Damage / 20 * 1000).ToString(), Damaged.Position, 2000, Color);
+            if(Damaged != null && Damage > DamageBorder)
+                new Label(GameScene, Math.Round(Damage).ToString(), Damaged.Position, 2000, Color, Label.Animation.RaiseFade, "Fonts/DamageText");
 
 
 
-            BodyObjectA.Hit(BodyObjectB, Damaged == BodyObjectA && Damage > 2, Damage);
-            BodyObjectB.Hit(BodyObjectA, Damaged == BodyObjectB && Damage > 2, Damage);
+            BodyObjectA.Hit(BodyObjectB, Damaged == BodyObjectA && Damage > DamageBorder, Damage);
+            BodyObjectB.Hit(BodyObjectA, Damaged == BodyObjectB && Damage > DamageBorder, Damage);
         }
 
         /// <summary>

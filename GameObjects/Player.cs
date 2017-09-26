@@ -19,6 +19,16 @@ namespace Horn_War_II.GameObjects
             : base(GameScene, PhysicEngine, Skin)
         {
             this.Camera = Camera;
+
+            Game.InputManager.OnMWScroll += InputManager_OnMWScroll;
+        }
+
+        private void InputManager_OnMWScroll(bool Up)
+        {
+            if (Up)
+                this.GameScene.Map.Camera.ZoomAnimation.Animate(0.2f * this.GameScene.Map.Camera.Zoom, 200, Tools.Easing.EaseFunction.CubicEaseOut);
+            else
+                this.GameScene.Map.Camera.ZoomAnimation.Animate(-0.2f * this.GameScene.Map.Camera.Zoom, 200, Tools.Easing.EaseFunction.CubicEaseOut);
         }
 
         MouseState oldMs = Mouse.GetState();

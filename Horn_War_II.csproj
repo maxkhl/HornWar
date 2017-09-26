@@ -64,6 +64,7 @@
     <Compile Include="GameObjects\DrawableObject.cs" />
     <Compile Include="GameObjects\Effects\Explosion.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\HealthbarDrawer.cs" />
     <Compile Include="GameObjects\Label.cs" />
     <Compile Include="GameObjects\NPC.cs" />
     <Compile Include="GameObjects\ParticleEmitter.cs" />

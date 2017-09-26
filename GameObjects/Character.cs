@@ -18,7 +18,34 @@ namespace Horn_War_II.GameObjects
         /// Defines a position, the character should try to look at
         /// </summary>
         public Vector2 LookAt { get; set; }
-        
+
+
+        /// <summary>
+        /// Determins the health of this character
+        /// </summary>
+        public float Health { get; private set; }
+
+        /// <summary>
+        /// Determins if this character is dead
+        /// </summary>
+        public bool Dead
+        {
+            get
+            {
+                return _dead;
+            }
+            private set
+            {
+                _dead = value;
+
+                var deathOverlay = TextureOverlays[DeathOverlayIndex];
+                deathOverlay.Enabled = value;
+                TextureOverlays[DeathOverlayIndex] = deathOverlay;
+            }
+        }
+        private bool _dead = false;
+        private int DeathOverlayIndex = -1;
+
         /// <summary>
         /// String indicating the team of this Character. AI's of teammates with similar strings will not attack each other. Also important for friendly fire
         /// </summary>
@@ -101,6 +128,8 @@ namespace Horn_War_II.GameObjects
                     case SkinType.Cyborg:
                         this.Texture = new hTexture(SceneManager.Game.Content.Load<Texture2D>("Images/Cyborg"), new Vector2(73), 2, 10);
                         //this.Texture.AnimationSequences.Add("Talk", new int[] { 0, 1, 2, 4, 5, 0 });
+
+                        /// Blinking
                         this.TextureOverlays.Add(new TextureOverlay()
                         {
                             Texture = this.Texture,
@@ -109,10 +138,23 @@ namespace Horn_War_II.GameObjects
                             AtlasFrame = 1,
                         });
                         BlinkOverlayIndex = this.TextureOverlays.Count - 1;
+
+                        /// Death
+                        this.TextureOverlays.Add(new TextureOverlay()
+                        {
+                            Texture = this.Texture,
+                            Enabled = false,
+                            Offset = Vector2.Zero,
+                            AtlasFrame = 1,
+                        });
+                        DeathOverlayIndex = this.TextureOverlays.Count - 1;
+
                         break;
                     case SkinType.Goblin:
                         this.Texture = new hTexture(SceneManager.Game.Content.Load<Texture2D>("Images/Goblin"),new Vector2(128), 9, 10);
                         this.Texture.AnimationSequences.Add("Talk", new int[] { 0, 1, 2, 4, 5, 0 });
+
+                        /// Blinking
                         this.TextureOverlays.Add(new TextureOverlay()
                         {
                             Texture = this.Texture,
@@ -121,6 +163,17 @@ namespace Horn_War_II.GameObjects
                             AtlasFrame = 6,
                         });
                         BlinkOverlayIndex = this.TextureOverlays.Count - 1;
+
+                        /// Death
+                        this.TextureOverlays.Add(new TextureOverlay()
+                        {
+                            Texture = this.Texture,
+                            Enabled = false,
+                            Offset = Vector2.Zero,
+                            AtlasFrame = 7,
+                        });
+                        DeathOverlayIndex = this.TextureOverlays.Count - 1;
+
                         break;
                 }
                 this.ShapeFromTexture();
@@ -135,9 +188,25 @@ namespace Horn_War_II.GameObjects
             this.Speed = WalkSpeed.Full;
             this.Skin = Skin;
 
+            this.Health = 100;
+
             //this.Size *= 0.1f;
 
             this.Damping = 5f;
+
+            this.OnHit += Character_OnHit;
+        }
+
+        /// <summary>
+        /// Occurs, when character is hit by something
+        /// </summary>
+        private void Character_OnHit(BodyObject Contact, bool DamagingImpact, float Damage)
+        {
+            if (DamagingImpact)
+                this.Health -= Damage;
+
+            if (this.Health <= 0 && !Dead)
+                this.Dead = true;
         }
 
         /// <summary>
@@ -145,6 +214,8 @@ namespace Horn_War_II.GameObjects
         /// </summary>
         public void Move(Vector2 Direction)
         {
+            if (this.Dead) return; //No movement if character is dead
+
             if (Direction == Vector2.Zero)
                 return;
 
@@ -170,6 +241,8 @@ namespace Horn_War_II.GameObjects
         Random random = new Random();
         public override void Update(GameTime gameTime)
         {
+            if (this.Dead) return; //No updates if character is dead
+
             Rotate((float)Math.Atan2(LookAt.Y - this.Position.Y, LookAt.X - this.Position.X), 5f, 5);
 
             if (random.NextDouble() < 0.005)
@@ -183,6 +256,8 @@ namespace Horn_War_II.GameObjects
         /// </summary>
         public void Say(string Text)
         {
+            if (this.Dead) return; //No talking if character is dead
+
             // Play talk animation if character has one
             if (this.Texture.AnimationSequences.ContainsKey("Talk"))
                 this.Texture.Play(true, "Talk", 5);
@@ -205,7 +280,9 @@ namespace Horn_War_II.GameObjects
         /// </summary>
         public void Blink()
         {
-            if(TextureOverlays.Count <= BlinkOverlayIndex + 1 && BlinkOverlayIndex >= 0)
+            if (this.Dead) return; //No blinking if character is dead
+
+            if (TextureOverlays.Count <= BlinkOverlayIndex + 1 && BlinkOverlayIndex >= 0)
             {
                 var blinkOverlay = TextureOverlays[BlinkOverlayIndex];
                 blinkOverlay.Enabled = true;
@@ -229,6 +306,13 @@ namespace Horn_War_II.GameObjects
             /// Mean goblin
             /// </summary>
             Goblin,
+        }
+
+        public override void Dispose()
+        {
+            this.OnHit -= Character_OnHit;
+
+            base.Dispose();
         }
     }
 }
