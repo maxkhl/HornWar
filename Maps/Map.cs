@@ -47,6 +47,7 @@ namespace Horn_War_II.Maps
             this.PhysicEngine = new GameObjects.PhysicEngine(GameScene);
 
             new GameObjects.DebugDrawer(GameScene, PhysicEngine.World, Camera);
+            new GameObjects.HealthbarDrawer(GameScene, Camera);
         }
 
         /// <summary>
