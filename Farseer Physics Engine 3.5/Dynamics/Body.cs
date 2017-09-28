@@ -1205,6 +1205,32 @@ namespace FarseerPhysics.Dynamics
             _xf.p = _sweep.C - MathUtils.Mul(_xf.q, _sweep.LocalCenter);
         }
 
+        private List<Body> _noCollideList = new List<Body>();
+
+        /// <summary>
+        /// Adds a body to the noCollideList of both bodies
+        /// </summary>
+        public void DontCollideWith(Body other)
+        {
+            if (!_noCollideList.Contains(other))
+            {
+                _noCollideList.Add(other);
+                other.DontCollideWith(this);
+            }
+        }
+
+        /// <summary>
+        /// Removes a body from the noCollideList of both bodies
+        /// </summary>
+        public void RemoveDontCollideWith(Body other)
+        {
+            if (_noCollideList.Contains(other))
+            {
+                _noCollideList.Remove(other);
+                other.RemoveDontCollideWith(this);
+            }
+        }
+
         /// <summary>
         /// This is used to prevent connected bodies from colliding.
         /// It may lie, depending on the collideConnected flag.
@@ -1230,6 +1256,9 @@ namespace FarseerPhysics.Dynamics
                     }
                 }
             }
+
+            if (_noCollideList.Contains(other))
+                return false;
 
             return true;
         }
