@@ -36,6 +36,7 @@ namespace Horn_War_II.Scenes
         {
             Cave,
             Space,
+            ParticleTest,
             None,
         }
 
@@ -76,6 +77,29 @@ namespace Horn_War_II.Scenes
 
             switch(_loadMap)
             {
+                case GameSceneMap.ParticleTest:
+                    Map = new Maps.Space(this);
+                    var spectator = new GameObjects.Spectator(this);
+                    Map.Camera.FollowGO = spectator;
+
+                    var pa = new GameObjects.ParticleEmitter(this, Map.PhysicEngine);
+                    pa.ParticleDefaultSettings = new GameObjects.ParticleEmitter.ParticleSettings()
+                    {
+                        ParticleTexture = new hTexture(Game.Content.Load<Texture2D>("Images/blood_hit"), new Vector2(128), 16),
+                        Lifetime = 2000,
+                        RndLinearVelocity = true,
+                        RndLinearVelocityMin = new Vector2(30,30),
+                        RndLinearVelocityMax = new Vector2(-30, -30),
+                        TextureDirection = GameObjects.ParticleEmitter.ParticleSettings.TextureDirections.FollowDirection,
+                    };
+
+                    pa.EmissionMin = 0;
+                    pa.EmissionMax = 10;
+                    pa.Emission = true;
+
+                    pa.AttachedTo = spectator;
+
+                    break;
                 case GameSceneMap.Cave:
                     Map = new Maps.Cave(this);
 

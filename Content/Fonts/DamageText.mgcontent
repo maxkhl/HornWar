@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Fonts/DamageText.spritefont</SourceFile>
-  <SourceTime>2017-09-26T18:54:14.1437931+02:00</SourceTime>
+  <SourceTime>2017-09-26T18:57:08.9400457+02:00</SourceTime>
   <DestFile>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Fonts/DamageText.xnb</DestFile>
-  <DestTime>2017-09-26T18:54:19.447858+02:00</DestTime>
+  <DestTime>2017-09-28T18:37:41.2992326+02:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

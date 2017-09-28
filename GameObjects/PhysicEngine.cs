@@ -55,6 +55,11 @@ namespace Horn_War_II.GameObjects
         /// </summary>
         public float DamageWeaponMultiplicator { get; set; }
 
+        /// <summary>
+        /// Alters the speed of the physics simulation (1 = normal speed)
+        /// </summary>
+        public float SimulationSpeedMultiplicator { get; set; }
+
 
 
         /// <summary>
@@ -73,6 +78,7 @@ namespace Horn_War_II.GameObjects
             DamageBorder = 2;
             DamageMultiplicator = 1;
             DamageWeaponMultiplicator = 2;
+            SimulationSpeedMultiplicator = 1;
 
         }
 
@@ -161,7 +167,7 @@ namespace Horn_War_II.GameObjects
             }
 
             
-            this.World.Step(0.033333f);
+            this.World.Step(0.033333f * SimulationSpeedMultiplicator);
 
             base.Update(gameTime);
         }

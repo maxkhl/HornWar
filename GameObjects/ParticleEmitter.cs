@@ -67,7 +67,10 @@ namespace Horn_War_II.GameObjects
         private int EmissionTick = 0;
         public override void Update(GameTime gameTime)
         {
-            this.Position = AttachedTo.Position + LocalPosition;
+            
+            this.Position = LocalPosition;
+            if (AttachedTo != null)
+                this.Position += AttachedTo.Position;
 
             if (this.Emission)
             {
@@ -177,6 +180,9 @@ namespace Horn_War_II.GameObjects
             public float AngularDamping;
         }
 
+        /// <summary>
+        /// A single particle spawned by the emitter
+        /// </summary>
         public class Particle : IDisposable
         {
             public ParticleEmitter Emitter { get; set; }
@@ -217,8 +223,10 @@ namespace Horn_War_II.GameObjects
 
 
                 this.Color = Settings.ParticleColor;
+                if (this.Color == Color.Transparent)
+                    this.Color = Color.White;
 
-                if(Settings.RndLifetime)
+                if (Settings.RndLifetime)
                     TotalLifetime = 
                         ((float)Emitter.Random.NextDouble() * (Settings.RndLifetimeMax - Settings.RndLifetimeMin)) + Settings.RndLifetimeMin;
                 else
@@ -285,7 +293,7 @@ namespace Horn_War_II.GameObjects
                         (float)Math.Atan2(this.Body.LinearVelocity.Y, this.Body.LinearVelocity.X) :
                         this.Body.Rotation,                     
                         new Vector2(this.Texture.Width, this.Texture.Height) / 2,
-                        SpriteEffects.None, 0);
+                        SpriteEffects.None, 99999);
             }
 
             public void Collision(FarseerPhysics.Dynamics.Body Object, Vector2 Position)
