@@ -17,7 +17,8 @@ namespace Horn_War_II.GameObjects
         /// <summary>
         /// Contains the character that is currently holding this weapon (null if none)
         /// </summary>
-        public Character Holder { get; private set; }
+        public Character Holder
+        { get; private set; }
 
         public FarseerPhysics.Dynamics.Joints.RevoluteJoint AttachmentJoint { get; protected set; }
 
@@ -39,7 +40,8 @@ namespace Horn_War_II.GameObjects
 
         public Weapon(Scenes.GameScene GameScene, PhysicEngine PhysicEngine)
             : base(GameScene, PhysicEngine)
-        { }
+        {
+        }
 
         /// <summary>
         /// Attaches the weapon to the specified character.
@@ -49,6 +51,38 @@ namespace Horn_War_II.GameObjects
         {
             Holder = Character;
             Holder.Weapon = this;
+
+            Holder.Body.RemoveDontCollideWith(this.Body);
+        }
+
+        /// <summary>
+        /// Try to detach this weapon
+        /// </summary>
+        public bool TryDetach { get; private set; }
+
+        /// <summary>
+        /// Detaches the weapon from the current holder.
+        /// </summary>
+        public virtual void Detach()
+        {
+			if(Holder != null)
+			{
+                Holder.Body.DontCollideWith(this.Body);
+
+                //Clear holder
+                Holder.Weapon = null;
+                Holder = null;
+
+                //Destroy joint
+                this.PhysicEngine.World.RemoveJoint(AttachmentJoint);
+				AttachmentJoint = null;
+                
+			}
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
         }
 
         public delegate void onHitCharacterHandler(Character Target);

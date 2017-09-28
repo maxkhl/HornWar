@@ -41,6 +41,7 @@ namespace Horn_War_II.GameObjects.Weapons
                 ConvertUnits.ToSimUnits(new Vector2(25, 68)));
             AttachmentJoint.LocalAnchorA = ConvertUnits.ToSimUnits(new Vector2(-37, 0));
             AttachmentJoint.LocalAnchorB = ConvertUnits.ToSimUnits(new Vector2(0, 0));
+            //AttachmentJoint.CollideConnected
             //RevoluteJoint.LimitEnabled = true;
             //RevoluteJoint.LowerLimit = MathHelper.ToRadians(-2);
             //RevoluteJoint.UpperLimit = MathHelper.ToRadians(2);

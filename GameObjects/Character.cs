@@ -71,7 +71,12 @@ namespace Horn_War_II.GameObjects
         /// Activates the characters boost wich will drain stamina until it disables itself or gets disabled (TODO:Stamina)
         /// </summary>
         public bool Boost { get; set; }
-        
+
+        /// <summary>
+        /// Distance, this character is able to pickup loose items
+        /// </summary>
+        public float PickUpDistance { get; set; }
+
         /// <summary>
         /// Equipted weapon
         /// </summary>
@@ -194,6 +199,8 @@ namespace Horn_War_II.GameObjects
 
             this.Damping = 5f;
 
+            this.PickUpDistance = 60;
+
             this.OnHit += Character_OnHit;
         }
 
@@ -273,6 +280,19 @@ namespace Horn_War_II.GameObjects
             Say(Text[new Random().Next(0, Text.Length)]);
         }
 
+        /// <summary>
+        /// Picks up a item near this character
+        /// </summary>
+        public void PickUp()
+        {
+            foreach(Weapon weapon in Game.Components.Where(x => x is Weapon && ((Weapon)x).Holder == null))
+            {
+                var distance = (weapon.Position - this.Position).Length();
+                if (distance <= PickUpDistance)
+                    weapon.Attach(this);
+            }
+        }
+
         private int BlinkOverlayIndex = -1;
 
         /// <summary>
@@ -291,6 +311,17 @@ namespace Horn_War_II.GameObjects
                 TextureOverlays[BlinkOverlayIndex] = blinkOverlay;
             }
         }
+		
+        /// <summary>
+        /// Equipts the given weapon and detaches the currently held one
+        /// </summary>
+		public void Equipt(Weapon newWeapon)
+		{
+			if (Weapon != null)
+				Weapon.Detach();
+
+			newWeapon.Attach(this);
+		}
 
         /// <summary>
         /// Skin (TODO: Charge at least 5$ per skin)

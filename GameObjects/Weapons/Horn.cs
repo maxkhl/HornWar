@@ -45,6 +45,8 @@ namespace Horn_War_II.GameObjects.Weapons
         /// <param name="Character">Receiver of the weapon.</param>
         public override void Attach(Character Character)
         {
+            base.Attach(Character);
+			
             AttachmentJoint = JointFactory.CreateRevoluteJoint(
                 PhysicEngine.World,
                 this.Body,
@@ -58,8 +60,6 @@ namespace Horn_War_II.GameObjects.Weapons
 
             // Move to weapon to the character to make sure its not stuck anywhere
             this.Position = Character.Position;
-
-            base.Attach(Character);
         }
     }
 }

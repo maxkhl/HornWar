@@ -24,7 +24,9 @@ namespace Horn_War_II
             Boost,
             Stab,
             Debug,
-            TogglePhysics
+            TogglePhysics,
+            DropWeapon,
+            PickUp,
         }
 
         /// <summary>
@@ -109,8 +111,10 @@ namespace Horn_War_II
             KeyboardDefinition.Add(Action.Right, AllKeys.D);
             KeyboardDefinition.Add(Action.Stab, AllKeys.LMB);
             KeyboardDefinition.Add(Action.Boost, AllKeys.RMB);
-            KeyboardDefinition.Add(Action.TogglePhysics, AllKeys.Space);
+            KeyboardDefinition.Add(Action.DropWeapon, AllKeys.Q);
+            KeyboardDefinition.Add(Action.PickUp, AllKeys.E);
 
+            KeyboardDefinition.Add(Action.TogglePhysics, AllKeys.Space);
             KeyboardDefinition.Add(Action.Debug, AllKeys.Y);
         }
 

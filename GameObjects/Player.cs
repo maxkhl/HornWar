@@ -60,23 +60,29 @@ namespace Horn_War_II.GameObjects
                 Explosion.Position = ingameMousePosition;
             }
 
-            /*var ms = Mouse.GetState();
+            if (Game.InputManager.IsActionPressed(InputManager.Action.DropWeapon) && this.Weapon != null)
+                this.Weapon.Detach();
 
-            if (ms.ScrollWheelValue < oldMs.ScrollWheelValue)
-                _camera.Zoom += 0.01f;
-            if (ms.ScrollWheelValue > oldMs.ScrollWheelValue)
-                _camera.Zoom -= 0.01f;
+            if (Game.InputManager.IsActionPressed(InputManager.Action.PickUp))
+                this.PickUp();
 
-            oldMs = ms;*/
+                /*var ms = Mouse.GetState();
 
-            /*var localRotation = MathHelper.ToDegrees(this.Rotation);
-            localRotation -= (int)(localRotation / 360) * 360;
-            if (localRotation < 0 && localRotation > -270)
-                this.Effects = SpriteEffects.None;
-            else
-                this.Effects = SpriteEffects.FlipHorizontally;*/
+                if (ms.ScrollWheelValue < oldMs.ScrollWheelValue)
+                    _camera.Zoom += 0.01f;
+                if (ms.ScrollWheelValue > oldMs.ScrollWheelValue)
+                    _camera.Zoom -= 0.01f;
 
-            base.Update(gameTime);
+                oldMs = ms;*/
+
+                /*var localRotation = MathHelper.ToDegrees(this.Rotation);
+                localRotation -= (int)(localRotation / 360) * 360;
+                if (localRotation < 0 && localRotation > -270)
+                    this.Effects = SpriteEffects.None;
+                else
+                    this.Effects = SpriteEffects.FlipHorizontally;*/
+
+                base.Update(gameTime);
         }
     }
 }
