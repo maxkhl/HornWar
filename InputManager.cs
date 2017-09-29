@@ -27,6 +27,7 @@ namespace Horn_War_II
             TogglePhysics,
             DropWeapon,
             PickUp,
+            Escape,
         }
 
         /// <summary>
@@ -116,6 +117,8 @@ namespace Horn_War_II
 
             KeyboardDefinition.Add(Action.TogglePhysics, AllKeys.Space);
             KeyboardDefinition.Add(Action.Debug, AllKeys.Y);
+
+            KeyboardDefinition.Add(Action.Escape, AllKeys.Escape);
         }
 
         /// <summary>

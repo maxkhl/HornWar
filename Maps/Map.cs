@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Horn_War_II.GameObjects;
+using Horn_War_II.GameObjects.ParticleSystem;
 
 namespace Horn_War_II.Maps
 {
@@ -33,6 +34,12 @@ namespace Horn_War_II.Maps
         public PhysicEngine PhysicEngine { get; private set; }
 
         /// <summary>
+        /// The particle engine used by this map.
+        /// </summary>
+        /// <value>
+        public ParticleEngine ParticleEngine { get; private set; }
+
+        /// <summary>
         /// List of all the datums in this map
         /// </summary>
         public List<Datums.Datum> Datums { get; private set; }
@@ -45,6 +52,7 @@ namespace Horn_War_II.Maps
             this.GameScene = GameScene;
             this.Camera = new GameCam(GameScene.Game);
             this.PhysicEngine = new GameObjects.PhysicEngine(GameScene);
+            this.ParticleEngine = new ParticleEngine(GameScene, PhysicEngine);
 
             new GameObjects.DebugDrawer(GameScene, PhysicEngine.World, Camera);
             new GameObjects.HealthbarDrawer(GameScene, Camera);

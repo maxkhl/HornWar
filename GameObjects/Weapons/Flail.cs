@@ -23,6 +23,7 @@ namespace Horn_War_II.GameObjects.Weapons
             this.ShapeFromTexture();
             this.DrawOrder = -10;
             this.Damping = 0;
+            this.Material = BOMaterial.Metal;
 
             this.Mass /= 2;
 
@@ -69,6 +70,7 @@ namespace Horn_War_II.GameObjects.Weapons
             this.ShapeFromTexture();
             this.DrawOrder = -10;
             this.Damping = 0;
+            this.Material = BOMaterial.Metal;
 
             this.Mass *= 3;
         }

@@ -44,5 +44,8 @@
     <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Fonts/IngameSmall.spritefont</File>
     <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Fonts/DamageText.spritefont</File>
     <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/blood_hit.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/fire.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Spark.png</File>
+    <File>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Explosion1.png</File>
   </SourceFiles>
 </SourceFileCollection>

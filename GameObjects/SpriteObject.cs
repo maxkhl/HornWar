@@ -133,6 +133,7 @@ namespace Horn_War_II.GameObjects
         {
             get
             {
+                if (Texture == null) return 0;
                 return Texture.Width;
             }
         }
@@ -144,6 +145,7 @@ namespace Horn_War_II.GameObjects
         {
             get
             {
+                if (Texture == null) return 0;
                 return Texture.Height;
             }
         }

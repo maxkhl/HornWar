@@ -57,6 +57,9 @@
     <Compile Include="GameObjects\Background.cs" />
     <Compile Include="GameObjects\BodyObject.cs" />
     <Compile Include="GameObjects\Character.cs" />
+    <Compile Include="GameObjects\Effects\Spark.cs" />
+    <Compile Include="GameObjects\Effects\BloodHit.cs" />
+    <Compile Include="GameObjects\Effects\Fire.cs" />
     <Compile Include="GameObjects\Effects\Shockwave.cs" />
     <Compile Include="GameObjects\DebugDrawer.cs" />
     <Compile Include="GameObjects\Decoration\Asteroid.cs" />
@@ -67,7 +70,10 @@
     <Compile Include="GameObjects\HealthbarDrawer.cs" />
     <Compile Include="GameObjects\Label.cs" />
     <Compile Include="GameObjects\NPC.cs" />
-    <Compile Include="GameObjects\ParticleEmitter.cs" />
+    <Compile Include="GameObjects\ParticleSystem\Emitter.cs" />
+    <Compile Include="GameObjects\ParticleSystem\Particle.cs" />
+    <Compile Include="GameObjects\ParticleSystem\ParticleEngine.cs" />
+    <Compile Include="GameObjects\ParticleSystem\ParticleSettings.cs" />
     <Compile Include="GameObjects\PhysicEngine.cs" />
     <Compile Include="GameObjects\Player.cs" />
     <Compile Include="GameObjects\Spectator.cs" />
@@ -107,6 +113,7 @@
     <Compile Include="UI\Picture.cs" />
     <Compile Include="UI\ScoreBoard.cs" />
     <Compile Include="UI\UiButton.cs" />
+    <Compile Include="UI\UIPopup.cs" />
     <Compile Include="UI\UIContainer.cs" />
     <Compile Include="UI\UiLabel.cs" />
     <Compile Include="UI\UiObject.cs" />

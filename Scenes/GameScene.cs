@@ -78,26 +78,14 @@ namespace Horn_War_II.Scenes
             switch(_loadMap)
             {
                 case GameSceneMap.ParticleTest:
-                    Map = new Maps.Space(this);
+                    Map = new Maps.Cave(this);
                     var spectator = new GameObjects.Spectator(this);
                     Map.Camera.FollowGO = spectator;
 
-                    var pa = new GameObjects.ParticleEmitter(this, Map.PhysicEngine);
-                    pa.ParticleDefaultSettings = new GameObjects.ParticleEmitter.ParticleSettings()
+                    new GameObjects.Effects.Fire(this, Map.ParticleEngine)
                     {
-                        ParticleTexture = new hTexture(Game.Content.Load<Texture2D>("Images/blood_hit"), new Vector2(128), 16),
-                        Lifetime = 2000,
-                        RndLinearVelocity = true,
-                        RndLinearVelocityMin = new Vector2(30,30),
-                        RndLinearVelocityMax = new Vector2(-30, -30),
-                        TextureDirection = GameObjects.ParticleEmitter.ParticleSettings.TextureDirections.FollowDirection,
+                        AttachedTo = spectator,
                     };
-
-                    pa.EmissionMin = 0;
-                    pa.EmissionMax = 10;
-                    pa.Emission = true;
-
-                    pa.AttachedTo = spectator;
 
                     break;
                 case GameSceneMap.Cave:
@@ -110,9 +98,18 @@ namespace Horn_War_II.Scenes
                     var player = new GameObjects.Player(this, Map.Camera, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
                     player.Position = new Microsoft.Xna.Framework.Vector2(-400, -150);
 
+                    new GameObjects.Effects.Fire(this, Map.ParticleEngine, 20, 30)
+                    {
+                        //AttachedTo = player,
+                        LocalPosition = new Vector2( 500, 0 ),
+                        
+                    };
+
                     // Arm player
                     var weapon = new GameObjects.Weapons.Sword(this, Map.PhysicEngine);
                     weapon.Attach(player);
+
+                    
 
                     // Tell camera to follow player
                     Map.Camera.FollowGO = player;
@@ -128,7 +125,7 @@ namespace Horn_War_II.Scenes
                     {
                         DefaultHostile = false,
                         Passive = true,
-                    }, 
+                    },
                     this, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
                     npcGoblin2.Position = new Microsoft.Xna.Framework.Vector2(-500, 50);
                     var npcGoblin2Horn = new GameObjects.Weapons.Horn(this, Map.PhysicEngine);
@@ -220,9 +217,27 @@ namespace Horn_War_II.Scenes
         }
 
 
+        private UI.UIPopup _BackPopup;
 
         public override void Update(GameTime gameTime)
         {
+            if(Game.InputManager.IsActionPressed(InputManager.Action.Escape))
+            {
+                var ScreenBounds = new Vector2(this.Map.Camera.Viewport.Width, this.Map.Camera.Viewport.Height);
+
+                if (_BackPopup == null)
+                {
+                    _BackPopup = new UI.UIPopup(this, this.Map.PhysicEngine, "Back to main menu?", "Yes", "No");
+                    _BackPopup.Position = ScreenBounds / 2 - new Vector2(_BackPopup.Bounds.Width, _BackPopup.Bounds.Height) / 2;
+                    _BackPopup.Button1.OnMouseClick += delegate { };
+                    _BackPopup.Button1.OnMouseClick += delegate
+                    {
+                        _BackPopup.Dispose();
+                    };
+                }
+
+            }
+
             BrightnessAnimation.Update(gameTime);
             ContrastAnimation.Update(gameTime);
         }

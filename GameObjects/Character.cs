@@ -12,7 +12,7 @@ namespace Horn_War_II.GameObjects
 {
     class Character : BodyObject
     {
-        public float SpeedFactor = 2f;
+        public float SpeedFactor = 8f;
 
         /// <summary>
         /// Defines a position, the character should try to look at
@@ -154,6 +154,8 @@ namespace Horn_War_II.GameObjects
                         });
                         DeathOverlayIndex = this.TextureOverlays.Count - 1;
 
+                        this.Material = BOMaterial.Metal;
+
                         break;
                     case SkinType.Goblin:
                         this.Texture = new hTexture(SceneManager.Game.Content.Load<Texture2D>("Images/Goblin"),new Vector2(128), 9, 10);
@@ -179,6 +181,8 @@ namespace Horn_War_II.GameObjects
                         });
                         DeathOverlayIndex = this.TextureOverlays.Count - 1;
 
+                        this.Material = BOMaterial.Biological;
+
                         break;
                 }
                 this.ShapeFromTexture();
@@ -197,7 +201,7 @@ namespace Horn_War_II.GameObjects
 
             //this.Size *= 0.1f;
 
-            this.Damping = 5f;
+            this.Damping = 20f;
 
             this.PickUpDistance = 60;
 

@@ -88,7 +88,7 @@ namespace Horn_War_II.GameObjects
         public delegate void onHitCharacterHandler(Character Target);
         public event onHitCharacterHandler onHitCharacter;
 
-        public override void Hit(BodyObject Contact, bool DamagingImpact, float Damage)
+        public override void Hit(BodyObject Contact, Vector2 ContactPoint, bool DamagingImpact, float Damage)
         {
             if(DamagingImpact && typeof(Character).IsAssignableFrom(Contact.GetType()))
             {
@@ -96,7 +96,7 @@ namespace Horn_War_II.GameObjects
                     onHitCharacter((Character)Contact);
             }
 
-            base.Hit(Contact, DamagingImpact, Damage);
+            base.Hit(Contact, ContactPoint, DamagingImpact, Damage);
         }
     }
 }

@@ -10,6 +10,7 @@ using FarseerPhysics.Common.TextureTools;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Common.Decomposition;
 using Microsoft.Xna.Framework;
+using Horn_War_II.GameObjects.Effects;
 
 namespace Horn_War_II.GameObjects
 {
@@ -131,6 +132,11 @@ namespace Horn_War_II.GameObjects
         }
 
         /// <summary>
+        /// Material, this BodyObject is made out of
+        /// </summary>
+        public BOMaterial Material { get; set; }
+
+        /// <summary>
         /// Amount of Health this Object has
         /// </summary>
         public float Health
@@ -169,7 +175,7 @@ namespace Horn_War_II.GameObjects
         {
             this.PhysicEngine = PhysicEngine;
             Body = new Body(PhysicEngine.World, ConvertUnits.ToSimUnits(this.Position), ConvertUnits.ToSimUnits(this.Rotation), this);
-            Body.CollisionCategories = FarseerPhysics.Dynamics.Category.DynamicGOs;
+            Body.CollisionCategories = Category.DynamicGOs;
 
             // Attach GameObject to Body
             Body.UserData = this;
@@ -179,6 +185,8 @@ namespace Horn_War_II.GameObjects
 
             this.Damping = 10f;
             this.Mass = 1f;
+            
+            this.Material = BOMaterial.Unknown;
         }
 
         /// <summary>
@@ -298,7 +306,7 @@ namespace Horn_War_II.GameObjects
         /// <summary>
         /// Gets called when this body is hit by another
         /// </summary>
-        public virtual void Hit(BodyObject Contact, bool DamagingImpact, float Damage)
+        public virtual void Hit(BodyObject Contact, Vector2 ContactPoint, bool DamagingImpact, float Damage)
         {
             if (DamagingImpact)
             {
@@ -308,6 +316,39 @@ namespace Horn_War_II.GameObjects
 
             // Invoke Hit event
             OnHit?.Invoke(Contact, DamagingImpact, Damage);
+
+            // Play hit-effect
+            if (DamagingImpact)
+                HitEffect(Contact, ContactPoint, DamagingImpact, Damage);
+        }
+
+        public virtual void HitEffect(BodyObject Contact, Vector2 ContactPoint, bool DamagingImpact, float Damage)
+        {
+            //Our material
+            switch(this.Material)
+            {
+                case BOMaterial.Biological:
+                    switch(Contact.Material) //Being hit by
+                    {
+                        case BOMaterial.Metal:
+                        case BOMaterial.Wood:
+                        case BOMaterial.Stone:
+                            new BloodHit(this.GameScene.Map.ParticleEngine, ContactPoint, ConvertUnits.ToDisplayUnits(this.Body.LinearVelocity));
+                            break;
+                    }
+                    break;
+                case BOMaterial.Metal:
+                case BOMaterial.Stone:
+
+                    switch (Contact.Material) //Being hit by
+                    {
+                        case BOMaterial.Metal:
+                        case BOMaterial.Stone:
+                            new Effects.Spark(this.GameScene.Map.ParticleEngine, ContactPoint, ConvertUnits.ToDisplayUnits(this.Body.LinearVelocity));
+                            break;
+                    }
+                    break;
+            }
         }
 
         /// <summary>
@@ -363,6 +404,18 @@ namespace Horn_War_II.GameObjects
         {
             var diff = b - a;
             return (float)(Mod(diff + Math.PI, Math.PI * 2) - Math.PI);
+        }
+
+        /// <summary>
+        /// Material-type of a bodyobject
+        /// </summary>
+        public enum BOMaterial
+        {
+            Unknown,
+            Biological,
+            Metal,
+            Wood,
+            Stone
         }
 
         /// <summary>

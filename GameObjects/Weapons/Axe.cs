@@ -22,6 +22,7 @@ namespace Horn_War_II.GameObjects.Weapons
             this.ShapeFromTexture();
             this.DrawOrder = -10;
             this.Damping = 0;
+            this.Material = BOMaterial.Metal;
 
             this.Mass /= 2;
         }
@@ -41,6 +42,8 @@ namespace Horn_War_II.GameObjects.Weapons
                 ConvertUnits.ToSimUnits(new Vector2(25, 68)));
             AttachmentJoint.LocalAnchorA = ConvertUnits.ToSimUnits(new Vector2(-37, 0));
             AttachmentJoint.LocalAnchorB = ConvertUnits.ToSimUnits(new Vector2(0, 0));
+
+            //this.IsFixed = true;
             //AttachmentJoint.CollideConnected
             //RevoluteJoint.LimitEnabled = true;
             //RevoluteJoint.LowerLimit = MathHelper.ToRadians(-2);

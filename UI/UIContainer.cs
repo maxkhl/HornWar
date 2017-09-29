@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,6 +43,31 @@ namespace Horn_War_II.UI
                     Child.Position += move;
 
                 base.Position = value;
+            }
+        }
+
+        /// <summary>
+        /// Returns the bounds of the entire container
+        /// </summary>
+        public Rectangle Bounds
+        {
+            get
+            {
+                var retBnds = new Rectangle();
+                foreach(var child in this.Children)
+                {
+                    if (child.Position.X < retBnds.X)
+                        retBnds.X = (int)child.Position.X;
+                    if (child.Position.Y < retBnds.Y)
+                        retBnds.X = (int)child.Position.X;
+
+                    if (child.Position.X + child.Width > retBnds.X + retBnds.Width)
+                        retBnds.Width = (int)(child.Position.X + child.Width - retBnds.X);
+
+                    if (child.Position.Y + child.Height > retBnds.Y + retBnds.Height)
+                        retBnds.Width = (int)(child.Position.Y + child.Height - retBnds.Y);
+                }
+                return retBnds;
             }
         }
 

@@ -22,6 +22,7 @@ namespace Horn_War_II.GameObjects.Weapons
             this.ShapeFromTexture();
             this.DrawOrder = -10;
             this.Damping = 0;
+            this.Material = BOMaterial.Wood;
 
             this.Mass /= 2;
         }

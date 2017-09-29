@@ -75,8 +75,10 @@ namespace Horn_War_II.GameObjects
             //var debugView = new Tools.DebugView(this.World);
             //debugView.Enabled = false;
 
+            UpdateOrder = -200;
+
             DamageBorder = 2;
-            DamageMultiplicator = 1;
+            DamageMultiplicator = 1f;
             DamageWeaponMultiplicator = 2;
             SimulationSpeedMultiplicator = 1;
 
@@ -90,15 +92,16 @@ namespace Horn_War_II.GameObjects
             Vector2 normal;
             FarseerPhysics.Common.FixedArray2<Vector2> WorldPoints;
             contact.GetWorldManifold(out normal, out WorldPoints);
+            
 
             var contactPoint = ConvertUnits.ToDisplayUnits(WorldPoints[0]);
 
-            if (typeof(ParticleEmitter.Particle).IsAssignableFrom(contact.FixtureA.Body.UserData.GetType()))
-                ((ParticleEmitter.Particle)contact.FixtureA.Body.UserData).Collision(contact.FixtureB.Body, contactPoint);
+            /*if (typeof(ParticleSystem.Particle).IsAssignableFrom(contact.FixtureA.Body.UserData.GetType()))
+                ((ParticleSystem.Particle)contact.FixtureA.Body.UserData).Collision(contact.FixtureB.Body, contactPoint);
 
 
-            if (typeof(ParticleEmitter.Particle).IsAssignableFrom(contact.FixtureB.Body.UserData.GetType()))
-                ((ParticleEmitter.Particle)contact.FixtureB.Body.UserData).Collision(contact.FixtureA.Body, contactPoint);
+            if (typeof(ParticleSystem.Particle).IsAssignableFrom(contact.FixtureB.Body.UserData.GetType()))
+                ((ParticleSystem.Particle)contact.FixtureB.Body.UserData).Collision(contact.FixtureA.Body, contactPoint);*/
 
 
             if (!(typeof(BodyObject).IsAssignableFrom(contact.FixtureA.Body.UserData.GetType()) &&
@@ -134,6 +137,8 @@ namespace Horn_War_II.GameObjects
             if(Attacker == null || Damaged == null)
                 return;
 
+            var DamagingStrike = Damage > DamageBorder;
+
             // Apply global multiplicator
             Damage *= DamageMultiplicator;
 
@@ -143,16 +148,17 @@ namespace Horn_War_II.GameObjects
                 Damage *= DamageWeaponMultiplicator;
                 Color = Color.Red;
             }
-            else if (Damage > DamageBorder)
+            /*else if (Damage > DamageBorder)
                 new Label(GameScene, Math.Round(Damage).ToString(), Attacker.Position, 2000, Color, Label.Animation.RaiseFade, "Fonts/DamageText");
 
             if(Damaged != null && Damage > DamageBorder)
-                new Label(GameScene, Math.Round(Damage).ToString(), Damaged.Position, 2000, Color, Label.Animation.RaiseFade, "Fonts/DamageText");
+                new Label(GameScene, Math.Round(Damage).ToString(), Damaged.Position, 2000, Color, Label.Animation.RaiseFade, "Fonts/DamageText");*/
 
+            
 
+            BodyObjectA.Hit(BodyObjectB, contactPoint, Damaged == BodyObjectA && DamagingStrike, Damage);
+            BodyObjectB.Hit(BodyObjectA, contactPoint, Damaged == BodyObjectB && DamagingStrike, Damage);
 
-            BodyObjectA.Hit(BodyObjectB, Damaged == BodyObjectA && Damage > DamageBorder, Damage);
-            BodyObjectB.Hit(BodyObjectA, Damaged == BodyObjectB && Damage > DamageBorder, Damage);
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace Horn_War_II.Scenes
 
         public override void Update(GameTime gameTime)
         {
-            
+            Game.InputManager.IsActionPressed(InputManager.Action.Escape);
             base.Update(gameTime);
         }
     }

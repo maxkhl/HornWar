@@ -66,23 +66,25 @@ namespace Horn_War_II.GameObjects
             if (Game.InputManager.IsActionPressed(InputManager.Action.PickUp))
                 this.PickUp();
 
-                /*var ms = Mouse.GetState();
+            //if(Game.InputManager.IsActionPressed(InputManager.Action.PickUp))
 
-                if (ms.ScrollWheelValue < oldMs.ScrollWheelValue)
-                    _camera.Zoom += 0.01f;
-                if (ms.ScrollWheelValue > oldMs.ScrollWheelValue)
-                    _camera.Zoom -= 0.01f;
+            /*var ms = Mouse.GetState();
 
-                oldMs = ms;*/
+            if (ms.ScrollWheelValue < oldMs.ScrollWheelValue)
+                _camera.Zoom += 0.01f;
+            if (ms.ScrollWheelValue > oldMs.ScrollWheelValue)
+                _camera.Zoom -= 0.01f;
 
-                /*var localRotation = MathHelper.ToDegrees(this.Rotation);
-                localRotation -= (int)(localRotation / 360) * 360;
-                if (localRotation < 0 && localRotation > -270)
-                    this.Effects = SpriteEffects.None;
-                else
-                    this.Effects = SpriteEffects.FlipHorizontally;*/
+            oldMs = ms;*/
 
-                base.Update(gameTime);
+            /*var localRotation = MathHelper.ToDegrees(this.Rotation);
+            localRotation -= (int)(localRotation / 360) * 360;
+            if (localRotation < 0 && localRotation > -270)
+                this.Effects = SpriteEffects.None;
+            else
+                this.Effects = SpriteEffects.FlipHorizontally;*/
+
+            base.Update(gameTime);
         }
     }
 }

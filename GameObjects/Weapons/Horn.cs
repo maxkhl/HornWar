@@ -21,6 +21,7 @@ namespace Horn_War_II.GameObjects.Weapons
             this.Texture = new hTexture(Game.Content.Load<Texture2D>("Images/Horn"));
             this.ShapeFromTexture();
             this.DrawOrder = -10;
+            this.Material = BOMaterial.Metal;
 
 
 

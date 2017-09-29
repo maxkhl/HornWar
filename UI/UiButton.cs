@@ -32,13 +32,13 @@ namespace Horn_War_II.UI
 
         GameObjects.Tools.Animation posAnim;
 
-        public UiButton(Scenes.MenuScene MenuScene, GameObjects.PhysicEngine PhysicEngine, string Text)
-            : base(MenuScene, PhysicEngine, Text)
+        public UiButton(Scenes.GameScene GameScene, GameObjects.PhysicEngine PhysicEngine, string Text)
+            : base(GameScene, PhysicEngine, Text)
         {
             this.Centered = true;
 
             this.Texture = new hTexture(
-                MenuScene.Game.Content.Load<Texture2D>("Images/Menu/MainMenuButtons"), 
+                GameScene.Game.Content.Load<Texture2D>("Images/Menu/MainMenuButtons"), 
                 new Vector2(277, 57), 
                 4);
             this.Texture.AtlasFrame = 0;

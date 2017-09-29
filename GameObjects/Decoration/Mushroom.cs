@@ -83,8 +83,9 @@ namespace Horn_War_II.GameObjects.Decoration
         {
             this.Type = Type;
             this.Body.IgnoreGravity = true;
+            Material = BodyObject.BOMaterial.Wood;
 
-            switch(Type)
+            switch (Type)
             {
                 case MushroomType.Mushroom1:
                     this.Texture = new hTexture(Game.Content.Load<Texture2D>("Images/Maps/Cave/Mushroom1"));

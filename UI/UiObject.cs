@@ -14,7 +14,6 @@ namespace Horn_War_II.UI
     /// </summary>
     class UiObject : GameObjects.StaticObject
     {
-        public Scenes.GameScene GameScene { get; set; }
         public UiObject(Scenes.GameScene GameScene, GameObjects.PhysicEngine PhysicEngine)
             : base(GameScene, PhysicEngine)
         {

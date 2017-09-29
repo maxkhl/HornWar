@@ -33,10 +33,12 @@ namespace Horn_War_II.Maps
             var caveBorderTop = new StaticObject(GameScene, PhysicEngine);
             caveBorderTop.Texture = new hTexture(GameScene.Game.Content.Load<Texture2D>("Images/Maps/Cave/CaveTop"));
             caveBorderTop.ShapeFromTexture();
+            caveBorderTop.Material = BodyObject.BOMaterial.Stone;
 
             var caveBorderBottom = new StaticObject(GameScene, PhysicEngine);
             caveBorderBottom.Texture = new hTexture(GameScene.Game.Content.Load<Texture2D>("Images/Maps/Cave/CaveBottom"));
             caveBorderBottom.ShapeFromTexture();
+            caveBorderBottom.Material = BodyObject.BOMaterial.Stone;
 
 
 

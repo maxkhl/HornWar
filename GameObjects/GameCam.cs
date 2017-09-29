@@ -89,6 +89,11 @@ namespace Horn_War_II.GameObjects
             }
         }
 
+        /// <summary>
+        /// Lets the camera focus in the direction of the mouse 
+        /// </summary>
+        public bool MouseAssist { get; set; }
+
         public HornWarII Game { get; set; }
         public GameCam(HornWarII Game)
             : base(Game.GraphicsDevice.Viewport)
@@ -128,6 +133,8 @@ namespace Horn_War_II.GameObjects
         public void Initialize()
         {
             FollowUseVelocity = true;
+            Zoom = 0.8f;
+            MouseAssist = true;
         }
 
         /// <summary>
@@ -146,6 +153,9 @@ namespace Horn_War_II.GameObjects
                     var Velocity = FarseerPhysics.ConvertUnits.ToDisplayUnits(((BodyObject)FollowGO).Body.LinearVelocity);
                     if (FollowUseVelocity)
                      Target += Velocity * 3;
+
+                    if (MouseAssist && Game.InputManager.MouseOnScreen)
+                        Target += Game.InputManager.MousePosition - new Vector2(this.Viewport.Width, this.Viewport.Height) / 2;
 
                     var Speed = Velocity.Length() > 0 ? Velocity.Length() : Velocity.Length() < 0 ? Velocity.Length() * -1 : 0;
                     Speed /= 1000;
