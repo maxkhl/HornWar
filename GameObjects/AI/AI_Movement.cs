@@ -66,7 +66,7 @@ namespace Horn_War_II.GameObjects.AI
                 {
                     if (this.AttackTarget != null)
                     {
-                        TargetPosition = this.AttackTarget.Position - this.Character.Position + FarseerPhysics.ConvertUnits.ToDisplayUnits(this.AttackTarget.Body.LinearVelocity) - FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass);
+                        TargetPosition = (this.AttackTarget.Position - this.Character.Position) * 5 + FarseerPhysics.ConvertUnits.ToDisplayUnits(this.AttackTarget.Body.LinearVelocity) - FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass);
 
                         this.Character.LookAt = this.AttackTarget.Position;
                     }

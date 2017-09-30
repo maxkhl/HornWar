@@ -58,10 +58,10 @@ namespace Horn_War_II.GameObjects.AI
                     this.State = AIState.Charge;
 
                 //if (this.Options.Difficulty == AIOptions.DifficultyType.Wtf)
-                if (this.State == AIState.Fallback && hvt_distance > 800)
+                if (this.State == AIState.Fallback && hvt_distance > 400)
                     this.State = AIState.Charge; //Attack again if we have enough distance
-                else if (this.State == AIState.Charge && hvt_distance < 140)
-                    this.State = AIState.Fallback; //Fallback when we're to close to get some momentum
+                //else if (this.State == AIState.Charge && hvt_distance < 140)
+                //    this.State = AIState.Fallback; //Fallback when we're to close to get some momentum
 
                 /*var forward = (hvt.Position - this.Character.Position);
                 forward.Normalize();
@@ -191,6 +191,7 @@ namespace Horn_War_II.GameObjects.AI
         /// <param name="Target">Character, that got hit by us</param>
         private void Character_OnWeaponHit(Character Target)
         {
+            this.State = AIState.Fallback;
             //if (Target == BiggestThreat)
             //    this.State = AIState.Fallback;
         }
