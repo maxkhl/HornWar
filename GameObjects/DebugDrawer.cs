@@ -7,6 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Horn_War_II.GameObjects
 {
+    /// <summary>
+    /// Used to debug the physics engine and other stuff
+    /// </summary>
+    [Spawn.SpawnAttribute("Images/Preview/BackgroundWorker", false)]
     class DebugDrawer : DrawableObject, IDrawable
     {
         Tools.DebugView _physicsDebug;

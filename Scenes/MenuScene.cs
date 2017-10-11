@@ -20,6 +20,10 @@ namespace Horn_War_II.Scenes
             DefaultFont = Game.Content.Load<SpriteFont>("MenuFont");
             CaptionFont = Game.Content.Load<SpriteFont>("MenuCaption");
             this.Map = new Maps.MainMenu(this);
+
+            //No healthbars needed in menu
+            this.Game.GetComponent<GameObjects.HealthbarDrawer>()?.Dispose();
+
             // The base would load ingame stuff. We dont want that here
             //base.LoadGame();
         }

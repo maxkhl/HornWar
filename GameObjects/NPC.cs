@@ -10,6 +10,7 @@ namespace Horn_War_II.GameObjects
     /// <summary>
     /// Non-player-character this is a AI controlled character
     /// </summary>
+    [Spawn.SpawnAttribute("Images/Preview/NPC", true)]
     class NPC : Character
     {
 

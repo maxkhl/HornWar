@@ -11,6 +11,7 @@ namespace Horn_War_II.GameObjects
     /// <summary>
     /// Displays health-bars of characters ingame
     /// </summary>
+    [Spawn.SpawnAttribute("Images/Preview/BackgroundWorker", false)]
     class HealthbarDrawer : DrawableObject, IDrawable
     {
         GameCam _camera;

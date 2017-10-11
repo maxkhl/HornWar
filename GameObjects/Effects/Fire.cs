@@ -25,7 +25,7 @@ namespace Horn_War_II.GameObjects.Effects
             //var pa = new GameObjects.ParticleSystem.Emitter(this, Map.ParticleEngine);
             ParticleDefaultSettings = new GameObjects.ParticleSystem.ParticleSettings()
             {
-                ParticleTexture = new hTexture(Game.Content.Load<Texture2D>("Images/Explosion1"), new Vector2(125), 11, 15),
+                ParticleTexture = new hTexture(Game.Content.Load<Texture2D>("Images/fire"), new Vector2(125), 11, 15),
                 Lifetime = 2000,
                 RndLinearVelocity = true,
                 RndLinearVelocityMin = new Vector2(30, -70),
@@ -33,10 +33,12 @@ namespace Horn_War_II.GameObjects.Effects
                 RndAngularVelocity = true,
                 RndAngularVelocityMin = 0,
                 RndAngularVelocityMax = 100,
+                ParticleColor = Color.White * 0.8f,
 
                 TextureDirection = GameObjects.ParticleSystem.ParticleSettings.TextureDirections.FollowRotation,
                 FullTransparencyAtMS = 250,
                 NoTransparencyAtMS = 1500,
+                DrawOrder = 200,
             };
 
             EmissionMin = 0;

@@ -14,6 +14,11 @@ namespace Horn_War_II.Maps
         UI.Picture Header;
         public Scenes.MenuScene MenuScene;
 
+        /// <summary>
+        /// True if intro is running currently
+        /// </summary>
+        public bool Intro { get; set; }
+
         public MainMenu(Scenes.MenuScene MenuScene)
             : base(MenuScene)
         {
@@ -31,11 +36,12 @@ namespace Horn_War_II.Maps
 #if DEBUG
             GameScene.Brightness = -1.0f;
             GameScene.BrightnessAnimation.Animate(1f, 1000, GameObjects.Tools.Easing.EaseFunction.CubicEaseIn);
-            this.Camera.Zoom = 0f;
-            this.Camera.ZoomAnimation.Animate(1f, 1000, GameObjects.Tools.Easing.EaseFunction.CubicEaseOut);
+            this.Camera.Zoom = -1.2f;
+            this.Camera.ZoomAnimation.Animate(0.1f, 1000, GameObjects.Tools.Easing.EaseFunction.CubicEaseOut);
 
             BuildMainMenu();
 #else
+            Intro = true;
             GameScene.Brightness = -1.0f;
             GameScene.BrightnessAnimation.Animate(1f, 8000, GameObjects.Tools.Easing.EaseFunction.CubicEaseIn);
             this.Camera.Zoom = 0f;
@@ -65,11 +71,13 @@ namespace Horn_War_II.Maps
         }
         void ZoomAnimation_OnAnimationDone4(GameObjects.Tools.Animation sender)
         {
+            Intro = false;
+
             sender.OnAnimationDone -= ZoomAnimation_OnAnimationDone4;
             ClearMenu();
             BuildMainMenu();
             GameScene.BrightnessAnimation.Animate(1f, 1000, GameObjects.Tools.Easing.EaseFunction.CubicEaseOut);
-            this.Camera.ZoomAnimation.Animate(0.8f, 1000, GameObjects.Tools.Easing.EaseFunction.CubicEaseOut);
+            this.Camera.ZoomAnimation.Animate(0.9f, 1000, GameObjects.Tools.Easing.EaseFunction.CubicEaseOut);
         }
 
         /// <summary>
@@ -190,6 +198,15 @@ namespace Horn_War_II.Maps
             button.Position = button.Position + new Vector2(0, ybtnoff);
             ybtnoff += 70;
 
+            /*button = new UI.UiButton(MenuScene, PhysicEngine, "Editor");
+            button.Background = UI.UiButton.Backgrounds.Wood4;
+            button.Position = button.Position + new Vector2(0, ybtnoff);
+            button.OnMouseClick += delegate
+            {
+                this.GameScene.Game.SceneManager.ActiveScene = new Scenes.EditorScene();
+            };
+            ybtnoff += 70;*/
+
             button = new UI.UiButton(MenuScene, PhysicEngine, "Options");
             button.Background = UI.UiButton.Backgrounds.Wood3;
             button.Position = button.Position + new Vector2(0, ybtnoff);
@@ -261,6 +278,25 @@ namespace Horn_War_II.Maps
                 GameScene.BrightnessAnimation.Animate(1f, 1000, GameObjects.Tools.Easing.EaseFunction.CubicEaseOut);
                 this.Camera.ZoomAnimation.Animate(0.8f, 1000, GameObjects.Tools.Easing.EaseFunction.CubicEaseOut);
             }
+        }
+        public override void Update(GameTime gameTime)
+        {
+
+            // Make intro skippable
+            if (GameScene.Game.InputManager.IsActionPressed(InputManager.Action.Escape) && Intro)
+            {
+                Camera.ZoomAnimation.OnAnimationDone -= ZoomAnimation_OnAnimationDone2;
+                Camera.ZoomAnimation.OnAnimationDone -= ZoomAnimation_OnAnimationDone3;
+                Camera.ZoomAnimation.OnAnimationDone -= ZoomAnimation_OnAnimationDone4;
+
+                Camera.ZoomAnimation.Reset();
+
+                GameScene.Brightness = -1f;
+                Camera.Zoom = -1.2f;
+                ZoomAnimation_OnAnimationDone4(Camera.ZoomAnimation);
+            }
+
+            base.Update(gameTime);
         }
     }
 }

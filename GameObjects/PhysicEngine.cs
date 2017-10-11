@@ -13,6 +13,7 @@ namespace Horn_War_II.GameObjects
     /// <summary>
     /// This GameObject manages the physics engine
     /// </summary>
+    [Spawn.SpawnAttribute("Images/Preview/BackgroundWorker", false)]
     class PhysicEngine : GameObject
     {
         /// <summary>

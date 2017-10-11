@@ -49,6 +49,22 @@
     <Compile Include="DebugTool.Designer.cs">
       <DependentUpon>DebugTool.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameObjects\Decoration\CampFire.cs" />
+    <Compile Include="GameObjects\Decoration\Rock.cs" />
+    <Compile Include="GameObjects\Effects\Dust.cs" />
+    <Compile Include="Spawn\SpawnAttribute.cs" />
+    <Compile Include="Spawn\SpawnTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Spawn\SpawnTool.Designer.cs">
+      <DependentUpon>SpawnTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Spawn\ValueSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Spawn\ValueSelect.Designer.cs">
+      <DependentUpon>ValueSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameObjects\AI\AI.cs" />
     <Compile Include="GameObjects\AI\AI_Effects.cs" />
     <Compile Include="GameObjects\AI\AI_Tools.cs" />
@@ -102,6 +118,8 @@
     <Compile Include="Maps\Datums\Spawn.cs" />
     <Compile Include="Maps\MainMenu.cs" />
     <Compile Include="Maps\Map.cs" />
+    <Compile Include="Maps\MapFromFile.cs" />
+    <Compile Include="Maps\Empty.cs" />
     <Compile Include="Maps\Space.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,6 +160,12 @@
   <ItemGroup>
     <EmbeddedResource Include="DebugTool.resx">
       <DependentUpon>DebugTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Spawn\SpawnTool.resx">
+      <DependentUpon>SpawnTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Spawn\ValueSelect.resx">
+      <DependentUpon>ValueSelect.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

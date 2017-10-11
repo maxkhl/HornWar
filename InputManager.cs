@@ -24,6 +24,7 @@ namespace Horn_War_II
             Boost,
             Stab,
             Debug,
+            SpawnMenu,
             TogglePhysics,
             DropWeapon,
             PickUp,
@@ -116,7 +117,8 @@ namespace Horn_War_II
             KeyboardDefinition.Add(Action.PickUp, AllKeys.E);
 
             KeyboardDefinition.Add(Action.TogglePhysics, AllKeys.Space);
-            KeyboardDefinition.Add(Action.Debug, AllKeys.Y);
+            KeyboardDefinition.Add(Action.Debug, AllKeys.N);
+            KeyboardDefinition.Add(Action.SpawnMenu, AllKeys.M);
 
             KeyboardDefinition.Add(Action.Escape, AllKeys.Escape);
         }

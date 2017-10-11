@@ -142,7 +142,7 @@ namespace Horn_War_II.GameObjects.ParticleSystem
                 (float)Math.Atan2(this.Body.LinearVelocity.Y, this.Body.LinearVelocity.X) :
                 this.Body.Rotation,
                 new Vector2(this.Texture.Width, this.Texture.Height) / 2,
-                SpriteEffects.None, 99999);
+                SpriteEffects.None, Settings.DrawOrder);
         }
 
         public void Collision(FarseerPhysics.Dynamics.Body Object, Vector2 Position)
