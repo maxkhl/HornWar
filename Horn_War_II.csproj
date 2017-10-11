@@ -49,6 +49,9 @@
     <Compile Include="DebugTool.Designer.cs">
       <DependentUpon>DebugTool.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameObjects\AI\Commands\Command.cs" />
+    <Compile Include="GameObjects\AI\Commands\Attack.cs" />
+    <Compile Include="GameObjects\AI\Commands\Roam.cs" />
     <Compile Include="GameObjects\Decoration\CampFire.cs" />
     <Compile Include="GameObjects\Decoration\Rock.cs" />
     <Compile Include="GameObjects\Effects\Dust.cs" />

@@ -52,6 +52,9 @@ namespace Horn_War_II.GameObjects
 
         public override void Draw(GameTime gameTime)
         {
+            //AI Test
+            return;
+
             var visible =  _camera.Visible;
 
             // Calculate local camera world offset

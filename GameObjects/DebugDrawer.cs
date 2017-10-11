@@ -38,7 +38,8 @@ namespace Horn_War_II.GameObjects
 #if DEBUG
             this.Visible = true;
 #endif
-            this.Visible = false;
+            // AI update
+            this.Visible = true;
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace Horn_War_II.GameObjects
                             0);
                     }
 
-                    if (ai.Path != null && ai.AttackTarget != null)
+                    /*if (ai.Path != null && ai.AttackTarget != null)
                     {
                         var distance = (ai.Character.Position - ai.AttackTarget.Position).Length();
 
@@ -119,7 +120,7 @@ namespace Horn_War_II.GameObjects
                                 0);
                             oldPos = target;
                         }
-                    }
+                    }*/
 
                     
                 }

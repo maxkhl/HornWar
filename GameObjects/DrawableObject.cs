@@ -127,7 +127,10 @@ namespace Horn_War_II.GameObjects
             : base(GameScene.Game)
         {
             this.GameScene = GameScene;
-            //this.Visible = false;
+            
+            //AI Path test
+            this.Visible = false;
+
             this.Brightness = 1;
         }
 

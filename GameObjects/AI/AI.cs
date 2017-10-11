@@ -70,47 +70,6 @@ namespace Horn_War_II.GameObjects.AI
         public Character Character { get; private set; }
 
         /// <summary>
-        /// State of this NPC
-        /// </summary>
-        public AIState State
-        {
-            get
-            {
-                return _State;
-            }
-            private set
-            {
-                _State = value;
-                switch(_State)
-                {
-                    case AIState.Charge:
-                        this.Character.Speed = Character.WalkSpeed.Full;
-                        break;
-                    case AIState.Move:
-                        this.Character.Speed = Character.WalkSpeed.Half;
-                        break;
-                    case AIState.Roam:
-                        this.Character.Speed = Character.WalkSpeed.Slow;
-                        break;
-                }
-            }
-        }
-        private AIState _State;
-
-        /// <summary>
-        /// Defines the state of the AI
-        /// </summary>
-        public enum AIState
-        {
-            Wait,
-            Roam,
-            Move,
-            Charge,
-            Hit,
-            Fallback,
-        }
-
-        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="Character">Character, this AI should control</param>

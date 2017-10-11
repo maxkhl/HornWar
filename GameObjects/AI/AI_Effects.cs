@@ -18,18 +18,12 @@ namespace Horn_War_II.GameObjects.AI
         /// <param name="gameTime"></param>
         private void ProcessEffects(GameTime gameTime)
         {
-            switch (this.State)
+            switch (this.ActiveCommand.GetType().Name)
             {
-                case AIState.Move:
+                case "Attack":
                     this.Character.Color = new Color(255, 180, 180);
                     break;
-                case AIState.Fallback:
-
-                    break;
-                case AIState.Charge:
-                    this.Character.Color = new Color(255, 150, 150);
-                    break;
-                case AIState.Roam:
+                case "Roam":
 
                     break;
             }

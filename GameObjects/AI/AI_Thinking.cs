@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Horn_War_II.GameObjects.AI.Commands;
 
 namespace Horn_War_II.GameObjects.AI
 {
@@ -16,7 +17,12 @@ namespace Horn_War_II.GameObjects.AI
         /// <summary>
         /// Random generator
         /// </summary>
-        private Random RandomGenerator { get; set; }
+        public Random RandomGenerator { get; set; }
+
+        /// <summary>
+        /// Contains the currently active command for the AI
+        /// </summary>
+        public Command ActiveCommand { get; set; }
 
         /// <summary>
         /// Initializes AI-Thinking
@@ -27,7 +33,6 @@ namespace Horn_War_II.GameObjects.AI
             this.Character.OnWeaponHit += Character_OnWeaponHit;
             this.Character.OnHit += Character_OnHit;
         }
-
 
         /// <summary>
         /// Processes the thinking of this AI
@@ -54,85 +59,10 @@ namespace Horn_War_II.GameObjects.AI
                 var hvt = enemies[0];
                 var hvt_distance = (hvt.Position - this.Character.Position).Length();
 
-                if(this.State != AIState.Fallback && this.State != AIState.Charge)
-                    this.State = AIState.Charge;
-
-                //if (this.Options.Difficulty == AIOptions.DifficultyType.Wtf)
-                if (this.State == AIState.Fallback && hvt_distance > 800)
-                    this.State = AIState.Charge; //Attack again if we have enough distance
-                else if (this.State == AIState.Charge && hvt_distance < 140)
-                    this.State = AIState.Fallback; //Fallback when we're to close to get some momentum
-
-                /*var forward = (hvt.Position - this.Character.Position);
-                forward.Normalize();
-                forward = new Vector2(forward.Y, -forward.X);*/
-
-                //hvt +
-                //   FarseerPhysics.ConvertUnits.ToDisplayUnits(hvt.Body.LinearVelocity - Vector2.Reflect(hvt.Body.LinearVelocity, forward))
-                if (this.State == AIState.Charge)
-                    Attack(
-                        hvt,
-                        200,
-                        900,
-                        30,
-                        Tools.Easing.EaseFunction.CircEaseOut,
-                        Tools.Easing.EaseFunction.BackEaseIn);
-                else if (this.State == AIState.Fallback)
-                    Fallback(hvt);
-
-                //else
-                //    this.GoTo = hvt.Position;
 
             }
-            else if(State != AIState.Roam) // No enemies nearby - switch to roam mode
-                Roam();
-        }
-
-        /// <summary>
-        /// Lets the character roam around randomly
-        /// </summary>
-        private void Roam()
-        {
-            this.State = AIState.Roam;
-
-            int Timeout = 10;
-            bool clearPath = false;
-
-            while (!clearPath)
-            {
-                if (Options.RoamArea != null)
-                    Move(new Vector2(RandomGenerator.Next(Options.RoamArea.X, Options.RoamArea.Width), RandomGenerator.Next(Options.RoamArea.Y, Options.RoamArea.Height)));
-                else
-                    Move(new Vector2(this.Character.Position.X + RandomGenerator.Next(-300, 300), this.Character.Position.Y + RandomGenerator.Next(-300, 300)));
-
-                var hits = Character.PhysicEngine.World.RayCast(FarseerPhysics.ConvertUnits.ToSimUnits(this.Character.Position), FarseerPhysics.ConvertUnits.ToSimUnits(this.GoTo));
-                bool Obstacle = false;
-                foreach (var fixture in hits)
-                    if (fixture.Body.UserData != this && fixture.Body.UserData != this.Character.Weapon)
-                        Obstacle = true;
-
-                clearPath = !Obstacle;
-
-                Timeout--;
-                if (Timeout <= 0)
-                    clearPath = true;
-            }
-        }
-
-
-
-        /// <summary>
-        /// Fired when char reached the goto point
-        /// </summary>
-        private void AI_GoToArrived(Vector2 GoToPoint)
-        {
-            switch(this.State)
-            {
-                // Keep roaming when already roaming and waypoint arrived
-                case AIState.Roam:
-                    Roam();
-                    break;
-            }
+            else if (!(ActiveCommand is Roam)) // No enemies nearby - switch to roam mode
+                ActiveCommand = new Roam(null, this);
         }
 
 
