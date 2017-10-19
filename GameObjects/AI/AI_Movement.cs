@@ -10,16 +10,6 @@ namespace Horn_War_II.GameObjects.AI
     partial class AI
     {
         /// <summary>
-        /// Currently calculated goto-step (including curves and shit)
-        /// </summary>
-        public Vector2 GoToCalculatedPoint { get; private set; }
-
-        /// <summary>
-        /// Moves character towards this point
-        /// </summary>
-        public Vector2 GoTo { get; private set; }
-
-        /// <summary>
         /// Lookat while moving towards goto
         /// </summary>
         private Vector2 GoToLookAt
@@ -36,15 +26,39 @@ namespace Horn_War_II.GameObjects.AI
         }
         private Vector2 _GoToLookAt;
 
+        public Waypoint CurrentMovementOrder { get; protected set; }
+
         /// <summary>
         /// Processes the movement-orders for this AI
         /// </summary>
         /// <param name="gameTime"></param>
         private void ProcessMovement(GameTime gameTime)
         {
-            var Movement = ActiveCommand?.Update(gameTime);
-            if(Movement.HasValue)
-                Character.Move(Movement.Value);
+            if (ActiveCommand != null)
+            {
+                ActiveCommand.Update(gameTime);
+
+                var newWP = ActiveCommand.RequestWaypoint();
+                if(newWP.HasValue)
+                    CurrentMovementOrder = newWP.Value;
+            }
+
+            
+            Character.Boost = CurrentMovementOrder.Boost;
+            Character.Speed = CurrentMovementOrder.Speed;
+
+            var direction = CurrentMovementOrder.Target - this.Character.Position;
+            if (CurrentMovementOrder.Stop)
+                direction *= 5;
+
+            direction += 
+                FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * 
+                FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass) * -1;
+
+
+            direction.Normalize();
+
+            Character.Move(direction);
         }
     }
 }

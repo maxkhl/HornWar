@@ -6,7 +6,7 @@ using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using Microsoft.Xna.Framework;
-
+using FarseerPhysics.Collision.Shapes;
 
 namespace Horn_War_II.GameObjects
 {
@@ -61,6 +61,84 @@ namespace Horn_War_II.GameObjects
         /// </summary>
         public float SimulationSpeedMultiplicator { get; set; }
 
+        /// <summary>
+        /// Returns all corners of every STATIC physical object in the game (used for pathfinding)
+        /// </summary>
+        public List<Vector2> GetCorners(List<Body> Exclude)
+        {
+            List<Vector2> Corners = new List<Vector2>();
+
+            foreach (var body in this.World.BodyList)
+            {
+                if(body.IsStatic && !Exclude.Contains(body))
+                    for (int i = 0; i < body.FixtureList.Count; i++)
+                        Corners.AddRange(PointsOfFixture(body, i));
+            }
+
+            return Corners.Distinct().ToList();
+        }
+
+        public static Vector2 Rotate(Vector2 Position, Vector2 Origin, float angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180);
+            double cosTheta = Math.Cos(angleInRadians);
+            double sinTheta = Math.Sin(angleInRadians);
+            return new Vector2
+            {
+                X =
+                    (int)
+                    (cosTheta * (Position.X - Origin.X) -
+                    sinTheta * (Position.Y - Origin.Y) + Origin.X),
+                Y =
+                    (int)
+                    (sinTheta * (Position.X - Origin.X) +
+                    cosTheta * (Position.Y - Origin.Y) + Origin.Y)
+            };
+        }
+        public static Vector2 PositionOfFixture(Body obj, int Number)
+        {
+            switch (obj.FixtureList[Number].Shape.ShapeType)
+            {
+                case (ShapeType.Circle):
+                    Vector2 pos = ((CircleShape)obj.FixtureList[Number].Shape).Position;
+                    return Rotate(ConvertUnits.ToDisplayUnits(pos), obj.Position, obj.Rotation);
+
+                case (ShapeType.Polygon):
+                    PolygonShape shape = (PolygonShape)obj.FixtureList[Number].Shape;
+                    List<Vector2> vecs = new List<Vector2>();
+                    Vector2 total = Vector2.Zero;
+                    foreach (Vector2 v in shape.Vertices)
+                    {
+                        vecs.Add(ConvertUnits.ToDisplayUnits(v));
+                        total += vecs[vecs.Count - 1];
+                    }
+                    Vector2 position = total / (vecs.Count);
+                    return obj.Position + Rotate(position, new Vector2(0, 0), MathHelper.ToDegrees(obj.Rotation));
+
+            }
+            throw new ArgumentException("Couldn't grab ShapeType");
+        }
+
+        public static Vector2[] PointsOfFixture(Body obj, int Number)
+        {
+            switch (obj.FixtureList[Number].Shape.ShapeType)
+            {
+                case (ShapeType.Polygon):
+                    PolygonShape shape = (PolygonShape)obj.FixtureList[Number].Shape;
+                    List<Vector2> vecs = new List<Vector2>();
+                    Vector2 total = Vector2.Zero;
+                    foreach (Vector2 v in shape.Vertices)
+                    {
+                        vecs.Add(Rotate(ConvertUnits.ToDisplayUnits(v), new Vector2(0, 0), MathHelper.ToDegrees(obj.Rotation)));
+                        total += vecs[vecs.Count - 1];
+                    }
+                    return vecs.ToArray();
+
+            }
+            return new Vector2[0];
+            //throw new ArgumentException("Couldn't grab ShapeType");
+        }
+
 
 
         /// <summary>
@@ -82,6 +160,7 @@ namespace Horn_War_II.GameObjects
             DamageMultiplicator = 1f;
             DamageWeaponMultiplicator = 2;
             SimulationSpeedMultiplicator = 1;
+
 
         }
 

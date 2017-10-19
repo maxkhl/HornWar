@@ -18,6 +18,8 @@ namespace Horn_War_II.GameObjects.AI
         /// <param name="gameTime"></param>
         private void ProcessEffects(GameTime gameTime)
         {
+            if (ActiveCommand == null) return;
+
             switch (this.ActiveCommand.GetType().Name)
             {
                 case "Attack":

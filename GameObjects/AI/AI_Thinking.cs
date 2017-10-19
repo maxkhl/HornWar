@@ -32,6 +32,8 @@ namespace Horn_War_II.GameObjects.AI
             this.RandomGenerator = new Random();
             this.Character.OnWeaponHit += Character_OnWeaponHit;
             this.Character.OnHit += Character_OnHit;
+
+            this.ActiveCommand = new Follow(Game.GetComponent<Spectator>(), this);
         }
 
         /// <summary>
@@ -61,8 +63,8 @@ namespace Horn_War_II.GameObjects.AI
 
 
             }
-            else if (!(ActiveCommand is Roam)) // No enemies nearby - switch to roam mode
-                ActiveCommand = new Roam(null, this);
+            //else if (!(ActiveCommand is Roam)) // No enemies nearby - switch to roam mode
+            //    ActiveCommand = new Roam(null, this);
         }
 
 

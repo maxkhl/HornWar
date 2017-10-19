@@ -51,7 +51,12 @@
     </Compile>
     <Compile Include="GameObjects\AI\Commands\Command.cs" />
     <Compile Include="GameObjects\AI\Commands\Attack.cs" />
+    <Compile Include="GameObjects\AI\Commands\Follow.cs" />
     <Compile Include="GameObjects\AI\Commands\Roam.cs" />
+    <Compile Include="GameObjects\AI\MovementOrder.cs" />
+    <Compile Include="GameObjects\AI\Pathfinding\MiniHeap.cs" />
+    <Compile Include="GameObjects\AI\Pathfinding\Node.cs" />
+    <Compile Include="GameObjects\AI\Pathfinding\PathFinderEngine.cs" />
     <Compile Include="GameObjects\Decoration\CampFire.cs" />
     <Compile Include="GameObjects\Decoration\Rock.cs" />
     <Compile Include="GameObjects\Effects\Dust.cs" />

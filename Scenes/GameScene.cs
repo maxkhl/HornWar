@@ -286,12 +286,12 @@ namespace Horn_War_II.Scenes
 
             // Spawn NPCs
             var npcGoblin1 = new GameObjects.NPC(new GameObjects.AI.AI.AIOptions(), this, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
-            npcGoblin1.Position = new Microsoft.Xna.Framework.Vector2(500, 50);
-            var npcGoblin1Horn = new GameObjects.Weapons.Horn(this, Map.PhysicEngine);
-            npcGoblin1Horn.Attach(npcGoblin1);
+            npcGoblin1.Position = new Microsoft.Xna.Framework.Vector2(1017, 292);
+            //var npcGoblin1Horn = new GameObjects.Weapons.Horn(this, Map.PhysicEngine);
+            //npcGoblin1Horn.Attach(npcGoblin1);
 
             // Spawn NPCs
-            var npcGoblin2 = new GameObjects.NPC(new GameObjects.AI.AI.AIOptions()
+            /*var npcGoblin2 = new GameObjects.NPC(new GameObjects.AI.AI.AIOptions()
             {
                 DefaultHostile = false,
                 Passive = true,
@@ -299,7 +299,7 @@ namespace Horn_War_II.Scenes
             this, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
             npcGoblin2.Position = new Microsoft.Xna.Framework.Vector2(-500, 50);
             var npcGoblin2Horn = new GameObjects.Weapons.Horn(this, Map.PhysicEngine);
-            npcGoblin2Horn.Attach(npcGoblin2);
+            npcGoblin2Horn.Attach(npcGoblin2);*/
         }
     }
 }

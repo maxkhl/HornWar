@@ -5,6 +5,7 @@ using System.Text;
 using Horn_War_II.GameObjects;
 using Horn_War_II.GameObjects.ParticleSystem;
 using Microsoft.Xna.Framework;
+using Horn_War_II.GameObjects.AI.Pathfinding;
 
 namespace Horn_War_II.Maps
 {
@@ -41,6 +42,12 @@ namespace Horn_War_II.Maps
         public ParticleEngine ParticleEngine { get; private set; }
 
         /// <summary>
+        /// The particle engine used by this map.
+        /// </summary>
+        /// <value>
+        public PathFinderEngine PathFinderEngine { get; private set; }
+
+        /// <summary>
         /// List of all the datums in this map
         /// </summary>
         public List<Datums.Datum> Datums { get; private set; }
@@ -54,6 +61,7 @@ namespace Horn_War_II.Maps
             this.Camera = new GameCam(GameScene.Game);
             this.PhysicEngine = new GameObjects.PhysicEngine(GameScene);
             this.ParticleEngine = new ParticleEngine(GameScene, PhysicEngine);
+            this.PathFinderEngine = new PathFinderEngine(GameScene, PhysicEngine);
 
             new GameObjects.DebugDrawer(GameScene, PhysicEngine.World, Camera);
             new GameObjects.HealthbarDrawer(GameScene, Camera);
