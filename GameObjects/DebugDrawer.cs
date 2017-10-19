@@ -48,7 +48,14 @@ namespace Horn_War_II.GameObjects
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Draw(GameTime gameTime)
         {
-            foreach(var comp in Game.Components)
+
+            foreach (var comp in Game.Components)
+            {
+                if(typeof(GameObject).IsAssignableFrom(comp.GetType()))
+                    ((GameObject)comp).DebugDraw(gameTime, Pixel, this);
+            }
+
+            foreach (var comp in Game.Components)
             {
                 if (typeof(SpriteObject).IsAssignableFrom(comp.GetType()))
                 {
@@ -66,7 +73,7 @@ namespace Horn_War_II.GameObjects
                     
                 }
 
-                if (typeof(AI.AI).IsAssignableFrom(comp.GetType()))
+                /*if (typeof(AI.AI).IsAssignableFrom(comp.GetType()))
                 {
                     var ai = (AI.AI)comp;
 
@@ -88,7 +95,7 @@ namespace Horn_War_II.GameObjects
                             0);
                     }
 
-                    /*if (ai.Path != null && ai.AttackTarget != null)
+                    if (ai.Path != null && ai.AttackTarget != null)
                     {
                         var distance = (ai.Character.Position - ai.AttackTarget.Position).Length();
 
@@ -120,13 +127,53 @@ namespace Horn_War_II.GameObjects
                                 0);
                             oldPos = target;
                         }
-                    }*/
+                    }
 
                     
-                }
+                }*/
             }
             Matrix proj = Matrix.CreateOrthographicOffCenter(0f, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height, 0f, 0f, 1f);
             _physicsDebug.RenderDebugData(proj, _camera.View);
+        }
+
+        /// <summary>
+        /// Draws a rectangle at the given area
+        /// </summary>
+        /// <param name="rectangle">Place, the rectangle should cover</param>
+        /// <param name="color">Color of the rectangle</param>
+        public void DrawRectangle(Rectangle rectangle, Color color)
+        {
+            Pixel.Draw(new GameTime(),
+                rectangle,
+                color,
+                0,
+                Vector2.Zero,
+                SpriteEffects.None,
+                0);
+        }
+
+        /// <summary>
+        /// Draws a line between two give points
+        /// </summary>
+        /// <param name="PointA">First point</param>
+        /// <param name="PointB">Second point</param>
+        /// <param name="color">Color line</param>
+        /// <param name="Width">Color width</param>
+        public void DrawLine(Vector2 PointA, Vector2 PointB, Color color, int Width = 2)
+        {
+            var forw = PointA - PointB;
+            forw.Normalize();
+            Pixel.Draw(new GameTime(),
+                new Rectangle(
+                    (int)PointB.X,
+                    (int)PointB.Y,
+                    (int)(PointA - PointB).Length(),
+                    Width),
+                color,
+                (float)Math.Atan2(forw.Y, forw.X),
+                Vector2.Zero,
+                SpriteEffects.None,
+                0);
         }
     }
 }

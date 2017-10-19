@@ -96,6 +96,17 @@ namespace Horn_War_II.GameObjects
         }
 
         /// <summary>
+        /// Used for debugging objects
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /// <param name="Pixel">Pixel-texture for easier drawing.</param>
+        /// <param name="debugDrawer">Debug-Drawer object that called this</param>
+        public virtual void DebugDraw(GameTime gameTime, hTexture Pixel, DebugDrawer debugDrawer)
+        {
+
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this <see cref="GameObject"/> is disposed.
         /// </summary>
         /// <value>

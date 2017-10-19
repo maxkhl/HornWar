@@ -99,6 +99,16 @@ namespace Horn_War_II.GameObjects.AI
         }
 
         /// <summary>
+        /// Debug drawing
+        /// </summary>
+        public override void DebugDraw(GameTime gameTime, hTexture Pixel, DebugDrawer debugDrawer)
+        {
+            ActiveCommand?.DebugDraw(gameTime, Pixel, debugDrawer);
+
+            base.DebugDraw(gameTime, Pixel, debugDrawer);
+        }
+
+        /// <summary>
         /// Disposal of the AI
         /// </summary>
         public override void Dispose()
