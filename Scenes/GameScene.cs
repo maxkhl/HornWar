@@ -82,7 +82,7 @@ namespace Horn_War_II.Scenes
                     var spectator = new GameObjects.Spectator(this);
                     Map.Camera.FollowGO = spectator;
 
-                    new GameObjects.BrowserObject(this);
+                    new GameObjects.BrowserObject(this, System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UI\\MainPage.html"), null);
                     /*new GameObjects.Effects.Fire(this, Map.ParticleEngine)
                     {
                         AttachedTo = spectator,

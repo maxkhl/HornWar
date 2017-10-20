@@ -42,7 +42,7 @@ namespace Horn_War_II
 
             this.Window.AllowAltF4 = true; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             this.Window.AllowUserResizing = true;
-            //this.Window.ClientSizeChanged += Window_ClientSizeChanged;
+            this.Window.ClientSizeChanged += Window_ClientSizeChanged;
 
             this.IsMouseVisible = true;
 
@@ -61,9 +61,9 @@ namespace Horn_War_II
 
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            Graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-            Graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
-            Graphics.ApplyChanges();
+            //Graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            //Graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+            //Graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -76,8 +76,9 @@ namespace Horn_War_II
         {
             // Load first scene
 #if DEBUG
+            SceneManager.ActiveScene = new Scenes.MenuScene();
             //SceneManager.ActiveScene = new Scenes.MenuScene();
-            SceneManager.ActiveScene = new Scenes.GameScene(Scenes.GameScene.GameSceneMap.ParticleTest);
+            //SceneManager.ActiveScene = new Scenes.GameScene(Scenes.GameScene.GameSceneMap.ParticleTest);
             //SceneManager.ActiveScene = new Scenes.EditorScene();
 #else
             SceneManager.ActiveScene = new Scenes.MenuScene();
