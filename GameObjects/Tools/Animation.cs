@@ -92,10 +92,7 @@ namespace Horn_War_II.GameObjects.Tools
                     this.Field.SetValue(this.Instance, Add(this.ValueStart, this.Value));
                     Reset();
 
-                    if (OnAnimationDone != null)
-                    {
-                        OnAnimationDone(this);
-                    }
+                    OnAnimationDone?.Invoke(this);
                 }
                 else
                 {

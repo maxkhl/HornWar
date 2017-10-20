@@ -9,7 +9,8 @@ namespace Horn_War_II.GameObjects
     /// <summary>
     /// Base GameObject. This is the fundament of every object in the game
     /// </summary>
-    class GameObject : IGameComponent, IUpdateable, IDisposable
+    [Spawn.SpawnAttribute("Images/NoPreview", false)]
+    abstract class GameObject : IGameComponent, IUpdateable, IDisposable
     {
         #region Properties_IUpdateable
         /// <summary>

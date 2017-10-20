@@ -66,6 +66,11 @@ namespace Horn_War_II
         /// </summary>
         public int AtlasFrame { get; set; }
 
+        /// <summary>
+        /// Rotation of each individual atlas tile in radians
+        /// </summary>
+        public float AtlasRotation { get; set; }
+
 
         /// <summary>
         /// Indicates that this texture is a animation. Check out the constructors to see how to create an atlas
@@ -267,7 +272,7 @@ namespace Horn_War_II
                 }
             }
 
-            SceneManager.Game.SpriteBatch.Draw(this.Base, Destination, this.GetSourceRectangle(), Color, Rotation, Origin, Effect, DrawOrder);
+            SceneManager.Game.SpriteBatch.Draw(this.Base, Destination, this.GetSourceRectangle(), Color, Rotation + AtlasRotation, Origin, Effect, DrawOrder);
         }
 
         /// <summary>
@@ -279,7 +284,8 @@ namespace Horn_War_II
             if (this.IsAnimation)
                 return new hTexture(this.Base, this.AtlasTile, this.AtlasFrameCount, this.AnimationFPS)
                 {
-                    AnimationSequences = this.AnimationSequences
+                    AnimationSequences = this.AnimationSequences,
+                    AtlasRotation = this.AtlasRotation,
                 };
 
             if(this.IsAtlas)

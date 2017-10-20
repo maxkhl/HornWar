@@ -10,6 +10,10 @@ using FarseerPhysics.Collision.Shapes;
 
 namespace Horn_War_II.GameObjects
 {
+    /// <summary>
+    /// Default player class - controls a character with given inputs
+    /// </summary>
+    [Spawn.SpawnAttribute("Images/NoPreview", false)]
     class Player : Character
     {
 

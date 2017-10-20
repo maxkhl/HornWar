@@ -46,6 +46,25 @@ namespace Horn_War_II.GameObjects.ParticleSystem
         /// </summary>
         public Random Random { get; private set; }
 
+        /// <summary>
+        /// Lifetime this emitter will be alive for. Disposes itself once it reaches zero. Value is ms. Negative means infinite
+        /// </summary>
+        public float EmitterLifetime
+        {
+            get
+            {
+                return _EmitterLifetime;
+            }
+            set
+            {
+                if (_EmitterLifetime > 0 && value <= 0)
+                    this.Dispose();
+
+                _EmitterLifetime = value;
+            }
+        }
+        private float _EmitterLifetime = -1;
+
         public ParticleEngine ParticleEngine { get; private set; }
 
         /// <summary>
@@ -67,7 +86,10 @@ namespace Horn_War_II.GameObjects.ParticleSystem
         private int EmissionTick = 0;
         public override void Update(GameTime gameTime)
         {
-            
+            // Count down lifetime. Will dispose itself when 0 is reached
+            if (EmitterLifetime > 0)
+                EmitterLifetime -= gameTime.ElapsedGameTime.Milliseconds;
+
             this.Position = LocalPosition;
             if (AttachedTo != null)
                 this.Position += AttachedTo.Position;

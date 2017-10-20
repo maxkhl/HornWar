@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace Horn_War_II
 {
@@ -14,6 +15,7 @@ namespace Horn_War_II
         [STAThread]
         static void Main()
         {
+            Application.EnableVisualStyles();
             using (var game = new HornWarII())
                 game.Run();
         }

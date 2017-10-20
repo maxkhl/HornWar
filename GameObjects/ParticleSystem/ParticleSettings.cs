@@ -72,5 +72,10 @@ namespace Horn_War_II.GameObjects.ParticleSystem
         /// MS, the particle should be fully transparent at
         /// </summary>
         public float NoTransparencyAtMS;
+
+        /// <summary>
+        /// DrawOrder for this particle
+        /// </summary>
+        public int DrawOrder;
     }
 }

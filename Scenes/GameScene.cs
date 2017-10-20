@@ -82,10 +82,11 @@ namespace Horn_War_II.Scenes
                     var spectator = new GameObjects.Spectator(this);
                     Map.Camera.FollowGO = spectator;
 
-                    new GameObjects.Effects.Fire(this, Map.ParticleEngine)
+                    new GameObjects.BrowserObject(this);
+                    /*new GameObjects.Effects.Fire(this, Map.ParticleEngine)
                     {
                         AttachedTo = spectator,
-                    };
+                    };*/
 
                     break;
                 case GameSceneMap.Cave:
@@ -98,12 +99,20 @@ namespace Horn_War_II.Scenes
                     var player = new GameObjects.Player(this, Map.Camera, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
                     player.Position = new Microsoft.Xna.Framework.Vector2(-400, -150);
 
-                    new GameObjects.Effects.Fire(this, Map.ParticleEngine, 20, 30)
+                    new GameObjects.Effects.Fire(this, Map.ParticleEngine, 20, 5)
                     {
                         //AttachedTo = player,
                         LocalPosition = new Vector2( 500, 0 ),
                         
                     };
+
+
+                    /*new GameObjects.Effects.Dust(this, Map.ParticleEngine)
+                    {
+                        AttachedTo = player,
+                        LocalPosition = new Vector2(0, 0),
+
+                    };*/
 
                     // Arm player
                     var weapon = new GameObjects.Weapons.Sword(this, Map.PhysicEngine);
@@ -221,6 +230,9 @@ namespace Horn_War_II.Scenes
 
         public override void Update(GameTime gameTime)
         {
+            if (Map != null)
+                Map.Update(gameTime);
+
             if(Game.InputManager.IsActionPressed(InputManager.Action.Escape))
             {
                 var ScreenBounds = new Vector2(this.Map.Camera.Viewport.Width, this.Map.Camera.Viewport.Height);

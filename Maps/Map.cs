@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Horn_War_II.GameObjects;
 using Horn_War_II.GameObjects.ParticleSystem;
+using Microsoft.Xna.Framework;
 
 namespace Horn_War_II.Maps
 {
@@ -56,6 +57,14 @@ namespace Horn_War_II.Maps
 
             new GameObjects.DebugDrawer(GameScene, PhysicEngine.World, Camera);
             new GameObjects.HealthbarDrawer(GameScene, Camera);
+        }
+
+        /// <summary>
+        /// Updates this map
+        /// </summary>
+        public virtual void Update(GameTime gameTime)
+        {
+
         }
 
         /// <summary>

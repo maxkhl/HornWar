@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace Horn_War_II
 {
@@ -45,6 +46,10 @@ namespace Horn_War_II
 
             this.IsMouseVisible = true;
 
+#if !DEBUG
+            this.Graphics.IsFullScreen = true;
+#endif
+
             Content.RootDirectory = "Content";
 
             // Setup the SceneManager
@@ -71,7 +76,9 @@ namespace Horn_War_II
         {
             // Load first scene
 #if DEBUG
-            SceneManager.ActiveScene = new Scenes.GameScene(Scenes.GameScene.GameSceneMap.Cave);
+            //SceneManager.ActiveScene = new Scenes.MenuScene();
+            SceneManager.ActiveScene = new Scenes.GameScene(Scenes.GameScene.GameSceneMap.ParticleTest);
+            //SceneManager.ActiveScene = new Scenes.EditorScene();
 #else
             SceneManager.ActiveScene = new Scenes.MenuScene();
 #endif
@@ -119,6 +126,10 @@ namespace Horn_War_II
             if(InputManager.IsActionPressed(InputManager.Action.Debug))
                 new DebugTool(this).Show();
 
+            //Open spawn tool when requested
+            if (InputManager.IsActionPressed(InputManager.Action.SpawnMenu))
+                new Spawn.SpawnTool(this.SceneManager.ActiveScene).Show();
+
             base.Update(gameTime);
         }
 
@@ -139,6 +150,26 @@ namespace Horn_War_II
         public void DrawComponents(GameTime gameTime)
         {
             base.Draw(gameTime);
+        }
+
+        /// <summary>
+        /// Returns first component of the specified type
+        /// </summary>
+        /// <typeparam name="T">Component type</typeparam>
+        /// <returns>First component of the specified type</returns>
+        public T GetComponent<T>()
+        {
+            return this.Components.OfType<T>().SingleOrDefault();
+        }
+
+        /// <summary>
+        /// Returns all components of the specified type
+        /// </summary>
+        /// <typeparam name="T">Component type</typeparam>
+        /// <returns>All components of the specified type</returns>
+        public IEnumerable<T> GetComponents<T>()
+        {
+            return this.Components.OfType<T>();
         }
     }
 }

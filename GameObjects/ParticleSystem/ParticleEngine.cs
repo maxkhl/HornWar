@@ -10,6 +10,7 @@ namespace Horn_War_II.GameObjects.ParticleSystem
     /// <summary>
     /// Takes care of handling and drawing particles
     /// </summary>
+    [Spawn.SpawnAttribute("Images/Preview/BackgroundWorker", false)]
     class ParticleEngine : DrawableObject
     {
         /// <summary>
@@ -33,7 +34,7 @@ namespace Horn_War_II.GameObjects.ParticleSystem
             this.PhysicEngine = PhysicEngine;
             Particles = new List<Particle>();
             Random = new Random();
-            this.DrawOrder = 200;
+            this.DrawOrder = 999999;
         }
 
         /// <summary>
