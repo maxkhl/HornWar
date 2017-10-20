@@ -82,10 +82,11 @@ namespace Horn_War_II.Scenes
                     var spectator = new GameObjects.Spectator(this);
                     Map.Camera.FollowGO = spectator;
 
-                    new GameObjects.Effects.Fire(this, Map.ParticleEngine)
+                    new GameObjects.BrowserObject(this);
+                    /*new GameObjects.Effects.Fire(this, Map.ParticleEngine)
                     {
                         AttachedTo = spectator,
-                    };
+                    };*/
 
                     break;
                 case GameSceneMap.Cave:
