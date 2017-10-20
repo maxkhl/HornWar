@@ -45,6 +45,8 @@ namespace Horn_War_II.GameObjects.Effects
 
             foreach(var body in this.World.BodyList)
             {
+                if (body.UserData is ParticleSystem.Particle) continue;
+
                 var delta = this.Position - body.Position;
                 if (delta.Length() < Size)
                 {
