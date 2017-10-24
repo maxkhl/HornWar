@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-namespace Horn_War_II.GameObjects.Tools
+namespace Horn_War_II.GameObjects.AI.Pathfinding
 {
     /// <summary>
     /// Used to define a path in the gameworld
@@ -18,15 +18,17 @@ namespace Horn_War_II.GameObjects.Tools
         public Vector2 Position { get; protected set; }
         
 
-        private AI.Pathfinding.MinHeap _PathList;
-        private AI.Pathfinding.Node _PathNode;
+        private MinHeap _PathList;
+        private Node _PathNode;
 
-        private AI.Pathfinding.PathFinderEngine _pfEngine;
+        private PathFinderEngine _pfEngine;
+
+        public bool LastWaypoint { get; protected set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public Path(Vector2 Start, Vector2 End, AI.Pathfinding.PathFinderEngine pfEngine, List<FarseerPhysics.Dynamics.Body> IgnoreObstacle)
+        public Path(Vector2 Start, Vector2 End, PathFinderEngine pfEngine, List<FarseerPhysics.Dynamics.Body> IgnoreObstacle)
         {
             this.Start = Start;
             this.Position = Start;
@@ -40,7 +42,6 @@ namespace Horn_War_II.GameObjects.Tools
 
             if (_PathList != null && _PathList.HasNext())
                 _PathNode = _PathList.ExtractFirst();
-
         }
 
         public Vector2? Next()
@@ -50,6 +51,20 @@ namespace Horn_War_II.GameObjects.Tools
                 var Node = _PathNode.Position;
                 Position = Node;
                 _PathNode = _PathNode.next;
+
+                if (_PathNode == null)
+                    LastWaypoint = true;
+                return Node;
+            }
+            else return null;
+        }
+
+
+        public Vector2? PeekNext()
+        {
+            if (_PathNode != null && _PathNode.next != null)
+            {
+                var Node = _PathNode.next.Position;
                 return Node;
             }
             else return null;

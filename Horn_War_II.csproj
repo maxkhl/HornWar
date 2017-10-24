@@ -108,7 +108,7 @@
     <Compile Include="GameObjects\Tools\DebugView.cs" />
     <Compile Include="GameObjects\Tools\Easing.cs" />
     <Compile Include="GameObjects\GameCam.cs" />
-    <Compile Include="GameObjects\Tools\Path.cs" />
+    <Compile Include="GameObjects\AI\Pathfinding\Path.cs" />
     <Compile Include="GameObjects\Weapon.cs" />
     <Compile Include="GameObjects\Weapons\Flail.cs" />
     <Compile Include="GameObjects\Weapons\Staff.cs" />

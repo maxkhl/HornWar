@@ -34,7 +34,7 @@ namespace Horn_War_II.GameObjects.AI.Pathfinding
         }
 
         //private List<Vector2> _HitPoints = new List<Vector2>();
-        private float _MinDistanceToObstacle = 50f;
+        private float _MinDistanceToObstacle = 100f;
         private MinHeap _MiniHeapDebugDraw = null;
 
         /// <summary>
@@ -58,6 +58,7 @@ namespace Horn_War_II.GameObjects.AI.Pathfinding
             _MiniHeapDebugDraw = openList;
 
             bool hit = false;
+
             _PhysicEngine.World.RayCast((f, p, n, fr) =>
             {
                 if(!Exclude.Contains(f.Body))
@@ -100,6 +101,9 @@ namespace Horn_War_II.GameObjects.AI.Pathfinding
 
                 if ((current.Position - End).Length() < 100)
                 {
+                    current.next = new Node(End, 0, 0, null);
+                    CleanUpHeap(ref openList, Exclude);
+                    _MiniHeapDebugDraw = openList;
                     return openList;
                 }
 
@@ -130,6 +134,32 @@ namespace Horn_War_II.GameObjects.AI.Pathfinding
         }
 
         /// <summary>
+        /// Checks for direct paths between nodes and shortenes the path
+        /// </summary>
+        private void CleanUpHeap(ref MinHeap oldHeap, List<Body> Exclude)
+        {
+            var currentNode = oldHeap.listHead;
+            while(currentNode != null)
+            {
+                Node nextNode = currentNode.next;
+
+                Node lastVisibleNode = null;
+                while(nextNode != null)
+                {
+                    var rayResult = TubeRayCast(currentNode.Position, nextNode.Position, Exclude, _MinDistanceToObstacle);
+                    if (!rayResult)
+                        lastVisibleNode = nextNode;
+                    nextNode = nextNode.next;
+                }
+
+                if (lastVisibleNode != null)
+                    currentNode.next = lastVisibleNode;
+
+                currentNode = currentNode.next;
+            }
+        }
+
+        /// <summary>
         /// Surrounding node class
         /// </summary>
         class SurroundingNode
@@ -157,13 +187,13 @@ namespace Horn_War_II.GameObjects.AI.Pathfinding
             List<SurroundingNode> Surrounding = new List<SurroundingNode>();
 
             // Make a direct cast and see if we can skip a ton of nodes
-            var testCast = TubeRayCast(Position, Target, Exclude, _MinDistanceToObstacle);
+            /*var testCast = TubeRayCast(Position, Target, Exclude, _MinDistanceToObstacle);
             if(!testCast)
             {
                 // This means we have a direct connection to the target so we add that node and get the fuck out
                 Surrounding.Add(new SurroundingNode(Target));
                 return Surrounding.ToArray();
-            }
+            }*/
             /*else if((testCast.Item2 - Position).Length() > _MinDistanceToObstacle * 2) // We have hit an obstacle in between so we figure out if it is far enough away. Maybe we can skip some way without using the heavier raycasting
             {
                 // Now we figure out how far we can move without hitting the obstacle
@@ -183,8 +213,30 @@ namespace Horn_War_II.GameObjects.AI.Pathfinding
                 return Surrounding.ToArray();
             }*/
 
+            for (float r = -180; r <= 180; r += 45)
+            {
 
-            var degreeToTarget = MathHelper.ToDegrees((float)Math.Atan2(Target.Y - Position.Y, Target.X - Position.X)) * -1;
+                var rayDir = RotateVector2(
+                                    new Vector2(_MinDistanceToObstacle, 0),
+                                    MathHelper.ToRadians(r));
+
+                var targetVec = Position + rayDir;
+
+                var rayResult = TubeRayCast(Position, targetVec, Exclude, _MinDistanceToObstacle);
+                if (!rayResult)
+                {
+                    var targetVecSpaceCheck = Position + rayDir * 2;
+                    var ray2Result = RayCast(targetVec, targetVecSpaceCheck, Exclude);
+                    // No hit again! This means this point is save to travel to
+                    if (!ray2Result.Item1)
+                    {
+                        Surrounding.Add(new SurroundingNode(targetVec));
+                        //return Surrounding.ToArray();
+                    }
+                }
+            }
+
+            /*var degreeToTarget = MathHelper.ToDegrees((float)Math.Atan2(Target.Y - Position.Y, Target.X - Position.X)) * -1;
 
             // Generate surrounding points
             // Loop over 180 degrees (half a circle btw)
@@ -217,9 +269,9 @@ namespace Horn_War_II.GameObjects.AI.Pathfinding
                 }
                 if(Surrounding.Count != 0)
                     return Surrounding.ToArray();
-            }
+            }*/
 
-            
+
 
 
             /*foreach (var hPoint in _HitPoints)
@@ -294,7 +346,7 @@ namespace Horn_War_II.GameObjects.AI.Pathfinding
         /// </summary>
         public override void DebugDraw(GameTime gameTime, hTexture Pixel, DebugDrawer debugDrawer)
         {
-            foreach (var networkKVP in _DebugSurrounding)
+            /*foreach (var networkKVP in _DebugSurrounding)
             { 
                 var source = networkKVP.Key;
                 
@@ -302,7 +354,7 @@ namespace Horn_War_II.GameObjects.AI.Pathfinding
                 {
                     debugDrawer.DrawLine(source, target.Item1, target.Item2 ? Color.Silver : Color.Red, 1);
                 }
-            }
+            }*/
 
             if(_MiniHeapDebugDraw != null)
             {

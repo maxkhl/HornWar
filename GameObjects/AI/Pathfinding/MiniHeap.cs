@@ -14,7 +14,7 @@ namespace Horn_War_II.GameObjects.AI.Pathfinding
     /// </summary>    
     public class MinHeap
     {
-        private Node listHead;
+        public Node listHead;
 
         public bool HasNext()
         {

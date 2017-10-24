@@ -16,7 +16,7 @@ namespace Horn_War_II.GameObjects.AI.Commands
         /// Position, the AI is moving towards
         /// </summary>
         public SpriteObject Target { get; set; }
-        public Tools.Path Path { get; set; }
+        public Pathfinding.Path Path { get; set; }
 
         private Vector2 _TargetPosition;
 
@@ -28,7 +28,7 @@ namespace Horn_War_II.GameObjects.AI.Commands
             this.Target = Target;
             this._TargetPosition = Target.Position;
 
-            Path = new Tools.Path(
+            Path = new Pathfinding.Path(
                 this.TargetAI.Character.Position,
                 Target.Position,
                 TargetAI.Game.GetComponent<Pathfinding.PathFinderEngine>(),
@@ -47,7 +47,7 @@ namespace Horn_War_II.GameObjects.AI.Commands
         {
             // Refresh path when target moves too far away
             if((Path.End - Target.Position).Length() > 50)
-                Path = new Tools.Path(
+                Path = new Pathfinding.Path(
                     this.TargetAI.Character.Position,
                     Target.Position,
                     TargetAI.Game.GetComponent<Pathfinding.PathFinderEngine>(),
@@ -69,7 +69,8 @@ namespace Horn_War_II.GameObjects.AI.Commands
                         newTarget.Value,
                         false,
                         Character.WalkSpeed.Full,
-                        false
+                        Path.LastWaypoint,
+                        Path.PeekNext()
                         );
                 }
             }

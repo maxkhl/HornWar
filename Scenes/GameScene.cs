@@ -79,7 +79,7 @@ namespace Horn_War_II.Scenes
             switch(_loadMap)
             {
                 case GameSceneMap.AITest:
-                    Map = new Maps.Cave(this);
+                    Map = new Maps.Space(this);
 
                     LoadAITest();
                     break;

@@ -48,17 +48,24 @@ namespace Horn_War_II.GameObjects.AI
             Character.Speed = CurrentMovementOrder.Speed;
 
             var direction = CurrentMovementOrder.Target - this.Character.Position;
-            if (CurrentMovementOrder.Stop)
-                direction *= 5;
-
-            direction += 
-                FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * 
-                FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass) * -1;
 
 
-            direction.Normalize();
+            var target = Vector2.Hermite(
+                this.Character.Position,
+                this.Character.Position + ( FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) *
+                                            FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass) * -1 ),
+                CurrentMovementOrder.Target,
+                (CurrentMovementOrder.PeekNext.HasValue ? CurrentMovementOrder.PeekNext.Value : CurrentMovementOrder.Target),
+                1.0f);
 
-            Character.Move(direction);
+            target -= this.Character.Position;
+
+            /*target +=
+                (FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity)) *
+                FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass) * -1;*/
+
+            Character.Move(target);
+            
         }
     }
 }

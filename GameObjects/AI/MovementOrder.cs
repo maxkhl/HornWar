@@ -18,6 +18,11 @@ namespace Horn_War_II.GameObjects.AI
         public Vector2 Target { get; set; }
 
         /// <summary>
+        /// Next waypoint 
+        /// </summary>
+        public Vector2? PeekNext { get; set; }
+
+        /// <summary>
         /// Use stamina-boost
         /// </summary>
         public bool Boost { get; set; }
@@ -39,12 +44,13 @@ namespace Horn_War_II.GameObjects.AI
         /// <param name="Boost">Use stamina-boost</param>
         /// <param name="Speed">Speed of the character</param>
         /// <param name="Stop">Character stops at target position?</param>
-        public Waypoint(Vector2 Target, bool Boost, Character.WalkSpeed Speed, bool Stop)
+        public Waypoint(Vector2 Target, bool Boost, Character.WalkSpeed Speed, bool Stop, Vector2? PeekNext)
         {
             this.Target = Target;
             this.Boost = Boost;
             this.Speed = Speed;
             this.Stop = Stop;
+            this.PeekNext = PeekNext;
         }
 
         /// <summary>
@@ -54,7 +60,7 @@ namespace Horn_War_II.GameObjects.AI
         {
             get
             {
-                return new Waypoint(Vector2.Zero, false, Character.WalkSpeed.Half, true);
+                return new Waypoint(Vector2.Zero, false, Character.WalkSpeed.Half, true, null);
             }
         }
 
