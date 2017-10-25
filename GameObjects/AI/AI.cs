@@ -105,6 +105,8 @@ namespace Horn_War_II.GameObjects.AI
         {
             ActiveCommand?.DebugDraw(gameTime, Pixel, debugDrawer);
 
+            DebugDrawMovement(gameTime, Pixel, debugDrawer);
+
             base.DebugDraw(gameTime, Pixel, debugDrawer);
         }
 

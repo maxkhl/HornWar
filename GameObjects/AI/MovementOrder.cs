@@ -60,7 +60,7 @@ namespace Horn_War_II.GameObjects.AI
         {
             get
             {
-                return new Waypoint(Vector2.Zero, false, Character.WalkSpeed.Half, true, null);
+                return new Waypoint(Vector2.Zero, false, Character.WalkSpeed.Full, false, null);
             }
         }
 

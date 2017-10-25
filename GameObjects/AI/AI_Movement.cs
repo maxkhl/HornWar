@@ -27,6 +27,8 @@ namespace Horn_War_II.GameObjects.AI
         private Vector2 _GoToLookAt;
 
         public Waypoint CurrentMovementOrder { get; protected set; }
+        private Vector2 _PositionAtCurrentMovementOrder;
+        private Vector2 _VelocityAtCurrentMovementOrder;
 
         /// <summary>
         /// Processes the movement-orders for this AI
@@ -39,33 +41,68 @@ namespace Horn_War_II.GameObjects.AI
                 ActiveCommand.Update(gameTime);
 
                 var newWP = ActiveCommand.RequestWaypoint();
-                if(newWP.HasValue)
+                if (newWP.HasValue)
+                {
                     CurrentMovementOrder = newWP.Value;
+                    _VelocityAtCurrentMovementOrder = FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity);
+                    _PositionAtCurrentMovementOrder = this.Character.Position;
+                }
             }
 
-            
-            Character.Boost = CurrentMovementOrder.Boost;
-            Character.Speed = CurrentMovementOrder.Speed;
+            if (CurrentMovementOrder != Waypoint.Zero)
+            {
+                Character.Boost = CurrentMovementOrder.Boost;
+                Character.Speed = CurrentMovementOrder.Speed;
 
-            var direction = CurrentMovementOrder.Target - this.Character.Position;
+                var direction = CurrentMovementOrder.Target - this.Character.Position;
 
+                var DistanceBetweenPoints = (CurrentMovementOrder.Target - _PositionAtCurrentMovementOrder).Length();
+                var DistanceToTarget = (CurrentMovementOrder.Target - this.Character.Position).Length();
 
-            var target = Vector2.Hermite(
-                this.Character.Position,
-                this.Character.Position + ( FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) *
-                                            FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass) * -1 ),
-                CurrentMovementOrder.Target,
-                (CurrentMovementOrder.PeekNext.HasValue ? CurrentMovementOrder.PeekNext.Value : CurrentMovementOrder.Target),
-                1.0f);
+                if(DistanceBetweenPoints > 0)
+                {
 
-            target -= this.Character.Position;
+                    var target = Vector2.Hermite(
+                        _PositionAtCurrentMovementOrder,
+                        _PositionAtCurrentMovementOrder + (_VelocityAtCurrentMovementOrder *
+                          FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass) * -1),
+                        CurrentMovementOrder.Target,
+                        (CurrentMovementOrder.PeekNext.HasValue ? CurrentMovementOrder.PeekNext.Value : CurrentMovementOrder.Target),
+                        DistanceToTarget / DistanceBetweenPoints);
 
-            /*target +=
-                (FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity)) *
-                FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass) * -1;*/
+                    target -= this.Character.Position;
+                    target.Normalize();
 
-            Character.Move(target);
-            
+                    /*target +=
+                        (FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity)) *
+                        FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass) * -1;*/
+
+                    Character.Move(target);
+
+                }
+            }
+        }
+
+        private void DebugDrawMovement(GameTime gameTime, hTexture Pixel, DebugDrawer debugDrawer)
+        {
+            if (CurrentMovementOrder != Waypoint.Zero)
+            {
+                Vector2 position = _PositionAtCurrentMovementOrder;
+                for (float p = 1; p >= 0; p -= 0.05f)
+                {
+                    var target = Vector2.Hermite(
+                        _PositionAtCurrentMovementOrder,
+                        _PositionAtCurrentMovementOrder + ( _VelocityAtCurrentMovementOrder *
+                          FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass) * -1),
+                        CurrentMovementOrder.Target,
+                        (CurrentMovementOrder.PeekNext.HasValue ? CurrentMovementOrder.PeekNext.Value : CurrentMovementOrder.Target),
+                        p);
+
+                    debugDrawer.DrawLine(position, target, Color.Yellow, 1);
+
+                    position = target;
+                }
+            }
         }
     }
 }
