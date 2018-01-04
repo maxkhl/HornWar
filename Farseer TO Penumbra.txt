@@ -1,0 +1,25 @@
+#######CONVERSION###################
+
+            // Create Hulls from the fixtures of the body
+            foreach (Fixture f in tBody.FixtureList)
+            {
+                // Creating the Hull out of the Shape (respectively Vertices) of the fixtures of the physics body
+                Hull h = new Hull(((PolygonShape)f.Shape).Vertices);
+
+                // We need to scale the Hull according to our "MetersInPixels-Simulation-Value"
+                h.Scale = new Vector2(MeterInPixels);
+
+                // A Hull of Penumbra is set in Display space but the physics body is set in Simulation space
+                // Thats why we need to convert the simulation units of the physics object to the display units
+                // of the Hull object
+                h.Position = ConvertUnits.ToDisplayUnits(tBody.Position);
+
+                // We are adding the new Hull to our physics body hull list
+                // This is necessary to update the Hulls in the Update method (see below)
+                tBodyHull.Add(h);
+
+                // Adding the Hull to Penumbra
+                penumbra.Hulls.Add(h);
+            }
+
+#########
