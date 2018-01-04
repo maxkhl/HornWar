@@ -29,6 +29,8 @@ namespace Horn_War_II.Scenes
         
         public SpriteFont DefaultFont { get; set; }
 
+        public Penumbra.PenumbraComponent PenumbraObject { get; set; }
+
         public GameObjects.Tools.Animation BrightnessAnimation { get; private set; }
         public GameObjects.Tools.Animation ContrastAnimation { get; private set; }
 
@@ -44,6 +46,7 @@ namespace Horn_War_II.Scenes
 
         public GameScene(GameSceneMap Map) : base()
         {
+
             _loadMap = Map;
             OverlayLayer = new List<IDrawable>();
             DefaultFont = Game.Content.Load<SpriteFont>("MenuFont");
@@ -56,6 +59,10 @@ namespace Horn_War_II.Scenes
         /// </summary>
         public override void LoadContent()
         {
+            PenumbraObject = new Penumbra.PenumbraComponent(this.Game);
+            this.Game.Components.Add(PenumbraObject);
+            //PenumbraObject.Lights.Add(new Penumbra.PointLight() { Radius = 20 });
+
             CreateRenderTarget(
                 Game.GraphicsDevice.PresentationParameters.BackBufferWidth,
                 Game.GraphicsDevice.PresentationParameters.BackBufferHeight);
@@ -190,10 +197,12 @@ namespace Horn_War_II.Scenes
         public override void Draw(GameTime gameTime)
         {            
             SceneManager.Game.GraphicsDevice.SetRenderTarget(RenderTarget);
+
+            PenumbraObject.BeginDraw();
             SceneManager.Game.GraphicsDevice.Clear(Color.Black);
 
             //Background-Drawcall
-            if(Map != null && Map.Background != null)
+            if (Map != null && Map.Background != null)
                 Map.Background.Draw(gameTime);
 
 
