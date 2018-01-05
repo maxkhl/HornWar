@@ -109,7 +109,7 @@ namespace Horn_War_II.GameObjects.ParticleSystem
 
         private float Transparency = 1f;
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             this.Lifetime += gameTime.ElapsedGameTime.Milliseconds;
 
@@ -151,7 +151,7 @@ namespace Horn_War_II.GameObjects.ParticleSystem
         }
 
         public bool Disposing { get; private set; }
-        public void Dispose()
+        public virtual void Dispose()
         {
             this.Body.Dispose();
             this.Engine.Remove(this);

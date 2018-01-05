@@ -70,7 +70,7 @@ namespace Horn_War_II.GameObjects.ParticleSystem
         /// <summary>
         /// Position that specifies where particles spawn
         /// </summary>
-        public Vector2 Position { get; set; }
+        public virtual Vector2 Position { get; set; }
 
         public SpriteObject AttachedTo { get; set; }
         public Vector2 LocalPosition { get; set; }

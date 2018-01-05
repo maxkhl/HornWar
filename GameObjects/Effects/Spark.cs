@@ -14,6 +14,10 @@ namespace Horn_War_II.GameObjects.Effects
     /// </summary>
     class Spark : Particle
     {
+        public Penumbra.Light Light { get; private set; }
+
+        private Penumbra.PenumbraComponent _PenumbraObject;
+
         public Spark(ParticleEngine particleEngine, Vector2 Position, Vector2 Velocity) : base(particleEngine, new ParticleSettings()
         {
             ParticleTexture = new hTexture(particleEngine.Game.Content.Load<Texture2D>("Images/Spark"), new Vector2(128), 16, 25),
@@ -30,6 +34,34 @@ namespace Horn_War_II.GameObjects.Effects
         {
             //Lets the particle become alive
             particleEngine.Spawn(this);
+
+            Light = new Penumbra.PointLight()
+            {
+                Scale = new Vector2(800),
+                Intensity = 0.1f,
+                Radius = 60,
+                Color = Color.Yellow,
+            };
+            _PenumbraObject = particleEngine.GameScene.PenumbraObject;
+            _PenumbraObject.Lights.Add(Light);
+        }
+
+        float _LightAlive = 80;
+        public override void Update(GameTime gameTime)
+        {
+            Light.Position = FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Body.Position);
+
+            if(_LightAlive <= 0)
+                _PenumbraObject.Lights.Remove(Light);
+
+            _LightAlive -= gameTime.ElapsedGameTime.Milliseconds;
+            base.Update(gameTime);
+        }
+
+        public override void Dispose()
+        {
+            _PenumbraObject.Lights.Remove(Light);
+            base.Dispose();
         }
     }
 }

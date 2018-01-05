@@ -15,6 +15,19 @@ namespace Horn_War_II.GameObjects.Effects
     /// </summary>
     class Fire : ParticleSystem.Emitter
     {
+        public Penumbra.Light Light { get; private set; }
+
+        public override Vector2 Position
+        {
+            get => base.Position;
+            set
+            {
+                base.Position = value;
+                Light.Position = value + new Vector2(0, -20);
+                _DefaultLightPosition = value + new Vector2(0, -20);
+            }
+        }
+
         /// <summary>
         /// Creates a new fire-effect
         /// </summary>
@@ -45,6 +58,65 @@ namespace Horn_War_II.GameObjects.Effects
             EmissionMax = Intensity;
             EmissionRadius = Radius;
             Emission = true;
+
+            Light = new Penumbra.PointLight()
+            {
+                Scale = new Vector2(Radius * Intensity * 10),
+                Color = Color.Yellow,
+                Position = this.Position,
+                ShadowType = Penumbra.ShadowType.Occluded,
+            };
+            _DefaultLightScale = Light.Scale;
+            _TargetLightScale = Light.Scale;
+            gameScene.PenumbraObject.Lights.Add(Light);
+        }
+        
+        private int _TargetGreen = 255;
+        private Vector2 _DefaultLightScale;
+        private Vector2 _TargetLightScale;
+
+        private Vector2 _DefaultLightPosition;
+        private Vector2 _TargetLightPosition;
+
+        public override void Update(GameTime gameTime)
+        {
+            //Randomize Light Movement
+
+            if (_TargetLightScale == Light.Scale)
+            {
+                _TargetLightScale = _DefaultLightScale + new Vector2(50) * (float)(this.Random.NextDouble() - 0.5 * 2);
+            }
+            else
+            {
+                float step = 3;
+                Light.Scale += new Vector2(
+                    MathHelper.Clamp(_TargetLightScale.X - Light.Scale.X, -step, step),
+                    MathHelper.Clamp(_TargetLightScale.Y - Light.Scale.Y, -step, step));
+            }
+
+            if (_TargetLightPosition == Light.Position)
+            {
+                _TargetLightPosition = _DefaultLightPosition + new Vector2(5) * (float)(this.Random.NextDouble() - 0.5 * 2) + new Vector2(0, -20);
+            }
+            else
+            {
+                float step = 3;
+                Light.Position += new Vector2(
+                    MathHelper.Clamp(_TargetLightPosition.X - Light.Position.X, -step, step),
+                    MathHelper.Clamp(_TargetLightPosition.Y - Light.Position.Y, -step, step));
+            }
+
+
+            if (_TargetGreen == Light.Color.G)
+            {
+                _TargetGreen = 80 + (int)(60 * this.Random.NextDouble());
+            }
+            else
+                Light.Color = new Color(255, Light.Color.G + MathHelper.Clamp(_TargetGreen - Light.Color.G, -1, 1), 0);
+
+
+
+            base.Update(gameTime);
         }
     }
 }

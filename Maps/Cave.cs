@@ -60,10 +60,10 @@ namespace Horn_War_II.Maps
             mushroom2.Body.IgnoreCollisionWith(caveBorderTop.Body);
             mushroom2.Body.IgnoreCollisionWith(caveBorderBottom.Body);
 
-            var mushroom3 = new GameObjects.Decoration.Mushroom(GameScene, PhysicEngine, GameObjects.Decoration.Mushroom.MushroomType.Mushroom2);
+            /*var mushroom3 = new GameObjects.Decoration.Mushroom(GameScene, PhysicEngine, GameObjects.Decoration.Mushroom.MushroomType.Mushroom2);
             mushroom3.Position = new Microsoft.Xna.Framework.Vector2(1500, 750);
             mushroom3.Body.IgnoreCollisionWith(caveBorderTop.Body);
-            mushroom3.Body.IgnoreCollisionWith(caveBorderBottom.Body);
+            mushroom3.Body.IgnoreCollisionWith(caveBorderBottom.Body);*/
 
 
             // Campfire
