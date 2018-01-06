@@ -29,6 +29,8 @@ namespace Horn_War_II.Scenes
         
         public SpriteFont DefaultFont { get; set; }
 
+        public Penumbra.PenumbraComponent PenumbraObject { get; set; }
+
         public GameObjects.Tools.Animation BrightnessAnimation { get; private set; }
         public GameObjects.Tools.Animation ContrastAnimation { get; private set; }
 
@@ -44,6 +46,7 @@ namespace Horn_War_II.Scenes
 
         public GameScene(GameSceneMap Map) : base()
         {
+
             _loadMap = Map;
             OverlayLayer = new List<IDrawable>();
             DefaultFont = Game.Content.Load<SpriteFont>("MenuFont");
@@ -56,6 +59,11 @@ namespace Horn_War_II.Scenes
         /// </summary>
         public override void LoadContent()
         {
+            PenumbraObject = new Penumbra.PenumbraComponent(this.Game);
+            PenumbraObject.Initialize();
+            //this.Game.Components.Add(PenumbraObject);
+            PenumbraObject.Lights.Add(new Penumbra.PointLight() { Scale = new Vector2(500) });
+
             CreateRenderTarget(
                 Game.GraphicsDevice.PresentationParameters.BackBufferWidth,
                 Game.GraphicsDevice.PresentationParameters.BackBufferHeight);
@@ -115,7 +123,7 @@ namespace Horn_War_II.Scenes
                     };*/
 
                     // Arm player
-                    var weapon = new GameObjects.Weapons.Sword(this, Map.PhysicEngine);
+                    var weapon = new GameObjects.Weapons.Flashlight(this, Map.PhysicEngine);
                     weapon.Attach(player);
 
                     
@@ -124,7 +132,7 @@ namespace Horn_War_II.Scenes
                     Map.Camera.FollowGO = player;
 
                     // Spawn NPCs
-                    var npcGoblin1 = new GameObjects.NPC(new GameObjects.AI.AI.AIOptions(), this, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
+                    /*var npcGoblin1 = new GameObjects.NPC(new GameObjects.AI.AI.AIOptions(), this, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
                     npcGoblin1.Position = new Microsoft.Xna.Framework.Vector2(500, 50);
                     var npcGoblin1Horn = new GameObjects.Weapons.Horn(this, Map.PhysicEngine);
                     npcGoblin1Horn.Attach(npcGoblin1);
@@ -138,7 +146,7 @@ namespace Horn_War_II.Scenes
                     this, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
                     npcGoblin2.Position = new Microsoft.Xna.Framework.Vector2(-500, 50);
                     var npcGoblin2Horn = new GameObjects.Weapons.Horn(this, Map.PhysicEngine);
-                    npcGoblin2Horn.Attach(npcGoblin2);
+                    npcGoblin2Horn.Attach(npcGoblin2);*/
 
                     //// Spawn NPCs
                     //var npcGoblin3 = new GameObjects.NPC(new GameObjects.AI.AI.AIOptions(), this, Map.PhysicEngine, GameObjects.Character.SkinType.Goblin);
@@ -190,10 +198,13 @@ namespace Horn_War_II.Scenes
         public override void Draw(GameTime gameTime)
         {            
             SceneManager.Game.GraphicsDevice.SetRenderTarget(RenderTarget);
+
+            PenumbraObject.BeginDraw();
+            //PenumbraObject.Visible = false; //Draw is getting called manually
             SceneManager.Game.GraphicsDevice.Clear(Color.Black);
 
             //Background-Drawcall
-            if(Map != null && Map.Background != null)
+            if (Map != null && Map.Background != null)
                 Map.Background.Draw(gameTime);
 
 
@@ -201,6 +212,7 @@ namespace Horn_War_II.Scenes
             SceneManager.Game.SpriteBatch.Begin(transformMatrix: Map.Camera.View, effect: Shader);
             SceneManager.Game.DrawComponents(gameTime);
             SceneManager.Game.SpriteBatch.End();
+            PenumbraObject.Draw(gameTime);
 
             //Overlay-Drawcalls
             SceneManager.Game.SpriteBatch.Begin(transformMatrix: Matrix.Identity, effect: Shader);
@@ -231,7 +243,11 @@ namespace Horn_War_II.Scenes
         public override void Update(GameTime gameTime)
         {
             if (Map != null)
+            {
                 Map.Update(gameTime);
+
+                PenumbraObject.Transform = Map.Camera.View;
+            }
 
             if(Game.InputManager.IsActionPressed(InputManager.Action.Escape))
             {

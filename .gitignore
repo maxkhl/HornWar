@@ -5,3 +5,5 @@
 /Farseer Physics Engine 3.5/obj
 /obj
 /.vs
+/Content/*.xnb
+/Content/*.mgcontent

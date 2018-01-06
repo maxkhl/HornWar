@@ -78,7 +78,7 @@ namespace Horn_War_II.GameObjects
 
             UpdateOrder = -200;
 
-            DamageBorder = 2;
+            DamageBorder = 0.1f;
             DamageMultiplicator = 1f;
             DamageWeaponMultiplicator = 2;
             SimulationSpeedMultiplicator = 1;

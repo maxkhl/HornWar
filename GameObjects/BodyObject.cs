@@ -30,6 +30,33 @@ namespace Horn_War_II.GameObjects
         public Body Body { get; private set; }
 
         /// <summary>
+        /// Hulls of this body for the penumbra shader
+        /// </summary>
+        public Penumbra.Hull[] Hulls
+        {
+            get { return _Hulls; }
+            private set
+            {
+                //De-register old hulls
+                if(_Hulls != null)
+                    foreach(var Hull in _Hulls)
+                    {
+                        GameScene.PenumbraObject.Hulls.Remove(Hull);
+                    }
+
+                _Hulls = value;
+
+                //Register new hulls
+                foreach (var Hull in _Hulls)
+                {
+                    GameScene.PenumbraObject.Hulls.Add(Hull);
+                }
+
+            }
+        }
+        private Penumbra.Hull[] _Hulls;
+
+        /// <summary>
         /// Position of the physical body
         /// </summary>
         public override Vector2 Position
@@ -189,6 +216,18 @@ namespace Horn_War_II.GameObjects
             this.Material = BOMaterial.Unknown;
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            //Update hulls
+            foreach (var Hull in Hulls)
+            {
+                Hull.Rotation = Body.Rotation;
+                Hull.Position = ConvertUnits.ToDisplayUnits(Body.Position);
+            }
+
+            base.Update(gameTime);
+        }
+
         /// <summary>
         /// Attaches a given shape to this objects body
         /// </summary>
@@ -264,6 +303,8 @@ namespace Horn_War_II.GameObjects
                 fixtures.Add(newFixture);
                 newFixture.AfterCollision += AfterCollision;
             }
+
+            this.Hulls = this.CreateShaderHulls(this.Body).ToArray();
 
             return fixtures;
         }
@@ -416,6 +457,36 @@ namespace Horn_War_II.GameObjects
             Metal,
             Wood,
             Stone
+        }
+
+
+
+        /// <summary>
+        /// Creates a shader hull for this body to be used by penumbra lighting
+        /// </summary>
+        private List<Penumbra.Hull> CreateShaderHulls(Body body)
+        {
+            var hulls = new List<Penumbra.Hull>();
+
+            foreach (Fixture f in body.FixtureList)
+            {
+                // Creating the Hull out of the Shape (respectively Vertices) of the fixtures of the physics body
+                var hull = new Penumbra.Hull(((PolygonShape)f.Shape).Vertices);
+
+                // We need to scale the Hull according to our "MetersInPixels-Simulation-Value"
+                hull.Scale = new Vector2(FarseerPhysics.ConvertUnits.ToDisplayUnits(1));
+
+                // A Hull of Penumbra is set in Display space but the physics body is set in Simulation space
+                // Thats why we need to convert the simulation units of the physics object to the display units
+                // of the Hull object
+                hull.Position = ConvertUnits.ToDisplayUnits(body.Position);
+
+                // We are adding the new Hull to our physics body hull list
+                // This is necessary to update the Hulls in the Update method (see below)
+                hulls.Add(hull);
+            }
+
+            return hulls;
         }
 
         /// <summary>

@@ -58,6 +58,7 @@
     <Compile Include="GameObjects\Decoration\Rock.cs" />
     <Compile Include="GameObjects\Effects\Dust.cs" />
     <Compile Include="GameObjects\BrowserObject.cs" />
+    <Compile Include="GameObjects\Weapons\Flashlight.cs" />
     <Compile Include="Spawn\SpawnAttribute.cs" />
     <Compile Include="Spawn\SpawnTool.cs">
       <SubType>Form</SubType>
@@ -201,6 +202,10 @@
     <ProjectReference Include="Farseer Physics Engine 3.5\Farseer Physics MonoGame.csproj">
       <Project>{0aad36e3-51a5-4a07-ab60-5c8a66bd38b7}</Project>
       <Name>Farseer Physics MonoGame</Name>
+    </ProjectReference>
+    <ProjectReference Include="Penumbra\Source\MonoGame.Penumbra.DesktopGL.csproj">
+      <Project>{3f53d144-2287-485f-91ed-fda8435396b9}</Project>
+      <Name>MonoGame.Penumbra.DesktopGL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

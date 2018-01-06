@@ -341,7 +341,9 @@ namespace FarseerPhysics.Collision
             Vector2 p1 = input.Point1;
             Vector2 p2 = input.Point2;
             Vector2 r = p2 - p1;
-            Debug.Assert(r.LengthSquared() > 0.0f);
+            if (r.LengthSquared() <= 0.0f)
+                return;
+            //Debug.Assert(r.LengthSquared() > 0.0f);
             r.Normalize();
 
             // v is perpendicular to the segment.

@@ -76,9 +76,9 @@ namespace Horn_War_II
         {
             // Load first scene
 #if DEBUG
-            SceneManager.ActiveScene = new Scenes.MenuScene();
             //SceneManager.ActiveScene = new Scenes.MenuScene();
-            //SceneManager.ActiveScene = new Scenes.GameScene(Scenes.GameScene.GameSceneMap.ParticleTest);
+            //SceneManager.ActiveScene = new Scenes.MenuScene();
+            SceneManager.ActiveScene = new Scenes.GameScene(Scenes.GameScene.GameSceneMap.Cave);
             //SceneManager.ActiveScene = new Scenes.EditorScene();
 #else
             SceneManager.ActiveScene = new Scenes.MenuScene();

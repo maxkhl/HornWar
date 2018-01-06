@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Cave/CaveBottom.png</SourceFile>
-  <SourceTime>2016-03-17T15:40:55.7319867+01:00</SourceTime>
-  <DestFile>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Maps/Cave/CaveBottom.xnb</DestFile>
-  <DestTime>2017-10-11T11:55:24.7988258+02:00</DestTime>
+  <SourceFile>C:/Users/maxkh/Desktop/HornWarLighting/Content/Images/Maps/Cave/CaveBottom.png</SourceFile>
+  <SourceTime>2017-09-30T18:53:46.4881411+02:00</SourceTime>
+  <DestFile>C:/Users/maxkh/Desktop/HornWarLighting/Content/Images/Maps/Cave/CaveBottom.xnb</DestFile>
+  <DestTime>2018-01-06T00:58:20.3090842+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
