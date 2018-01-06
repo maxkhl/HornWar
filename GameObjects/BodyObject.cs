@@ -219,11 +219,12 @@ namespace Horn_War_II.GameObjects
         public override void Update(GameTime gameTime)
         {
             //Update hulls
-            foreach (var Hull in Hulls)
-            {
-                Hull.Rotation = Body.Rotation;
-                Hull.Position = ConvertUnits.ToDisplayUnits(Body.Position);
-            }
+            if(Hulls != null)
+                foreach (var Hull in Hulls)
+                {
+                    Hull.Rotation = Body.Rotation;
+                    Hull.Position = ConvertUnits.ToDisplayUnits(Body.Position);
+                }
 
             base.Update(gameTime);
         }
@@ -244,7 +245,7 @@ namespace Horn_War_II.GameObjects
         /// This will not work with texture atlas or animations
         /// </summary>
         /// <exception cref="Exception">Cant generate shape from texture. Texture is null</exception>
-        public List<Fixture> ShapeFromTexture(TriangulationAlgorithm Algorithm = TriangulationAlgorithm.Bayazit)
+        public List<Fixture> ShapeFromTexture(bool CreateHull = true, TriangulationAlgorithm Algorithm = TriangulationAlgorithm.Bayazit)
         {
             if (this.Texture == null)
                 throw new Exception("Cant generate shape from texture. Texture is null");
@@ -304,7 +305,8 @@ namespace Horn_War_II.GameObjects
                 newFixture.AfterCollision += AfterCollision;
             }
 
-            this.Hulls = this.CreateShaderHulls(this.Body).ToArray();
+            if(CreateHull)
+                this.Hulls = this.CreateShaderHulls(this.Body).ToArray();
 
             return fixtures;
         }

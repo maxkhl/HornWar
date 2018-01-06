@@ -21,7 +21,7 @@ namespace Horn_War_II.GameObjects.Weapons
             : base(GameScene, PhysicEngine)
         {
             this.Texture = new hTexture(Game.Content.Load<Texture2D>("Images/Flashlight"));
-            this.ShapeFromTexture();
+            this.ShapeFromTexture(false);
             this.DrawOrder = -10;
             this.Material = BOMaterial.Metal;
             this.Mass = 0.01f;
@@ -49,7 +49,7 @@ namespace Horn_War_II.GameObjects.Weapons
 
         public override void Update(GameTime gameTime)
         {
-            _Light.Position = this.Position + Vector2.Transform(Vector2.UnitX * 50, Matrix.CreateRotationZ(this.Rotation));
+            _Light.Position = this.Position + Vector2.Transform(Vector2.UnitX * 30, Matrix.CreateRotationZ(this.Rotation));
 
 
             _Light.Rotation = this.Rotation;

@@ -54,6 +54,7 @@
     <Compile Include="DebugTool.Designer.cs">
       <DependentUpon>DebugTool.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameObjects\Decoration\Firefly.cs" />
     <Compile Include="GameObjects\Decoration\CampFire.cs" />
     <Compile Include="GameObjects\Decoration\Rock.cs" />
     <Compile Include="GameObjects\Effects\Dust.cs" />
