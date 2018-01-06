@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Staff.png</SourceFile>
-  <SourceTime>2016-07-22T17:06:38.2674337+02:00</SourceTime>
-  <DestFile>G:/Norton Cache/.cache/.p2/pool/Artiacts/HornWar/Content/Images/Staff.xnb</DestFile>
-  <DestTime>2017-10-11T11:55:26.4099207+02:00</DestTime>
+  <SourceFile>C:/Users/maxkh/Desktop/HornWarLighting/Content/Images/Staff.png</SourceFile>
+  <SourceTime>2017-09-30T18:53:46.9221955+02:00</SourceTime>
+  <DestFile>C:/Users/maxkh/Desktop/HornWarLighting/Content/Images/Staff.xnb</DestFile>
+  <DestTime>2018-01-06T00:58:23.0903268+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

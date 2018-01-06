@@ -123,7 +123,7 @@ namespace Horn_War_II.Scenes
                     };*/
 
                     // Arm player
-                    var weapon = new GameObjects.Weapons.Sword(this, Map.PhysicEngine);
+                    var weapon = new GameObjects.Weapons.Flashlight(this, Map.PhysicEngine);
                     weapon.Attach(player);
 
                     

@@ -18,6 +18,8 @@ namespace Horn_War_II.Maps
     {
         public Cave(Scenes.GameScene GameScene) : base(GameScene)
         {
+            GameScene.PenumbraObject.AmbientColor = Color.White * 0.5f;
+
             // Background
             this.Background = new GameObjects.Background(GameScene, Camera, "Images/Maps/Cave/RockBackground");
 
