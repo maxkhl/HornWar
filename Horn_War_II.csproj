@@ -58,7 +58,9 @@
     <Compile Include="GameObjects\Decoration\Rock.cs" />
     <Compile Include="GameObjects\Effects\Dust.cs" />
     <Compile Include="GameObjects\BrowserObject.cs" />
-    <Compile Include="Server\Gameserver.cs" />
+    <Compile Include="Server\RemoteClient.cs" />
+    <Compile Include="Server\ClientManager.cs" />
+    <Compile Include="Server\Server.cs" />
     <Compile Include="Spawn\SpawnAttribute.cs" />
     <Compile Include="Spawn\SpawnTool.cs">
       <SubType>Form</SubType>
