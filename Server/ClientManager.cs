@@ -29,16 +29,7 @@ namespace Horn_War_II.Server
             this.Server = Server;
         }
 
-        public void ProcessAsync(NetIncomingMessage im)
-        {
-            var task = new Task(delegate { WorkIM(im); });
-            task.Start();
-        }
-
-        /// <summary>
-        /// Works a single incoming message
-        /// </summary>
-        private void WorkIM(NetIncomingMessage im)
+        public void Process(NetIncomingMessage im)
         {
             // Create client if doesnt exist already
             if (!Clients.ContainsKey(im.SenderConnection))
@@ -55,6 +46,29 @@ namespace Horn_War_II.Server
                 case NetIncomingMessageType.VerboseDebugMessage:
                     Server.Output.Enqueue(im.ReadString());
                     break;
+                // Redirect to client
+                case NetIncomingMessageType.ConnectionApproval:
+                case NetIncomingMessageType.Data:
+                    var task = new Task(delegate { Client.Process(im); });
+                    task.Start();
+                    break;
+                // Connections and Disconnections
+                case NetIncomingMessageType.StatusChanged:
+                    NetConnectionStatus status = (NetConnectionStatus)im.ReadByte();
+                    switch (status)
+                    {
+                        case NetConnectionStatus.RespondedAwaitingApproval:
+                            Server.Output.Enqueue("Incomming connection from " + im.SenderConnection.RemoteEndPoint.Address.ToString());
+                            break;
+                        case NetConnectionStatus.RespondedConnect:
+                        case NetConnectionStatus.Connected:
+                            //Do nothing for now
+                            break;
+                        case NetConnectionStatus.Disconnecting:
+
+                            break;
+                    }
+                    break;
                 default:
                     Server.Output.Enqueue("Unhandled type: " + im.MessageType + " " + im.LengthBytes + " bytes " + im.DeliveryMethod + "|" + im.SequenceChannel);
                     break;
@@ -68,7 +82,7 @@ namespace Horn_War_II.Server
         /// </summary>
         private void CreateClient(NetConnection connection)
         {
-            var newClient = new RemoteClient();
+            var newClient = new RemoteClient(this, connection);
             this.Clients.AddOrUpdate(
               connection,
               newClient,

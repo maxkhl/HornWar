@@ -111,7 +111,7 @@ namespace Horn_War_II.Server
             {
                 // External message? - ClientManagers business
                 if(im.SenderConnection != null)
-                    ClientManager.ProcessAsync(im);
+                    ClientManager.Process(im);
 
                 // Internal message! Probably debugging or error stuff
                 else
