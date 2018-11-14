@@ -12,7 +12,7 @@ namespace Horn_War_II.Maps
     /// The goblins cave
     /// - limited space (surrounded by rocks and dirt)
     /// - moveable mushrooms
-    /// - eh
+    /// - darkness
     /// </summary>
     class Cave : Map
     {
@@ -50,6 +50,18 @@ namespace Horn_War_II.Maps
 
 
             //caveBorder.Position -= caveBorder.Size / 2;
+
+            var goblin1 = new GameObjects.NPC(
+                new GameObjects.AI.AI.AIOptions()
+                {
+                    DefaultHostile = false,
+                    Passive = true
+                }, 
+                GameScene, 
+                PhysicEngine, 
+                Character.SkinType.Cyborg);
+            goblin1.Position = new Vector2(200, 0);
+
 
             // Spawn mushrooms
             var mushroom1 = new GameObjects.Decoration.Mushroom(GameScene, PhysicEngine, GameObjects.Decoration.Mushroom.MushroomType.Mushroom1);

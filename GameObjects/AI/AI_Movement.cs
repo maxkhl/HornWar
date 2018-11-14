@@ -42,6 +42,11 @@ namespace Horn_War_II.GameObjects.AI
         private bool Boost { get; set; }
 
         /// <summary>
+        /// Current movement-path
+        /// </summary>
+        public Tools.BezierCurve Path { get; set; }
+
+        /// <summary>
         /// Processes the movement-orders for this AI
         /// </summary>
         /// <param name="gameTime"></param>
@@ -66,27 +71,51 @@ namespace Horn_War_II.GameObjects.AI
                 {
                     if (this.AttackTarget != null)
                     {
-                        TargetPosition = (this.AttackTarget.Position - this.Character.Position) * 5 + FarseerPhysics.ConvertUnits.ToDisplayUnits(this.AttackTarget.Body.LinearVelocity) - FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass);
+                        //TargetPosition = (this.AttackTarget.Position - this.Character.Position) * 5 + FarseerPhysics.ConvertUnits.ToDisplayUnits(this.AttackTarget.Body.LinearVelocity) - FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass);
 
                         this.Character.LookAt = this.AttackTarget.Position;
+
+                        // Attack curve
+                        if (this.Path != null)
+                        {
+                            // Create a intercepting path against the targets movement
+                            this.Path.Points[0] = this.Character.Position;
+                            this.Path.Points[1] = this.AttackTarget.Position + FarseerPhysics.ConvertUnits.ToDisplayUnits(this.AttackTarget.Body.LinearVelocity) * 4;
+                            this.Path.Points[2] = this.AttackTarget.Position;
+
+                            float radiusToIgnorePoints = 20f;
+                            var curve = this.Path.GetCurve(50);
+                            foreach(var point in curve)
+                            {
+                                var distance = (point - this.Character.Position).Length();
+                                if (distance > radiusToIgnorePoints ||
+                                    distance < -radiusToIgnorePoints)
+                                {
+                                    TargetPosition = point - this.Character.Position;
+                                    break;
+                                }
+                            }
+
+                        }
                     }
 
-                    // Attack curve
-                    if (this.Path != null)
-                        TargetPosition = (Path.CalculateStep(this.Character.Position, AttackTarget.Position) * 25) - FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass);
+                    //    TargetPosition = (Path.CalculateStep(this.Character.Position, AttackTarget.Position) * 25) - FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.Mass);
                 }
 
                 GoToCalculatedPoint = TargetPosition;
                 this.Character.Move(TargetPosition);
             }
         }
-
-        public Tools.Path Path;
+        
         public BodyObject AttackTarget;
         private void Attack(BodyObject Target, float CurveWidth, float CurveStart, float CurveEnd, Tools.Easing.EaseFunction FunctionIn, Tools.Easing.EaseFunction FunctionOut)
         {
             this.AttackTarget = Target;
             this.GoTo = Vector2.Zero;
+            this.Path = new Tools.BezierCurve(this.Game, this.Game.SpriteBatch);
+            this.Path.AddPoint(this.Character.Position);
+            this.Path.AddPoint(this.Character.Position);
+            this.Path.AddPoint(this.Character.Position);
 
 
             // Path shit deacitvated for now - it's harder than I thought

@@ -142,14 +142,16 @@ namespace Horn_War_II.GameObjects
             // Remove browser position from mousecoords
             MousePosition -= this.Position;
 
-            if (MouseState.LeftButton == ButtonState.Pressed)
-                browser.GetBrowser().GetHost().SendMouseClickEvent((int)MousePosition.X, (int)MousePosition.Y, MouseButtonType.Left, false, 1, CefEventFlags.LeftMouseButton);
-            else if(MouseState.LeftButton == ButtonState.Released)
-                browser.GetBrowser().GetHost().SendMouseClickEvent((int)MousePosition.X, (int)MousePosition.Y, MouseButtonType.Left, true, 1, CefEventFlags.LeftMouseButton);
+            if (browser.IsBrowserInitialized)
+            {
+                if (MouseState.LeftButton == ButtonState.Pressed)
+                    browser.GetBrowser().GetHost().SendMouseClickEvent((int)MousePosition.X, (int)MousePosition.Y, MouseButtonType.Left, false, 1, CefEventFlags.LeftMouseButton);
+                else if (MouseState.LeftButton == ButtonState.Released)
+                    browser.GetBrowser().GetHost().SendMouseClickEvent((int)MousePosition.X, (int)MousePosition.Y, MouseButtonType.Left, true, 1, CefEventFlags.LeftMouseButton);
 
-            browser.GetBrowser().GetHost().SendMouseMoveEvent(new MouseEvent((int)MousePosition.X, (int)MousePosition.Y, CefEventFlags.None), false);
-            browser.GetBrowser().GetHost().SendMouseWheelEvent(new MouseEvent((int)MousePosition.X, (int)MousePosition.Y, CefEventFlags.None), 0, MouseState.ScrollWheelValue - OldMouseWheel);
-
+                browser.GetBrowser().GetHost().SendMouseMoveEvent(new MouseEvent((int)MousePosition.X, (int)MousePosition.Y, CefEventFlags.None), false);
+                browser.GetBrowser().GetHost().SendMouseWheelEvent(new MouseEvent((int)MousePosition.X, (int)MousePosition.Y, CefEventFlags.None), 0, MouseState.ScrollWheelValue - OldMouseWheel);
+            }
 
 
 

@@ -61,9 +61,13 @@ namespace Horn_War_II
 
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            //Graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-            //Graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
-            //Graphics.ApplyChanges();
+            //if (Window.ClientBounds.Width != Graphics.PreferredBackBufferWidth ||
+            //    Window.ClientBounds.Height != Graphics.PreferredBackBufferHeight)
+            //{
+            //    Graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            //    Graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+            //    Graphics.ApplyChanges();
+            //}
         }
 
         /// <summary>

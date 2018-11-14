@@ -37,8 +37,8 @@ namespace Horn_War_II.GameObjects
             this.Visible = false;
 #if DEBUG
             this.Visible = true;
+            this.Overlay = true;
 #endif
-            this.Visible = false;
         }
 
         /// <summary>
@@ -47,14 +47,14 @@ namespace Horn_War_II.GameObjects
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Draw(GameTime gameTime)
         {
-            foreach(var comp in Game.Components)
+            foreach (var comp in Game.Components)
             {
                 if (typeof(SpriteObject).IsAssignableFrom(comp.GetType()))
                 {
                     var drawComp = (SpriteObject)comp;
                     if (!(typeof(BodyObject).IsAssignableFrom(comp.GetType()) && ((BodyObject)drawComp).Body.JointList != null && ((BodyObject)drawComp).Body.JointList.Joint.BodyA != ((BodyObject)drawComp).Body))
                     {
-                        Game.SpriteBatch.DrawString(_debugFont, drawComp.Position.ToString(), drawComp.Position + drawComp.Size, Color.Red);
+                        Game.SpriteBatch.DrawString(_debugFont, drawComp.Position.ToString(), drawComp.Position, Color.Red);
 
                         if (typeof(BodyObject).IsAssignableFrom(comp.GetType()))
                         {
@@ -89,43 +89,48 @@ namespace Horn_War_II.GameObjects
 
                     if (ai.Path != null && ai.AttackTarget != null)
                     {
-                        var distance = (ai.Character.Position - ai.AttackTarget.Position).Length();
+                        var Points = ai.Path.GetCurve(100);
 
-                        var forward = ai.Character.Position - ai.AttackTarget.Position;
-                        forward.Normalize();
-                        var oldPos = ai.Character.Position;
-                        var timeout = 5000;
-                        for(int i = 0; i < ai.Path.Waypoints.Length; i++)
+                        foreach (var point in ai.Path.Points)
                         {
-                            timeout--;                                
+                            DrawLine(point + new Vector2(-4, -4), point + new Vector2(4, 4), 1, Color.Yellow);
+                            DrawLine(point + new Vector2(-4, 4), point + new Vector2(4, -4), 1, Color.Yellow);
+                        }
 
-                            var target = oldPos;
+                        
 
-                            target += ai.Path.CalculateStepSim(oldPos, ai.AttackTarget.Position, i);
-
-                            var forw = oldPos - target;
-                            forw.Normalize();
-
-                            Pixel.Draw(gameTime,
-                                new Rectangle(
-                                    (int)oldPos.X,
-                                    (int)oldPos.Y,
-                                    (int)(target - oldPos).Length(),
-                                    2),
-                                Color.Yellow,
-                                (float)Math.Atan2(forw.Y, forw.X),
-                                Vector2.Zero,
-                                SpriteEffects.None,
-                                0);
-                            oldPos = target;
+                        for (int i = 0; i < Points.Length - 1; i++)
+                        {
+                            DrawLine(Points[i], Points[i + 1], 1, Color.Red);
                         }
                     }
-
-                    
                 }
             }
             Matrix proj = Matrix.CreateOrthographicOffCenter(0f, Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height, 0f, 0f, 1f);
             _physicsDebug.RenderDebugData(proj, _camera.View);
+        }
+        
+        private void DrawLine(Vector2 start, Vector2 end, int width, Color color)
+        {
+            //start = this.GameScene.Map.Camera.ToScreen(start);
+            //end = this.GameScene.Map.Camera.ToScreen(end);
+
+            Vector2 edge = end - start;
+            // calculate angle to rotate line
+            float angle =
+                (float)Math.Atan2(edge.Y, edge.X);
+                Game.SpriteBatch.Draw(Pixel.Base,
+                new Rectangle(// rectangle defines shape of line and position of start of line
+                    (int)start.X,
+                    (int)start.Y,
+                    (int)edge.Length(), //sb will strech the texture to fill this rectangle
+                    width), //width of line, change this to make thicker line
+                null,
+                color, //colour of line
+                angle,     //angle of line (calulated above)
+                new Vector2(0, 0), // point in line about which to rotate
+                SpriteEffects.None,
+                0);
         }
     }
 }

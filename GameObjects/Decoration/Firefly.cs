@@ -12,9 +12,25 @@ namespace Horn_War_II.GameObjects.Decoration
     /// </summary>
     class Firefly : BodyObject
     {
-        Random _Random;
+        static Random _Random;
         Penumbra.PointLight _Light;
         Penumbra.PointLight _LightGlow;
+
+        /// <summary>
+        /// Area, the firefly is alowed to move inside
+        /// </summary>
+        public Rectangle AllowedArea
+        {
+            get
+            {
+                return _AllowedArea;
+            }
+            set
+            {
+                _AllowedArea = value;
+            }
+        }
+        public Rectangle _AllowedArea = Rectangle.Empty;
 
         public Firefly(Scenes.GameScene GameScene, PhysicEngine PhysicEngine)
             : base(GameScene, PhysicEngine)
@@ -24,7 +40,9 @@ namespace Horn_War_II.GameObjects.Decoration
             this.Texture = new hTexture(Game.Content.Load<Texture2D>("Images/Firefly"));
             this.ShapeFromTexture(false);
 
-            _Random = new Random();
+
+            if(_Random == null)
+                _Random = new Random();
 
             _Light = new Penumbra.PointLight();
             GameScene.PenumbraObject.Lights.Add(_Light);
@@ -52,14 +70,22 @@ namespace Horn_War_II.GameObjects.Decoration
                 (_TargetPosition - this.Position).Length() > -1)
             {
                 _TargetPosition = this.Position + new Vector2(
-                    (float)_Random.NextDouble() -0.5f * 2,
-                    (float)_Random.NextDouble() - 0.5f * 2) * 150;
-                while (GameScene.Map.PhysicEngine.World.RayCast(this.Position, _TargetPosition).Count > 0)
+                    ((float)_Random.NextDouble() - 0.5f) * 2,
+                    ((float)_Random.NextDouble() - 0.5f) * 2) * 150;
+
+                // Limit movement to area if given
+                if (AllowedArea != Rectangle.Empty)
+                {
+                    _TargetPosition.X = MathHelper.Clamp(_TargetPosition.X, AllowedArea.X, AllowedArea.X + AllowedArea.Width);
+                    _TargetPosition.Y = MathHelper.Clamp(_TargetPosition.Y, AllowedArea.Y, AllowedArea.Y + AllowedArea.Height);
+                }
+
+                /*while (GameScene.Map.PhysicEngine.World.RayCast(this.Position, _TargetPosition).Count > 0)
                 {
                     _TargetPosition = this.Position + new Vector2(
                         (float)_Random.NextDouble() - 0.5f * 2,
                         (float)_Random.NextDouble() - 0.5f * 2) * 50;
-                }
+                }*/
             }
             else
             {

@@ -81,7 +81,7 @@ namespace Horn_War_II.GameObjects
             DamageBorder = 0.1f;
             DamageMultiplicator = 1f;
             DamageWeaponMultiplicator = 2;
-            SimulationSpeedMultiplicator = 1;
+            SimulationSpeedMultiplicator = 1f;
 
         }
 

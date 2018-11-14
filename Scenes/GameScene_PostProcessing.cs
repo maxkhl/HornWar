@@ -148,6 +148,9 @@ namespace Horn_War_II.Scenes
 
         public void CreateRenderTarget(int Width, int Height)
         {
+            if (this.RenderTarget != null)
+                this.RenderTarget.Dispose();
+
             this.RenderTarget = new RenderTarget2D(
                 Game.GraphicsDevice,
                 Width,

@@ -1,6 +1,10 @@
 ﻿<html>
 <head>
 	<style type="text/css">
+		@font-face {
+			font-family: Blackadder;
+			src: url(ITCBLKAD.TTF);
+		}
         body, html {
             background: transparent;
             overflow: hidden;
@@ -9,21 +13,36 @@
             margin: 0 0 0 0;
         }
         div#Header {
-            width: 100%;
+            width: 40%;
+            max-width: 730px;
             height: 274px;
             margin: 0 0 0 0;
             background-image: url(Header.png);
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
+            float: left;
         }
         div.Button {
+			font-family: Blackadder;
+			font-size: 50px;
             width: 100%;
             margin: 0 0 0 0;
             text-align: center;
-            background-color: white;
+			cursor: pointer;
         }
         div.Button:hover {
-            background-color: pink;
+			color: #6d5c00;
+        }
+        div.Menu {
+            background-image: url(MenuNavBG.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 39%;
+            max-width: 532px;
+            height: 792px;
+            padding: 90px 90px 90px 70px;
+            float: left;
         }
     </style>
 
@@ -38,7 +57,11 @@
 
 </head>
 <body>
+	<div class="Menu">
+		<div class="button">Start</div>
+	</div>
     <div id="Header"></div>
-    <div class="button">Start</div>
+    <!--<img src="Video_Color_Test_Pattern.jpg" width="500px" />-->
+    
 </body>
 </html>

@@ -62,7 +62,7 @@ namespace Horn_War_II.Scenes
             PenumbraObject = new Penumbra.PenumbraComponent(this.Game);
             PenumbraObject.Initialize();
             //this.Game.Components.Add(PenumbraObject);
-            PenumbraObject.Lights.Add(new Penumbra.PointLight() { Scale = new Vector2(500) });
+            //PenumbraObject.Lights.Add(new Penumbra.PointLight() { Scale = new Vector2(500) });
 
             CreateRenderTarget(
                 Game.GraphicsDevice.PresentationParameters.BackBufferWidth,
@@ -130,6 +130,10 @@ namespace Horn_War_II.Scenes
 
                     // Tell camera to follow player
                     Map.Camera.FollowGO = player;
+
+                    new GameObjects.Decoration.Firefly(this, Map.PhysicEngine);
+
+                    new GameObjects.Decoration.Firefly(this, Map.PhysicEngine);
 
                     new GameObjects.Decoration.Firefly(this, Map.PhysicEngine);
 
@@ -217,7 +221,7 @@ namespace Horn_War_II.Scenes
             PenumbraObject.Draw(gameTime);
 
             //Overlay-Drawcalls
-            SceneManager.Game.SpriteBatch.Begin(transformMatrix: Matrix.Identity, effect: Shader);
+            SceneManager.Game.SpriteBatch.Begin(transformMatrix: Map.Camera.View, effect: Shader);
             foreach (var dComponent in OverlayLayer)
                 dComponent.Draw(gameTime);
             SceneManager.Game.SpriteBatch.End();
@@ -286,6 +290,10 @@ namespace Horn_War_II.Scenes
             CreateRenderTarget(
                 Game.GraphicsDevice.PresentationParameters.BackBufferWidth,
                 Game.GraphicsDevice.PresentationParameters.BackBufferHeight);
+
+
+            PenumbraObject = Penumbra.PenumbraComponent.Refresh(PenumbraObject);
+
 
             if (Map != null && Map.Camera != null)
                 Map.Camera.Refresh();

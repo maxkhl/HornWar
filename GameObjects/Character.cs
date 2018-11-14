@@ -23,7 +23,7 @@ namespace Horn_War_II.GameObjects
         /// <summary>
         /// Determins the health of this character
         /// </summary>
-        public float Health { get; private set; }
+        public new float Health { get; private set; }
 
         /// <summary>
         /// Determins if this character is dead

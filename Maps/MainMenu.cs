@@ -21,10 +21,16 @@ namespace Horn_War_II.Maps
             this.MenuScene = MenuScene;
 
             // Setup PP Shader
-            GameScene.RenderTechnique = Scenes.GameScene.RenderTechniques.Default;
+            /*GameScene.RenderTechnique = Scenes.GameScene.RenderTechniques.Default;
             GameScene.ScreenColor = new Vector4(1.0f, 1.0f, 1.0f, 1.0f); //Keep true colors in menu
             GameScene.Contrast = 1.0f;
-            GameScene.Brightness = -1;
+            GameScene.Brightness = -1f;*/
+
+            // Setup PP Shader
+            GameScene.RenderTechnique = Scenes.GameScene.RenderTechniques.Default;
+            GameScene.ScreenColor = new Vector4(1.0f, 1.0f, 1.0f, 1.0f); //Keep true colors in menu
+            GameScene.Brightness = -0.99f;
+            GameScene.Contrast = 1.1f;
 
             BrowserObject = new BrowserObject(
                 MenuScene, 
@@ -45,17 +51,26 @@ namespace Horn_War_II.Maps
             StartGame = true;
         }
 
+        //float LightningTimePassed;
+
         bool MenuInitialized = false;
         public override void Update(GameTime gameTime)
         {
-            if(BrowserObject.Loaded && !MenuInitialized)
+            //if(LightningTimePassed <= 0)
+            //{
+            //    new GameObjects.Effects.Lightning(this.ParticleEngine, new Vector2(0));
+            //    LightningTimePassed = 2000;
+            //}
+            //LightningTimePassed -= gameTime.ElapsedGameTime.Milliseconds;
+
+            if (BrowserObject.Loaded && !MenuInitialized)
             {
                 this.Camera.Zoom = 0.0001f;
                 this.Camera.ZoomAnimation.Animate(.8f, 2000, GameObjects.Tools.Easing.EaseFunction.CircEaseOut);
                 this.GameScene.BrightnessAnimation.Animate(1.0f, 2000, GameObjects.Tools.Easing.EaseFunction.CircEaseOut);
 
 
-
+                /*
                 // Spawn NPCs
                 var npcGoblin1 = new GameObjects.NPC(new GameObjects.AI.AI.AIOptions()
                 {
@@ -78,6 +93,37 @@ namespace Horn_War_II.Maps
                 npcGoblin1.DrawOrder = -5;
                 npcGoblin1Horn = new GameObjects.Weapons.Horn(GameScene, PhysicEngine);
                 npcGoblin1Horn.Attach(npcGoblin1);
+                */
+
+
+
+                var screen = new Rectangle(
+                    this.GameScene.ResWidth / 2 * -1,
+                    this.GameScene.ResHeight / 2 * -1,
+                    this.GameScene.ResWidth,
+                    this.GameScene.ResHeight
+                    );
+
+                new GameObjects.Decoration.Firefly(GameScene, PhysicEngine)
+                { AllowedArea = screen };
+                new GameObjects.Decoration.Firefly(GameScene, PhysicEngine)
+                { AllowedArea = screen };
+                new GameObjects.Decoration.Firefly(GameScene, PhysicEngine)
+                { AllowedArea = screen };
+                new GameObjects.Decoration.Firefly(GameScene, PhysicEngine)
+                { AllowedArea = screen };
+                new GameObjects.Decoration.Firefly(GameScene, PhysicEngine)
+                { AllowedArea = screen };
+                new GameObjects.Decoration.Firefly(GameScene, PhysicEngine)
+                { AllowedArea = screen };
+                new GameObjects.Decoration.Firefly(GameScene, PhysicEngine)
+                { AllowedArea = screen };
+
+
+                /*new GameObjects.Effects.Fire(GameScene, ParticleEngine, 10, 5)
+                {
+                    LocalPosition = new Microsoft.Xna.Framework.Vector2(0, 300),
+                };*/
 
                 MenuInitialized = true;
             }

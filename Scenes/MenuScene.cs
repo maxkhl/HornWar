@@ -12,7 +12,7 @@ namespace Horn_War_II.Scenes
         public MenuScene() : base(GameSceneMap.None)
         { }
 
-        public SpriteFont DefaultFont { get; set; }
+        public new SpriteFont DefaultFont { get; set; }
         public SpriteFont CaptionFont { get; set; }
 
         public override void LoadGame()
