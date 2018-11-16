@@ -80,7 +80,7 @@ namespace Horn_War_II.GameObjects.AI
                         {
                             // Create a intercepting path against the targets movement
                             this.Path.Points[0] = this.Character.Position;
-                            this.Path.Points[1] = this.AttackTarget.Position + FarseerPhysics.ConvertUnits.ToDisplayUnits(this.AttackTarget.Body.LinearVelocity) * 4;
+                            this.Path.Points[1] = this.AttackTarget.Position + FarseerPhysics.ConvertUnits.ToDisplayUnits(this.AttackTarget.Body.LinearVelocity) * 3; // - FarseerPhysics.ConvertUnits.ToDisplayUnits(this.Character.Body.LinearVelocity) * 0.3f;
                             this.Path.Points[2] = this.AttackTarget.Position;
 
                             float radiusToIgnorePoints = 20f;

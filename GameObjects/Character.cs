@@ -19,11 +19,30 @@ namespace Horn_War_II.GameObjects
         /// </summary>
         public Vector2 LookAt { get; set; }
 
+        /// <summary>
+        /// Makes the character invincible
+        /// </summary>
+        public bool Invincible { get; set; }
+
 
         /// <summary>
         /// Determins the health of this character
         /// </summary>
-        public new float Health { get; private set; }
+        public new float Health
+        {
+            get
+            {
+                return _Health;
+            }
+            private set
+            {
+                _Health = value;
+
+                if (_Health <= 0 && !Dead && !Invincible)
+                    this.Dead = true;
+            }
+        }
+        private float _Health;
 
         /// <summary>
         /// Determins if this character is dead
@@ -38,9 +57,12 @@ namespace Horn_War_II.GameObjects
             {
                 _dead = value;
 
-                var deathOverlay = TextureOverlays[DeathOverlayIndex];
-                deathOverlay.Enabled = value;
-                TextureOverlays[DeathOverlayIndex] = deathOverlay;
+                if (_dead)
+                {
+                    var deathOverlay = TextureOverlays[DeathOverlayIndex];
+                    deathOverlay.Enabled = value;
+                    TextureOverlays[DeathOverlayIndex] = deathOverlay;
+                }
             }
         }
         private bool _dead = false;
@@ -215,9 +237,6 @@ namespace Horn_War_II.GameObjects
         {
             if (DamagingImpact)
                 this.Health -= Damage;
-
-            if (this.Health <= 0 && !Dead)
-                this.Dead = true;
         }
 
         /// <summary>
